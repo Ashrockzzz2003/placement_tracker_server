@@ -15,7 +15,7 @@ const establishConnection = require('./initializeConnection.js');
 const fs = require('fs');
 
 const concurrencyLimit = os.cpus().length;
-const PORT = 5000;
+const PORT = 443;
 
 server.use(helmet());
 server.use(express.json());
