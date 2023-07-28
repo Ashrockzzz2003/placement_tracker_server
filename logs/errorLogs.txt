@@ -1,0 +1,6 @@
+[ERROR, allPlacements, 1,690,523,508,655]: Error: Table 'placement_tracker.placement' doesn't exist
+
+[ERROR, companyPlacements, 1,690,525,007,848]: TypeError: Cannot set properties of undefined (setting 'company')
+
+[ERROR, companyPlacements, 1,690,525,122,902]: TypeError: Cannot set properties of undefined (setting 'company')
+
