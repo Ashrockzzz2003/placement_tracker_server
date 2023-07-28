@@ -16,7 +16,7 @@ const fs = require('fs');
 
 const concurrencyLimit = os.cpus().length;
 const IP = '20.219.191.115';
-const PORT = 443;
+const PORT = 5000;
 let ip = require('ip');
 let ipAddr = ip.address();
 
@@ -57,7 +57,7 @@ if (cluster.isPrimary) {
         cluster.fork();
     }
 } else {
-    server.listen(PORT, IP, (err) => {
+    server.listen(PORT, (err) => {
         if (err) {
             console.log('[ERROR]: Error starting server.');
         } else {
