@@ -4,3 +4,9 @@
 
 [ERROR, companyPlacements, 1,690,525,122,902]: TypeError: Cannot set properties of undefined (setting 'company')
 
+[ERROR, allStudents, 1,690,561,733,760]: Error: Table 'placement_tracker.placement' doesn't exist
+
+[ERROR, addStudent, 1,690,562,750,449]: Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?, ?, ?, ?, ?, ?, ?)' at line 1
+
+[ERROR, addStudent, 1,690,562,806,978]: Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?, ?, ?, ?, ?, ?, ?)' at line 1
+

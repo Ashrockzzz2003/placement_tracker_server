@@ -7,6 +7,350 @@ const fs = require('fs');
 const validator = require('validator');
 
 module.exports = {
+    test: async (req, res) => {
+        return res.status(200).send({ "message": 'Ok' });
+    },
+
+    // students
+    getStudent: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.rollNo === undefined) {
+                return res.status(400).send({ "message": 'BAD REQUEST' });
+            }
+
+            if (req.body.rollNo === '') {
+                return res.status(400).send({ "message": 'INVALID ROLLNO' });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [req.body.rollNo]);
+
+                if (student.length === 0) {
+                    return res.status(404).send({ "message": 'STUDENT NOT FOUND' });
+                } else {
+
+                    let [placement] = await db_connection.query(`SELECT * FROM placements WHERE studentRollNo = ?`, [req.body.rollNo]);
+
+                    if (placement.length === 0) {
+                        student[0].placement = [];
+                        student[0].noOfOffers = 0;
+                        return res.status(200).send({ "message": 'STUDENT FOUND', "data": student[0] });
+                    } else {
+                        
+                        for (let i = 0; i < placement.length; i++) {
+                            let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[i].companyID]);
+
+                            if (company.length === 0) {
+                                return res.status(404).send({ "message": 'COMPANY NOT FOUND' });
+                            }
+
+                            placement[i].company = company[0];
+
+                        }
+
+                        student[0].placement = placement;
+                        student[0].noOfOffers = placement.length;
+
+                        return res.status(200).send({ "message": 'STUDENT FOUND', "data": student[0] });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+                const istTime = Date.now().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, getStudent, ${istTime}]: ${err}\n\n`);
+                return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
+            } finally {
+                db_connection.release();
+            }
+        }
+    ],
+
+    allStudents: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.userEmail === undefined) {
+                return res.status(400).send({ "message": 'BAD REQUEST' });
+            }
+
+            if (req.userEmail === '') {
+                return res.status(400).send({ "message": 'INVALID USEREMAIL' });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                let [user] = await db_connection.query(`SELECT * FROM user WHERE userEmail = ?`, [req.userEmail]);
+
+                if (user.length === 0) {
+                    return res.status(404).send({ "message": 'USER NOT FOUND' });
+                } else {
+
+                    let [students] = await db_connection.query(`SELECT * FROM student`);
+
+                    if (students.length === 0) {
+                        return res.status(200).send({ "message": 'NO STUDENTS FOUND', "data": [] });
+                    } else {
+                        // attach placement details of each student
+                        for (let i = 0; i < students.length; i++) {
+                            let [placement] = await db_connection.query(`SELECT * FROM placements WHERE studentRollNo = ?`, [students[i].rollNo]);
+
+                            if (placement.length === 0) {
+                                students[i].placement = [];
+                            } else {
+                                let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[0].companyID]);
+                                
+                                if (company.length === 0) {
+                                    return res.status(404).send({ "message": 'COMPANY NOT FOUND' });
+                                }
+
+                                placement[0].company = company[0];
+                                students[i].placement = placement;
+                            }
+
+                            students[i].noOfOffers = students[i].placement.length;
+                        }
+
+                        return res.status(200).send({ "message": 'OK', "data": students });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+                const istTime = Date.now().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, allStudents, ${istTime}]: ${err}\n\n`);
+                return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
+            } finally {
+                db_connection.release();
+            }
+        }        
+    ],
+
+    addStudent: [
+        webTokenValidator,
+        async (req, res) => {
+            // rollNo VARCHAR(100) PRIMARY KEY NOT NULL,
+            // fullName VARCHAR(200) NOT NULL,
+            // gender VARCHAR(1) NOT NULL,
+            // section VARCHAR(1) NOT NULL,
+            // batch VARCHAR(4) NOT NULL,
+            // campus VARCHAR(100) NOT NULL,
+            // dept VARCHAR(100) NOT NULL,
+            // isHigherStudies VARCHAR(1) NOT NULL
+
+            if (req.userEmail === undefined || req.body.rollNo === undefined || req.body.fullName === undefined || req.body.gender === undefined || req.body.section === undefined || req.body.batch === undefined || req.body.campus === undefined || req.body.dept === undefined || req.body.isHigherStudies === undefined) {
+                return res.status(400).send({ "message": 'BAD REQUEST' });
+            }
+
+            if (req.userEmail === '' || req.userEmail === '' || req.body.rollNo === '' || req.body.fullName === '' || req.body.gender === '' || req.body.section === '' || req.body.batch === '' || req.body.campus === '' || req.body.dept === '' || req.body.isHigherStudies === '') {
+                return res.status(400).send({"message": 'INVALID PARAMETERS'});
+            }
+
+            if (req.body.isHigherStudies !== '0' && req.body.isHigherStudies !== '1') {
+                return res.status(400).send({ "message": 'INVALID HIGHER STUDIES PARAMETER' });
+            }
+
+            if (req.body.gender !== 'M' && req.body.gender  !== 'F') {
+                return res.status(400).send({"message": "INVALID GENDER PARAMETER"});
+            }
+
+            if (req.body.section.length !== 1) {
+                return res.status(400).send({"message": "INVALID SECTION PARAMETER"});
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+
+                // check duplicate rollno
+                let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [req.body.rollNo]);
+
+                if (student.length !== 0) {
+                    return res.status(400).send({"message": "DUPLICATE ROLLNO"});
+                }
+
+                // add student. write code to insert
+
+                await db_connection.query(`INSERT INTO student (rollNo, fullName, gender, section, batch, campus, dept, isHigherStudies) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`, [req.body.rollNo, req.body.fullName, req.body.gender, req.body.section, req.body.batch, req.body.campus, req.body.dept, req.body.isHigherStudies]);
+
+                return res.status(200).send({ "message": 'OK' });
+
+            } catch (err) {
+                console.log(err);
+
+                const istTime = Date.now().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, addStudent, ${istTime}]: ${err}\n\n`);
+                return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
+            }
+        }
+    ],
+
+    updateStudent: [
+        webTokenValidator,
+        async (req, res) => {
+            // rollNo VARCHAR(100) PRIMARY KEY NOT NULL,
+            // fullName VARCHAR(200) NOT NULL,
+            // gender VARCHAR(1) NOT NULL,
+            // section VARCHAR(1) NOT NULL,
+            // batch VARCHAR(4) NOT NULL,
+            // campus VARCHAR(100) NOT NULL,
+            // dept VARCHAR(100) NOT NULL,
+            // isHigherStudies VARCHAR(1) NOT NULL
+
+            if (req.userEmail === undefined || req.body.rollNo === undefined) {
+                return res.status(400).send({ "message": 'BAD REQUEST' });
+            }
+
+            if (req.userEmail === '' || req.body.rollNo === '') {
+                return res.status(400).send({ "message": 'INVALID PARAMETERS' });
+            }
+
+            if (req.body.fullName === undefined && req.body.gender === undefined && req.body.section === undefined && req.body.batch === undefined && req.body.campus === undefined && req.body.dept === undefined && req.body.isHigherStudies === undefined) {
+                return res.status(400).send({ "message": 'NO PARAMETERS FOUND TO UPDATE' });
+            }
+
+            if (req.body.fullName === '' && req.body.gender === '' && req.body.section === '' && req.body.batch === '' && req.body.campus === '' && req.body.dept === '' && req.body.isHigherStudies === '') {
+                return res.status(400).send({ "message": 'INVALID PARAMETERS FOUND TO UPDATE' });
+            }
+
+            if (req.body.isHigherStudies !== undefined && req.body.isHigherStudies !== '' && req.body.isHigherStudies !== '0' && req.body.isHigherStudies !== '1') {
+                return res.status(400).send({ "message": 'INVALID HIGHER STUDIES PARAMETER' });
+            }
+
+            if (req.body.gender !== undefined && req.body.gender !== '' && req.body.gender !== 'M' && req.body.gender  !== 'F') {
+                return res.status(400).send({"message": "INVALID GENDER PARAMETER"});
+            }
+
+            if (req.body.section !== undefined && req.body.section !== '' && req.body.section.length !== 1) {
+                return res.status(400).send({"message": "INVALID SECTION PARAMETER"});
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [req.body.rollNo]);
+
+                if (student.length === 0) {
+                    return res.status(404).send({ "message": 'STUDENT NOT FOUND' });
+                }
+
+                let [newStudent] = student[0];
+
+                if (req.body.fullName !== undefined && req.body.fullName !== '') {
+                    newStudent.fullName = req.body.fullName;
+                }
+
+                if (req.body.gender !== undefined && req.body.gender === '') {
+                    newStudent.gender = req.body.gender;
+                }
+
+                if (req.body.section !== undefined && req.body.section !== '') {
+                    newStudent.section = req.body.section;
+                }
+
+                if (req.body.batch !== undefined && req.body.batch !== '') {
+                    newStudent.batch = req.body.batch;
+                }
+
+                if (req.body.campus !== undefined && req.body.campus !== '') {
+                    newStudent.campus = req.body.campus;
+                }
+
+                if (req.body.dept !== undefined && req.body.dept !== '') {
+                    newStudent.dept = req.body.dept;
+                }
+
+                if (req.body.isHigherStudies !== undefined && req.body.isHigherStudies !== '') {
+                    newStudent.isHigherStudies = req.body.isHigherStudies;
+                }
+
+
+                // execute update query
+
+                await db_connection.query(`UPDATE student SET fullName = ?, gender = ?, section = ?, batch = ?, campus = ?, dept = ?, isHigherStudies = ? WHERE rollNo = ?`, [newStudent.fullName, newStudent.gender, newStudent.section, newStudent.batch, newStudent.campus, newStudent.dept, newStudent.isHigherStudies, req.body.rollNo]);
+
+                return res.status(200).send({ "message": 'OK' });
+
+            } catch (err) {
+                console.log(err);
+
+                const istTime = Date.now().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, updateStudent, ${istTime}]: ${err}\n\n`);
+                return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
+            }
+        }    
+    ],
+
+    // placements
+    getPlacement: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.userEmail === undefined || req.body.placementID === undefined) {
+                return res.status(400).send({ "message": 'BAD REQUEST' });
+            }
+
+            if (req.userEmail === '' || req.body.placementID === '') {
+                return res.status(400).send({ "message": 'INVALID USEREMAIL OR PLACEMENTID' });
+            }
+
+            if (!validator.isInt(req.body.placementID)) {
+                return res.status(400).send({ "message": 'INVALID PLACEMENTID' });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                let [user] = await db_connection.query(`SELECT * FROM user WHERE userEmail = ?`, [req.userEmail]);
+
+                if (user.length === 0) {
+                    return res.status(404).send({ "message": 'USER NOT FOUND' });
+                } else {
+                    let [placement] = await db_connection.query(`SELECT * FROM placements WHERE id = ?`, [req.body.placementID]);
+
+                    if (placement.length === 0) {
+                        return res.status(404).send({ "message": 'PLACEMENT NOT FOUND' });
+                    } else {
+
+                        let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [placement[0].studentRollNo]);
+
+                        if (student.length === 0) {
+                            return res.status(404).send({ "message": 'STUDENT NOT FOUND' });
+                        }
+
+                        let [studentOffers] = await db_connection.query(`SELECT COUNT(*) AS noOfOffers FROM placements WHERE studentRollNo = ?`, [placement[0].studentRollNo]);
+
+                        student[0].noOfOffers = studentOffers[0].noOfOffers;
+
+                        placement[0].student = student[0];
+
+                        let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[0].companyID]);
+                        
+                        if (company.length === 0) {
+                            return res.status(404).send({ "message": 'COMPANY NOT FOUND' });
+                        }
+
+                        let [companyOffers] = await db_connection.query(`SELECT COUNT(*) AS noOfOffers FROM placements WHERE companyID = ?`, [placement[0].companyID]);
+
+                        company[0].noOfOffers = companyOffers[0].noOfOffers;
+
+                        placement[0].company = company[0];
+
+                        return res.status(200).send({ "message": 'OK', "data": placement[0] });
+
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+                const istTime = Date.now().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, getPlacement, ${istTime}]: ${err}\n\n`);
+                return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
+            } finally {
+                db_connection.release();
+            }
+        }
+    ],
+
     allPlacements: [
         webTokenValidator,
         async (req, res) => {
@@ -178,9 +522,7 @@ module.exports = {
 
                     // req.body.studentRollNo, req.body.companyID, req.body.role, req.body.ctc, req.body.datePlaced, req.body.isPPO, req.body.isOnCampus, req.body.extra, req.body.location
 
-                    const [newPlacement] = {
-                        id: req.body.placementID
-                    };
+                    const [newPlacement] = placement[0];
 
                     if (req.body.studentRollNo !== undefined && req.body.studentRollNo !== '') {
                         let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [req.body.studentRollNo]);
@@ -508,7 +850,7 @@ module.exports = {
                 }
 
                 // delete from placements
-                await db_connection.query(`DELETE FROM placement WHERE companyID = ?`, [req.body.companyID]);
+                await db_connection.query(`DELETE FROM placements WHERE companyID = ?`, [req.body.companyID]);
 
                 // delete from company
                 await db_connection.query(`DELETE FROM company WHERE id = ?`, [req.body.companyID]);
