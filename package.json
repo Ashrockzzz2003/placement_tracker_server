@@ -4,7 +4,7 @@
   "description": "Server for an app that tracks FTE offers.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "pm2 start index.js -i max --name placement_tracker"
   },
   "author": "Ashwin Narayanan S",
   "license": "ISC",
