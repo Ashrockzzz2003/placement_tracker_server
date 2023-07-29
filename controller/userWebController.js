@@ -806,8 +806,6 @@ module.exports = {
 
                     let [companyName] = await db_connection.query(`SELECT * FROM company WHERE lower(companyName) = ?`, [req.body.companyName.toString().toLowerCase()]);
 
-                    console.log(companyName);
-
                     if (companyName.length !== 0) {
                         return res.status(409).send({ "message": 'COMPANY ALREADY EXISTS' });
                     }
