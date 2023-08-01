@@ -39,7 +39,6 @@ module.exports = {
                         student[0].noOfOffers = 0;
                         return res.status(200).send({ "message": 'STUDENT FOUND', "data": student[0] });
                     } else {
-                        
                         for (let i = 0; i < placement.length; i++) {
                             let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[i].companyID]);
 
@@ -94,26 +93,39 @@ module.exports = {
                         return res.status(200).send({ "message": 'NO STUDENTS FOUND', "data": [] });
                     } else {
                         // attach placement details of each student
+                        let [companies] = await db_connection.query(`SELECT companyName FROM company`);
+
+                        if (companies.length === 0) {
+                            companies = [];
+                        }
+
                         for (let i = 0; i < students.length; i++) {
                             let [placement] = await db_connection.query(`SELECT * FROM placements WHERE studentRollNo = ?`, [students[i].rollNo]);
+                            let studentCompanies = [];
 
                             if (placement.length === 0) {
                                 students[i].placement = [];
                             } else {
-                                let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[0].companyID]);
-                                
-                                if (company.length === 0) {
-                                    return res.status(404).send({ "message": 'COMPANY NOT FOUND' });
+
+                                for (let j = 0; j < placement.length; j++) {
+                                    let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[j].companyID]);
+
+                                    if (company.length === 0) {
+                                        return res.status(404).send({ "message": 'COMPANY NOT FOUND' });
+                                    }
+
+                                    placement[j].companyName = company[0].companyName;
+                                    studentCompanies.push(company[0].companyName);
                                 }
 
-                                placement[0].company = company[0];
                                 students[i].placement = placement;
                             }
 
                             students[i].noOfOffers = students[i].placement.length;
+                            students[i].companies = studentCompanies;
                         }
 
-                        return res.status(200).send({ "message": 'OK', "data": students });
+                        return res.status(200).send({ "message": 'OK', "data": students, "companies": companies });
                     }
                 }
             } catch (err) {
@@ -124,7 +136,7 @@ module.exports = {
             } finally {
                 db_connection.release();
             }
-        }        
+        }
     ],
 
     addStudent: [
@@ -144,30 +156,31 @@ module.exports = {
             }
 
             if (req.userEmail === '' || req.userEmail === '' || req.body.rollNo === '' || req.body.fullName === '' || req.body.gender === '' || req.body.section === '' || req.body.batch === '' || req.body.campus === '' || req.body.dept === '' || req.body.isHigherStudies === '') {
-                return res.status(400).send({"message": 'INVALID PARAMETERS'});
+                return res.status(400).send({ "message": 'INVALID PARAMETERS' });
             }
 
             if (req.body.isHigherStudies !== '0' && req.body.isHigherStudies !== '1') {
                 return res.status(400).send({ "message": 'INVALID HIGHER STUDIES PARAMETER' });
             }
 
-            if (req.body.gender !== 'M' && req.body.gender  !== 'F') {
-                return res.status(400).send({"message": "INVALID GENDER PARAMETER"});
+            if (req.body.gender !== 'M' && req.body.gender !== 'F') {
+                return res.status(400).send({ "message": "INVALID GENDER PARAMETER" });
             }
 
             if (req.body.section.length !== 1) {
-                return res.status(400).send({"message": "INVALID SECTION PARAMETER"});
+                return res.status(400).send({ "message": "INVALID SECTION PARAMETER" });
             }
 
             let db_connection = await db.promise().getConnection();
 
             try {
+                console.log(req.body);
 
                 // check duplicate rollno
                 let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [req.body.rollNo]);
 
                 if (student.length !== 0) {
-                    return res.status(400).send({"message": "DUPLICATE ROLLNO"});
+                    return res.status(400).send({ "message": "DUPLICATE ROLLNO" });
                 }
 
                 // add student. write code to insert
@@ -218,12 +231,12 @@ module.exports = {
                 return res.status(400).send({ "message": 'INVALID HIGHER STUDIES PARAMETER' });
             }
 
-            if (req.body.gender !== undefined && req.body.gender !== '' && req.body.gender !== 'M' && req.body.gender  !== 'F') {
-                return res.status(400).send({"message": "INVALID GENDER PARAMETER"});
+            if (req.body.gender !== undefined && req.body.gender !== '' && req.body.gender !== 'M' && req.body.gender !== 'F') {
+                return res.status(400).send({ "message": "INVALID GENDER PARAMETER" });
             }
 
             if (req.body.section !== undefined && req.body.section !== '' && req.body.section.length !== 1) {
-                return res.status(400).send({"message": "INVALID SECTION PARAMETER"});
+                return res.status(400).send({ "message": "INVALID SECTION PARAMETER" });
             }
 
             let db_connection = await db.promise().getConnection();
@@ -279,7 +292,7 @@ module.exports = {
                 fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, updateStudent, ${istTime}]: ${err}\n\n`);
                 return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
             }
-        }    
+        }
     ],
 
     // placements
@@ -325,7 +338,7 @@ module.exports = {
                         placement[0].student = student[0];
 
                         let [company] = await db_connection.query(`SELECT * FROM company WHERE id = ?`, [placement[0].companyID]);
-                        
+
                         if (company.length === 0) {
                             return res.status(404).send({ "message": 'COMPANY NOT FOUND' });
                         }
@@ -692,35 +705,38 @@ module.exports = {
                 if (user.length === 0) {
                     return res.status(404).send({ "message": 'USER NOT FOUND' });
                 } else {
+                    let [data] = await db_connection.query(`SELECT * FROM company`);
+                    let companyNames = data.map(company => company.companyName);
 
-                    let [companies] = await db_connection.query(`SELECT * FROM company`);
+                    for (let i = 0; i < data.length; i++) {
+                        let [placementData] = await db_connection.query(`SELECT DISTINCT COUNT(*) AS noOfOffers, p.ctc, p.role, p.extra, p.isPPO FROM placements AS p JOIN student AS s ON s.rollNo = p.studentRollNo WHERE p.companyID = ? GROUP BY p.ctc, p.role,p.extra, p.isPPO`, [data[i].id]);
 
-                    for (let i = 0; i < companies.length; i++) {
-                        let [placementData] = await db_connection.query(`SELECT * FROM placements WHERE companyID = ?`, [companies[i].id]);
+                        for(let j = 0; j < placementData.length; j++) {
+                            // group student data by section
+                            let [studentData] = await db_connection.query(`SELECT s.section, COUNT(*) AS noOfStudents FROM placements AS p JOIN student AS s ON s.rollNo = p.studentRollNo WHERE p.companyID = ? AND p.ctc = ? AND p.role = ? AND p.extra = ? AND p.isPPO = ? GROUP BY s.section`, [data[i].id, placementData[j].ctc, placementData[j].role, placementData[j].extra, placementData[j].isPPO]);
 
-                        if (placementData.length === 0) {
-                            companies[i].noOfOffers = 0;
-                            companies[i].placementData = [];
-                            continue;
-                        }
+                            let [sections] = await db_connection.query(`SELECT DISTINCT section FROM student`);
 
-                        companies[i].noOfOffers = placementData.length;
+                            for(let k = 0; k < sections.length; k++) {
+                                let section = sections[k].section;
+                                let index = studentData.findIndex(student => student.section === section);
 
-                        for (let j = 0; j < placementData.length; j++) {
-                            let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [placementData[j].studentRollNo]);
-
-                            if (student.length === 0) {
-                                return res.status(404).send({ "message": 'STUDENT NOT FOUND' });
+                                if(index === -1) {
+                                    studentData.push({
+                                        "section": section,
+                                        "noOfStudents": 0
+                                    });
+                                }   
                             }
 
-                            placementData[j].student = student[0];
+                            placementData[j].sectionData = studentData || [];
                         }
 
-                        companies[i].placementData = placementData;
-
+                        data[i].placementData = placementData;
                     }
 
-                    return res.status(200).send({ "message": 'OK', "data": companies });
+
+                    return res.status(200).send({ "message": 'OK', "data": data, "companyData": companyNames });
                 }
             } catch (err) {
                 console.log(err);

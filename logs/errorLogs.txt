@@ -10,3 +10,17 @@
 
 [ERROR, addStudent, 1,690,562,806,978]: Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?, ?, ?, ?, ?, ?, ?)' at line 1
 
+[ERROR, allStudents, 1,690,871,224,237]: TypeError: Cannot read properties of undefined (reading 'push')
+
+[ERROR, allStudents, 1,690,871,303,456]: TypeError: Cannot read properties of undefined (reading 'push')
+
+[ERROR, allCompanies, 1,690,883,877,554]: ReferenceError: companies is not defined
+
+[ERROR, allCompanies, 1,690,883,927,986]: ReferenceError: companies is not defined
+
+[ERROR, allCompanies, 1,690,884,930,664]: Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UNIQUE p.ctc, p.role FROM placements AS p JOIN student AS s ON s.rollNo = p.stud' at line 1
+
+[ERROR, allCompanies, 1,690,885,553,986]: Error: In aggregated query without GROUP BY, expression #2 of SELECT list contains nonaggregated column 'placement_tracker.p.ctc'; this is incompatible with sql_mode=only_full_group_by
+
+[ERROR, allCompanies, 1,690,888,232,983]: Error: Expression #4 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'placement_tracker.s.section' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+
