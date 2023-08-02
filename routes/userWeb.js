@@ -13,6 +13,7 @@ router.post('/student/add', userWebController.addStudent);          // Test Pass
 router.post('/student/update', userWebController.updateStudent);    // Pending
 
 router.post('/allPlacements', userWebController.allPlacements);     // Test Passed
+router.post('/addPlacementList', userWebController.addPlacementList)
 router.post('/placement', userWebController.getPlacement);          // Test Passed
 router.post('/placement/add', userWebController.addPlacement);      // Test Passed
 router.post('/placement/update', userWebController.updatePlacement);// Pending

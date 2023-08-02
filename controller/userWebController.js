@@ -174,8 +174,6 @@ module.exports = {
             let db_connection = await db.promise().getConnection();
 
             try {
-                console.log(req.body);
-
                 // check duplicate rollno
                 let [student] = await db_connection.query(`SELECT * FROM student WHERE rollNo = ?`, [req.body.rollNo]);
 
@@ -421,6 +419,42 @@ module.exports = {
         }
     ],
 
+    addPlacementList: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.userEmail === undefined) {
+                return res.status(400).send({ "message": 'BAD REQUEST' });
+            }
+
+            if (req.userEmail === '') {
+                return res.status(400).send({ "message": 'INVALID USEREMAIL' });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                let [user] = await db_connection.query(`SELECT * FROM user WHERE userEmail = ?`, [req.userEmail]);
+
+                if (user.length === 0) {
+                    return res.status(404).send({ "message": 'USER NOT FOUND' });
+                } else {
+
+                    let [companyData] = await db_connection.query(`SELECT * FROM company`);
+                    let [studentData] = await db_connection.query(`SELECT rollNo FROM student`);
+
+                    return res.status(200).send({ "message": 'OK', "companyData": companyData, "studentData": studentData });
+                }
+            } catch (err) {
+                console.log(err);
+                const istTime = Date.now().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+                fs.appendFileSync(`logs/errorLogs.txt`, `[ERROR, companyList, ${istTime}]: ${err}\n\n`);
+                return res.status(500).send({ "message": 'INTERNAL SERVER ERROR' });
+            } finally {
+                db_connection.release();
+            }
+        }
+    ],
+
     addPlacement: [
         webTokenValidator,
         async (req, res) => {
@@ -486,7 +520,7 @@ module.exports = {
 
                     await db_connection.query(`INSERT INTO placements (studentRollNo, companyID, role, ctc, datePlaced, isPPO, isOnCampus, extra, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.companyID, req.body.role, req.body.ctc, req.body.datePlaced, req.body.isPPO, req.body.isOnCampus, req.body.extra, req.body.location]);
 
-                    return res.status(201).send({ "message": 'CREATED' });
+                    return res.status(200).send({ "message": 'CREATED' });
                 }
             } catch (err) {
                 console.log(err);
@@ -711,22 +745,22 @@ module.exports = {
                     for (let i = 0; i < data.length; i++) {
                         let [placementData] = await db_connection.query(`SELECT DISTINCT COUNT(*) AS noOfOffers, p.ctc, p.role, p.extra, p.isPPO FROM placements AS p JOIN student AS s ON s.rollNo = p.studentRollNo WHERE p.companyID = ? GROUP BY p.ctc, p.role,p.extra, p.isPPO`, [data[i].id]);
 
-                        for(let j = 0; j < placementData.length; j++) {
+                        for (let j = 0; j < placementData.length; j++) {
                             // group student data by section
                             let [studentData] = await db_connection.query(`SELECT s.section, COUNT(*) AS noOfStudents FROM placements AS p JOIN student AS s ON s.rollNo = p.studentRollNo WHERE p.companyID = ? AND p.ctc = ? AND p.role = ? AND p.extra = ? AND p.isPPO = ? GROUP BY s.section`, [data[i].id, placementData[j].ctc, placementData[j].role, placementData[j].extra, placementData[j].isPPO]);
 
                             let [sections] = await db_connection.query(`SELECT DISTINCT section FROM student`);
 
-                            for(let k = 0; k < sections.length; k++) {
+                            for (let k = 0; k < sections.length; k++) {
                                 let section = sections[k].section;
                                 let index = studentData.findIndex(student => student.section === section);
 
-                                if(index === -1) {
+                                if (index === -1) {
                                     studentData.push({
                                         "section": section,
                                         "noOfStudents": 0
                                     });
-                                }   
+                                }
                             }
 
                             placementData[j].sectionData = studentData || [];

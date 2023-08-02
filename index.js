@@ -15,7 +15,6 @@ const establishConnection = require('./initializeConnection.js');
 const fs = require('fs');
 
 const concurrencyLimit = os.cpus().length;
-const IP = '20.219.191.115';
 const PORT = 5000;
 let ip = require('ip');
 let ipAddr = ip.address();
