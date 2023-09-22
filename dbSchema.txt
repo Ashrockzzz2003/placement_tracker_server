@@ -59,3 +59,126 @@ role
     0 -> user
     1 -> admin
 */
+
+
+/* BARD */
+-- Management table
+
+CREATE TABLE management (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    role VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+-- Student table
+
+CREATE TABLE students (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    roll_number VARCHAR(255) NOT NULL UNIQUE,
+    class_section VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL,
+    higher_studies BOOLEAN NOT NULL DEFAULT FALSE,
+    placement BOOLEAN NOT NULL DEFAULT FALSE,
+    interests (array of strings),
+    skills (array of strings),
+    academic_performance (decimal),
+    management_id INT NOT NULL,
+    FOREIGN KEY (management_id) REFERENCES management (id),
+    PRIMARY KEY (id)
+);
+
+-- Companies table
+
+CREATE TABLE companies (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    website VARCHAR(255),
+    contact_information VARCHAR(255),
+    industry VARCHAR(255),
+    technologies (array of strings),
+    PRIMARY KEY (id)
+);
+
+-- Jobs table
+
+CREATE TABLE jobs (
+    id INT NOT NULL AUTO_INCREMENT,
+    company_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    location VARCHAR(255),
+    description TEXT NOT NULL,
+    deadline DATETIME NOT NULL,
+    package DECIMAL(10,2),
+    type VARCHAR(255) NOT NULL,
+    required_skills (array of strings),
+    FOREIGN KEY (company_id) REFERENCES companies (id),
+    PRIMARY KEY (id)
+);
+
+-- Applications table
+
+CREATE TABLE applications (
+    id INT NOT NULL AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    job_id INT NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (student_id) REFERENCES students (id),
+    FOREIGN KEY (job_id) REFERENCES jobs (id)
+);
+
+-- Career roadmaps table
+
+CREATE TABLE career_roadmaps (
+    id INT NOT NULL AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    steps (array of strings),
+    FOREIGN KEY (student_id) REFERENCES students (id),
+    PRIMARY KEY (id)
+);
+
+-- Alumni network table
+
+CREATE TABLE alumni_network (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    company VARCHAR(255) NOT NULL,
+    designation VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES students (id),
+    PRIMARY KEY (id)
+);
+
+-- Mentoring relationships table
+
+CREATE TABLE mentoring_relationships (
+    id INT NOT NULL AUTO_INCREMENT,
+    mentor_id INT NOT NULL,
+    mentee_id INT NOT NULL,
+    FOREIGN KEY (mentor_id) REFERENCES students (id),
+    FOREIGN KEY (mentee_id) REFERENCES students (id),
+    PRIMARY KEY (id)
+);
+
+-- Job interview resources table
+
+CREATE TABLE job_interview_resources (
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    link VARCHAR(255),
+    PRIMARY KEY (id)
+);
+
+-- Career counseling resources table
+
+CREATE TABLE career_counseling_resources (
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    link VARCHAR(255),
+    PRIMARY KEY (id)
+);

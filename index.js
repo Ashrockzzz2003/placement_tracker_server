@@ -1,21 +1,30 @@
 const express = require('express');
 const helmet = require('helmet');
+
 const createTables = require('./schema/createRelations');
 const dropTables = require('./schema/dropRelations');
 
 const cluster = require('cluster');
 let os = require('os')
+
 const { pid } = require('process');
+
 const insertData = require('./schema/insertData');
+
 const server = express();
 const cors = require('cors');
+
 const userWebRouter = require('./routes/userWeb');
+
 const { generateKey } = require('./RSA/keyGen');
+
 const establishConnection = require('./initializeConnection.js');
+
 const fs = require('fs');
 
 const concurrencyLimit = os.cpus().length;
 const PORT = 5000;
+
 let ip = require('ip');
 let ipAddr = ip.address();
 
