@@ -5,8 +5,9 @@ const createTables = (db) => {
         managerPassword VARCHAR(255) NOT NULL,
         managerName VARCHAR(255) NOT NULL,
         managerRole CHAR(1) NOT NULL,
-        createdAt VARCHAR(108) NOT NULL,
-        PRIMARY KEY (id)
+        createdAt DATE NOT NULL,
+        PRIMARY KEY (id),
+        CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1' OR managerRole='2')
     );`, (err, result) => {
         if (err) {
             console.log("[ERROR]: Failed to create managementData table");
@@ -20,7 +21,7 @@ const createTables = (db) => {
         id INT NOT NULL AUTO_INCREMENT,
         managerEmail VARCHAR(255) NOT NULL UNIQUE,
         otp VARCHAR(6) NOT NULL,
-        createdAt VARCHAR(108) NOT NULL,
+        createdAt DATETIME NOT NULL,
         PRIMARY KEY (id)
     );`, (err, result) => {
         if (err) {
@@ -43,9 +44,12 @@ const createTables = (db) => {
         studentDept VARCHAR(10) NOT NULL,
         isHigherStudies CHAR(1) NOT NULL,
         isPlaced CHAR(1) NOT NULL DEFAULT '0',
-        createdAt VARCHAR(108) NOT NULL,
+        createdAt DATE NOT NULL,
         CGPA VARCHAR(4) NULL,
-        PRIMARY KEY (id)
+        PRIMARY KEY (id),
+        CONSTRAINT CK_isHigherStudies CHECK ( isHigherStudies='0' OR isHigherStudies='1'),
+        CONSTRAINT CK_isPlaced CHECK ( isPlaced='0' OR isPlaced='1'),
+        CONSTRAINT CK_studentGender CHECK (studentGender = 'M' OR studentGender = 'F' OR studentGender = 'O')
     );`, (err, result) => {
         if (err) {
             console.log("[ERROR]: Failed to create studentData table");
@@ -59,7 +63,7 @@ const createTables = (db) => {
         id INT NOT NULL AUTO_INCREMENT,
         studentEmail VARCHAR(255) NOT NULL,
         otp VARCHAR(6) NOT NULL,
-        createdAt VARCHAR(108) NOT NULL,
+        createdAt DATETIME NOT NULL,
         PRIMARY KEY (id)
     );`, (err, result) => {
         if (err) {
@@ -75,7 +79,7 @@ const createTables = (db) => {
     db.query(`CREATE TABLE companyData (
         id INT NOT NULL AUTO_INCREMENT,
         companyName VARCHAR(255) NOT NULL UNIQUE,
-        createdAt VARCHAR(108) NOT NULL,
+        createdAt DATE NOT NULL,
         managerEmail VARCHAR(255) NULL,
         studentRollNo VARCHAR(255) NULL,
         PRIMARY KEY (id)
