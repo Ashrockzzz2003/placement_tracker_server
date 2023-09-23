@@ -1,23 +1,24 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
+// create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
     auth: {
-        "user": "",
-        "pass": ""
+        user: "auth.amrita.placements@gmail.com",
+        pass: "Authamrita123",
     },
-    tls: {
-        rejectUnauthorized: false
-    }
 });
 
-const sendMail = async (mailOptions) => {
+const sendEmail = async (mailOptions, callback) => {
     try {
-        await transporter.sendMail(mailOptions);
-        return true;
-    } catch (err) {
-        return false;
+        const info = await transporter.sendMail(mailOptions)
+        callback(info);
+    } catch (error) {
+        callback(error);
     }
-}
+};
 
-module.exports = sendMail;
+module.exports = sendEmail;

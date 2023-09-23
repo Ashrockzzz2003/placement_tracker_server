@@ -1,10 +1,12 @@
 const createTables = (db) => {
     db.query(`CREATE TABLE managementData (
-        managerEmail VARCHAR(255) NOT NULL,
+        id INT NOT NULL AUTO_INCREMENT,
+        managerEmail VARCHAR(255) NOT NULL UNIQUE,
+        managerPassword VARCHAR(255) NOT NULL,
         managerName VARCHAR(255) NOT NULL,
-        role CHAR(1) NOT NULL,
-        createdAt DATE NOT NULL,
-        PRIMARY KEY (managerEmail)
+        managerRole CHAR(1) NOT NULL,
+        createdAt VARCHAR(108) NOT NULL,
+        PRIMARY KEY (id)
     );`, (err, result) => {
         if (err) {
             console.log("[ERROR]: Failed to create managementData table");
@@ -14,8 +16,26 @@ const createTables = (db) => {
         }
     });
 
+    db.query(`CREATE TABLE managementRegister (
+        id INT NOT NULL AUTO_INCREMENT,
+        managerEmail VARCHAR(255) NOT NULL UNIQUE,
+        otp VARCHAR(6) NOT NULL,
+        createdAt VARCHAR(108) NOT NULL,
+        PRIMARY KEY (id)
+    );`, (err, result) => {
+        if (err) {
+            console.log("[ERROR]: Failed to create managementRegister table");
+            console.log(err);
+        } else {
+            console.log("[MESSAGE]: Created managementRegister table");
+        }
+    });
+
     db.query(`CREATE TABLE studentData (
+        id INT NOT NULL AUTO_INCREMENT,
         studentRollNo CHAR(16) NOT NULL UNIQUE,
+        studentEmail VARCHAR(255) NOT NULL UNIQUE,
+        studentPassword VARCHAR(255) NOT NULL,
         studentName VARCHAR(255) NOT NULL,
         studentSection CHAR(1) NOT NULL,
         studentGender CHAR(1) NOT NULL,
@@ -23,10 +43,9 @@ const createTables = (db) => {
         studentDept VARCHAR(10) NOT NULL,
         isHigherStudies CHAR(1) NOT NULL,
         isPlaced CHAR(1) NOT NULL DEFAULT '0',
-        createdAt DATE NOT NULL,
-    
+        createdAt VARCHAR(108) NOT NULL,
         CGPA VARCHAR(4) NULL,
-        PRIMARY KEY (studentRollNo)
+        PRIMARY KEY (id)
     );`, (err, result) => {
         if (err) {
             console.log("[ERROR]: Failed to create studentData table");
@@ -36,48 +55,54 @@ const createTables = (db) => {
         }
     });
 
-    db.query(`CREATE TABLE jobData (
+    db.query(`CREATE TABLE studentRegister (
         id INT NOT NULL AUTO_INCREMENT,
-        companyName VARCHAR(255) NOT NULL,
-        ctc FLOAT NOT NULL,
-        role VARCHAR(255) NOT NULL,
-        opportunityStatus CHAR(1) NOT NULL,
-        totalHires INT NOT NULL DEFAULT 0,
-        createdAt DATE NOT NULL,
-        managerEmail VARCHAR(255) NULL,
-        studentRollNo VARCHAR(255) NULL,
-    
-        PRIMARY KEY (id),
-        FOREIGN KEY (companyName) REFERENCES companyData(companyName),
-        FOREIGN KEY (managerEmail) REFERENCES managementData(managerEmail),
-        FOREIGN KEY (studentRollNo) REFERENCES studentData(studentRollNo),
-        UNIQUE (companyName, role, ctc)
+        studentEmail VARCHAR(255) NOT NULL,
+        otp VARCHAR(6) NOT NULL,
+        createdAt VARCHAR(108) NOT NULL,
+        PRIMARY KEY (id)
     );`, (err, result) => {
         if (err) {
-            console.log("[ERROR]: Failed to create jobData table");
+            console.log("[ERROR]: Failed to create studentRegister table");
             console.log(err);
         } else {
-            console.log("[MESSAGE]: Created jobData table");
+            console.log("[MESSAGE]: Created studentRegister table");
+        }
+    });
+
+
+
+    db.query(`CREATE TABLE companyData (
+        id INT NOT NULL AUTO_INCREMENT,
+        companyName VARCHAR(255) NOT NULL UNIQUE,
+        createdAt VARCHAR(108) NOT NULL,
+        managerEmail VARCHAR(255) NULL,
+        studentRollNo VARCHAR(255) NULL,
+        PRIMARY KEY (id)
+    );`, (err, result) => {
+        if (err) {
+            console.log("[ERROR]: Failed to create companyData table");
+            console.log(err);
+        } else {
+            console.log("[MESSAGE]: Created companyData table");
         }
     });
 
     db.query(`CREATE TABLE placementData (
         id INT NOT NULL AUTO_INCREMENT,
-    
-        studentRollNo VARCHAR(255) NOT NULL,
-        studentSection CHAR(1) NOT NULL,
-        studentGender CHAR(1) NOT NULL,
-    
-        jobID INT NOT NULL,
+        studentId INT NOT NULL,
+        companyId INT NOT NULL,
+        ctc FLOAT NOT NULL,
+        jobRole VARCHAR(255) NOT NULL,
+        placementDate VARCHAR(108) NOT NULL,
         isIntern VARCHAR(1) NOT NULL,
         isPPO VARCHAR(1) NOT NULL,
         isOnCampus VARCHAR(1) NOT NULL,
-        extra VARCHAR(500),
-        createdAt DATE NOT NULL,
-    
+        extraData VARCHAR(1000),
+        createdAt VARCHAR(108) NOT NULL,
         PRIMARY KEY (id),
-        FOREIGN KEY (studentRollNo) REFERENCES studentData(studentRollNo),
-        FOREIGN KEY (jobID) REFERENCES jobData(id)
+        FOREIGN KEY (studentId) REFERENCES studentData(id),
+        FOREIGN KEY (companyId) REFERENCES companyData(id)
     );`, (err, result) => {
         if (err) {
             console.log("[ERROR]: Failed to create placementData table");

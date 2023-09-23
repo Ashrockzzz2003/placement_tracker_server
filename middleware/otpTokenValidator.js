@@ -21,23 +21,22 @@ async function otpTokenValidator(req, res, next) {
             req.authorization_tier = payLoad["userRole"];
 
             if (payLoad["userRole"] == "0" || payLoad["userRole"] == "1") {
-                req.userEmail = payLoad["userEmail"];
-                req.managerName = payLoad["managerName"];
-                req.managerRole = payLoad["managerRole"];
-                req.managerPassword = payLoad["managerPassword"];
+                req.body.userEmail = payLoad["userEmail"];
+                req.body.managerName = payLoad["managerName"];
+                req.body.managerPassword = payLoad["managerPassword"];
             } else if (payLoad["userRole"] == "2") {
-                req.userEmail = payLoad["userEmail"];
-                req.studentRollNo = payLoad["studentRollNo"];
-                req.studentEmail = payLoad["studentEmail"];
-                req.studentPassword = payLoad["studentPassword"];
-                req.studentName = payLoad["studentName"];
-                req.studentSection = payLoad["studentSection"];
-                req.studentGender = payLoad["studentGender"];
-                req.studentBatch = payLoad["studentBatch"];
-                req.studentDept = payLoad["studentDept"];
-                req.isHigherStudies = payLoad["isHigherStudies"];
-                req.isPlaced = payLoad["isPlaced"];
-                req.CGPA = payLoad["CGPA"];
+                req.body.userEmail = payLoad["userEmail"];
+                req.body.studentRollNo = payLoad["studentRollNo"];
+                req.body.studentEmail = payLoad["studentEmail"];
+                req.body.studentPassword = payLoad["studentPassword"];
+                req.body.studentName = payLoad["studentName"];
+                req.body.studentSection = payLoad["studentSection"];
+                req.body.studentGender = payLoad["studentGender"];
+                req.body.studentBatch = payLoad["studentBatch"];
+                req.body.studentDept = payLoad["studentDept"];
+                req.body.isHigherStudies = payLoad["isHigherStudies"];
+                req.body.isPlaced = payLoad["isPlaced"];
+                req.body.CGPA = payLoad["CGPA"];
             }
 
             next();
