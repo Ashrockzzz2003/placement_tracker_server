@@ -8,6 +8,7 @@
 CREATE TABLE managementData (
     id INT NOT NULL AUTO_INCREMENT,
     managerEmail VARCHAR(255) NOT NULL UNIQUE,
+    managerPassword VARCHAR(255) NOT NULL,
     managerName VARCHAR(255) NOT NULL,
     managerRole CHAR(1) NOT NULL,
     createdAt DATE NOT NULL,
@@ -41,6 +42,7 @@ CREATE TABLE studentData (
     id INT NOT NULL AUTO_INCREMENT,
     studentRollNo CHAR(16) NOT NULL UNIQUE,
     studentEmail VARCHAR(255) NOT NULL UNIQUE,
+    studentPassword VARCHAR(255) NOT NULL,
     studentName VARCHAR(255) NOT NULL,
     studentSection CHAR(1) NOT NULL,
     studentGender CHAR(1) NOT NULL,
