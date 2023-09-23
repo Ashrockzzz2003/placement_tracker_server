@@ -1,61 +1,51 @@
 const dropTables = (db) => {
-    db.query(`DROP TABLE IF EXISTS placements`, (err, result) => {
+    db.query(`DROP TABLE IF EXISTS managementData`, (err, result) => {
         if (err) {
-            console.log("[ERROR]: Failed to drop placements table");
+            console.log("[ERROR]: Failed to drop managementData table");
             console.log(err);
         }
         else {
-            console.log("[MESSAGE]: Dropped placements table");
+            console.log("[MESSAGE]: Dropped managementData table");
         }
     });
 
-    db.query(`DROP TABLE IF EXISTS student`, (err, result) => {
+    db.query(`DROP TABLE IF EXISTS studentData`, (err, result) => {
         if (err) {
-            console.log("[ERROR]: Failed to drop student table");
+            console.log("[ERROR]: Failed to drop studentData table");
             console.log(err);
         }
         else {
-            console.log("[MESSAGE]: Dropped student table");
+            console.log("[MESSAGE]: Dropped studentData table");
         }
     });
 
-    db.query(`DROP TABLE IF EXISTS company`, (err, result) => {
+    db.query(`DROP TABLE IF EXISTS jobData`, (err, result) => {
         if (err) {
-            console.log("[ERROR]: Failed to drop company table");
+            console.log("[ERROR]: Failed to drop jobData table");
             console.log(err);
         }
         else {
-            console.log("[MESSAGE]: Dropped company table");
+            console.log("[MESSAGE]: Dropped jobData table");
         }
     });
 
-    db.query(`DROP TABLE IF EXISTS loginHistory`, (err, result) => {
+    db.query(`DROP TABLE IF EXISTS placementData`, (err, result) => {
         if (err) {
-            console.log("[ERROR]: Failed to drop user table");
+            console.log("[ERROR]: Failed to drop placementData table");
             console.log(err);
         }
         else {
-            console.log("[MESSAGE]: Dropped user table");
+            console.log("[MESSAGE]: Dropped placementData table");
         }
     });
 
-    db.query(`DROP TABLE IF EXISTS user`, (err, result) => {
+    db.query(`DROP TABLE IF EXISTS mangementData`, (err, result) => {
         if (err) {
-            console.log("[ERROR]: Failed to drop user table");
+            console.log("[ERROR]: Failed to drop managementData table");
             console.log(err);
         }
         else {
-            console.log("[MESSAGE]: Dropped user table");
-        }
-    });
-
-    db.query(`DROP TABLE IF EXISTS role`, (err, result) => {
-        if (err) {
-            console.log("[ERROR]: Failed to drop role table");
-            console.log(err);
-        }
-        else {
-            console.log("[MESSAGE]: Dropped role table");
+            console.log("[MESSAGE]: Dropped managementData table");
         }
     });
 }

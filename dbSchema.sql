@@ -1,15 +1,28 @@
 /* Ashwin */
 
+-- role: 0 -> Teacher, 1 -> Admin, 2 -> Student.
+-- all OTP valid only for 5 minutes.
+
 -- Management table
 
--- role: 0 -> Teacher, 1 -> Admin
-
 CREATE TABLE managementData (
-    managerEmail VARCHAR(255) NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
+    managerEmail VARCHAR(255) NOT NULL UNIQUE,
     managerName VARCHAR(255) NOT NULL,
-    role CHAR(1) NOT NULL,
+    managerRole CHAR(1) NOT NULL,
     createdAt DATE NOT NULL,
-    PRIMARY KEY (managerEmail)
+    PRIMARY KEY (id)
+);
+
+-- This will act like a temporary table. Once the manager verifies their email, the data will be moved to managementData table.
+-- managerEmail is UNIQUE to ensure that only 1 entry for manager. If the manager tries to register again, new OTP will be updated.
+
+CREATE TABLE managementRegister (
+    id INT NOT NULL AUTO_INCREMENT,
+    managerEmail VARCHAR(255) NOT NULL UNIQUE,
+    otp VARCHAR(6) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    PRIMARY KEY (id)
 );
 
 -- Student table
@@ -25,7 +38,9 @@ CREATE TABLE managementData (
 -- isPlaced: 0 -> NO, 1 -> INTERN, 2 -> JOB (Just to show a preview of the data. Can be extended with more options later.)
 
 CREATE TABLE studentData (
+    id INT NOT NULL AUTO_INCREMENT,
     studentRollNo CHAR(16) NOT NULL UNIQUE,
+    studentEmail VARCHAR(255) NOT NULL UNIQUE,
     studentName VARCHAR(255) NOT NULL,
     studentSection CHAR(1) NOT NULL,
     studentGender CHAR(1) NOT NULL,
@@ -36,31 +51,29 @@ CREATE TABLE studentData (
     createdAt DATE NOT NULL,
 
     CGPA VARCHAR(4) NULL,
-    PRIMARY KEY (studentRollNo)
+
+    PRIMARY KEY (id)
+);
+
+-- This will act like a temporary table. Once the student verifies their email, the data will be moved to studentData table.
+
+CREATE TABLE studentRegister (
+    studentEmail VARCHAR(255) NOT NULL,
+    otp VARCHAR(6) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    PRIMARY KEY (studentEmail)
 );
 
 -- Jobs table
 
--- opportunityStatus: 0 -> closed, 1 -> open. If opportunityStatus is 0, it means that the company is not hiring anymore. If it is 1, it means that the company is still hiring.
--- student has access to make an entry to this table if it's off-campus, this will be done in front-end (Not so very sure. But let's see).
--- totalHires is the total number of students hired by the company for a particular role and ctc.
+-- student has access to make an entry to this table if it's off-campus, this will be done in front-end.
 
-CREATE TABLE jobData (
-    id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE companyData (
     companyName VARCHAR(255) NOT NULL,
-    ctc FLOAT NOT NULL,
-    role VARCHAR(255) NOT NULL,
-    opportunityStatus CHAR(1) NOT NULL,
-    totalHires INT NOT NULL DEFAULT 0,
     createdAt DATE NOT NULL,
     managerEmail VARCHAR(255) NULL,
     studentRollNo VARCHAR(255) NULL,
-
-    PRIMARY KEY (id),
-    FOREIGN KEY (companyName) REFERENCES companyData(companyName),
-    FOREIGN KEY (managerEmail) REFERENCES managementData(managerEmail),
-    FOREIGN KEY (studentRollNo) REFERENCES studentData(studentRollNo),
-    UNIQUE (companyName, role, ctc)
+    PRIMARY KEY (companyName)
 );
 
 -- Placement table
@@ -68,28 +81,26 @@ CREATE TABLE jobData (
 -- isIntern: 0 -> no, 1 -> yes
 -- isPPO: 0 -> no, 1 -> yes
 -- isOnCampus: 0 -> no, 1 -> yes
+-- extra: string with extra data. Can be used to store anything.
 
 CREATE TABLE placementData (
     id INT NOT NULL AUTO_INCREMENT,
-
     studentRollNo VARCHAR(255) NOT NULL,
-    studentSection CHAR(1) NOT NULL,
-    studentGender CHAR(1) NOT NULL,
-
-    jobID INT NOT NULL,
+    companyName VARCHAR(255) NOT NULL,
+    ctc FLOAT NOT NULL,
+    jobRole VARCHAR(255) NOT NULL,
     isIntern VARCHAR(1) NOT NULL,
     isPPO VARCHAR(1) NOT NULL,
     isOnCampus VARCHAR(1) NOT NULL,
-    extra VARCHAR(500),
+    extraData VARCHAR(1000),
     createdAt DATE NOT NULL,
 
     PRIMARY KEY (id),
     FOREIGN KEY (studentRollNo) REFERENCES studentData(studentRollNo),
-    FOREIGN KEY (jobID) REFERENCES jobData(id)
+    FOREIGN KEY (companyName) REFERENCES companyData(companyName)
 );
 
-/* Need */
-
+/*
 1. login
 2. register
 
@@ -131,7 +142,5 @@ CREATE TABLE placementData (
 14. update_job
     b. manager updates job data
     c. student can modify only their job
-
-
-
+*/
 
