@@ -1,184 +1,137 @@
-CREATE TABLE company (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    companyName VARCHAR(200) NOT NULL
-)
+/* Ashwin */
 
-CREATE TABLE student (
-    rollNo VARCHAR(100) PRIMARY KEY NOT NULL,
-    fullName VARCHAR(200) NOT NULL,
-    gender VARCHAR(1) NOT NULL,
-    section VARCHAR(1) NOT NULL,
-    batch VARCHAR(4) NOT NULL,
-    campus VARCHAR(100) NOT NULL,
-    dept VARCHAR(100) NOT NULL,
-    isHigherStudies VARCHAR(1) NOT NULL
-)
-
-/*
-location: ALWAYS UPPERCASE
-*/
-CREATE TABLE placements (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    studentRollNo VARCHAR(100) NOT NULL,
-    companyID INT NOT NULL,
-    role VARCHAR(200) NOT NULL,
-    ctc VARCHAR(100) NOT NULL,
-    datePlaced VARCHAR(200) NOT NULL,
-    isPPO VARCHAR(1) NOT NULL,
-    isOnCampus VARCHAR(1) NOT NULL,
-    extra VARCHAR(500),
-    location VARCHAR(200) NOT NULL,
-    FOREIGN KEY (studentRollNo) REFERENCES student(rollNo),
-    FOREIGN KEY (companyID) REFERENCES company(id)
-)
-
-CREATE TABLE role (
-    id VARCHAR(1) PRIMARY KEY NOT NULL,
-    roleName VARCHAR(200) NOT NULL
-)
-
-CREATE TABLE user (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    fullName VARCHAR(200) NOT NULL,
-    userEmail VARCHAR(200) NOT NULL UNIQUE,
-    userPassword VARCHAR(200) NOT NULL,
-    userRole VARCHAR(1) NOT NULL,
-    createdAt VARCHAR(500) NOT NULL,
-    FOREIGN KEY (userRole) REFERENCES role(id)
-)
-
-CREATE TABLE loginHistory (
-        id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        userEmail VARCHAR(200) NOT NULL,
-        loginTime VARCHAR(500) NOT NULL,
-        FOREIGN KEY (userEmail) REFERENCES user(userEmail)
-)
-
-/* 
-role
-    0 -> user
-    1 -> admin
-*/
-
-
-/* BARD */
 -- Management table
 
-CREATE TABLE management (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    role VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
+-- role: 0 -> Teacher, 1 -> Admin
+
+CREATE TABLE managementData (
+    managerEmail VARCHAR(255) NOT NULL,
+    managerName VARCHAR(255) NOT NULL,
+    role CHAR(1) NOT NULL,
+    createdAt DATE NOT NULL,
+    PRIMARY KEY (managerEmail)
 );
 
 -- Student table
 
-CREATE TABLE students (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    roll_number VARCHAR(255) NOT NULL UNIQUE,
-    class_section VARCHAR(255) NOT NULL,
-    department VARCHAR(255) NOT NULL,
-    higher_studies BOOLEAN NOT NULL DEFAULT FALSE,
-    placement BOOLEAN NOT NULL DEFAULT FALSE,
-    interests (array of strings),
-    skills (array of strings),
-    academic_performance (decimal),
-    management_id INT NOT NULL,
-    FOREIGN KEY (management_id) REFERENCES management (id),
-    PRIMARY KEY (id)
-);
+-- isHigherStudies: 0 -> NO, 1 -> YES
+-- studentSection: A - Z. more than that is not practical.
+-- studentGender: 'M' or 'F'
+-- studentBatch: 4 digit number (YYYY)
+-- studentDept: CSE only for now. Can be extended later.
+-- CGPA: 4 digit number (X.XX)
+-- studentRollNo: CB.EN.U4CSEXXXXX (X -> 0-9). Can be extended later.
+-- studentDob: YYYY-MM-DD
+-- isPlaced: 0 -> NO, 1 -> INTERN, 2 -> JOB (Just to show a preview of the data. Can be extended with more options later.)
 
--- Companies table
+CREATE TABLE studentData (
+    studentRollNo CHAR(16) NOT NULL UNIQUE,
+    studentName VARCHAR(255) NOT NULL,
+    studentSection CHAR(1) NOT NULL,
+    studentGender CHAR(1) NOT NULL,
+    studentBatch CHAR(4) NOT NULL,
+    studentDept VARCHAR(10) NOT NULL,
+    isHigherStudies CHAR(1) NOT NULL,
+    isPlaced CHAR(1) NOT NULL DEFAULT '0',
+    createdAt DATE NOT NULL,
 
-CREATE TABLE companies (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL UNIQUE,
-    website VARCHAR(255),
-    contact_information VARCHAR(255),
-    industry VARCHAR(255),
-    technologies (array of strings),
-    PRIMARY KEY (id)
+    CGPA VARCHAR(4) NULL,
+    PRIMARY KEY (studentRollNo)
 );
 
 -- Jobs table
 
-CREATE TABLE jobs (
-    id INT NOT NULL AUTO_INCREMENT,
-    company_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    location VARCHAR(255),
-    description TEXT NOT NULL,
-    deadline DATETIME NOT NULL,
-    package DECIMAL(10,2),
-    type VARCHAR(255) NOT NULL,
-    required_skills (array of strings),
-    FOREIGN KEY (company_id) REFERENCES companies (id),
-    PRIMARY KEY (id)
-);
+-- opportunityStatus: 0 -> closed, 1 -> open. If opportunityStatus is 0, it means that the company is not hiring anymore. If it is 1, it means that the company is still hiring.
+-- student has access to make an entry to this table if it's off-campus, this will be done in front-end (Not so very sure. But let's see).
+-- totalHires is the total number of students hired by the company for a particular role and ctc.
 
--- Applications table
-
-CREATE TABLE applications (
+CREATE TABLE jobData (
     id INT NOT NULL AUTO_INCREMENT,
-    student_id INT NOT NULL,
-    job_id INT NOT NULL,
-    status VARCHAR(255) NOT NULL,
+    companyName VARCHAR(255) NOT NULL,
+    ctc FLOAT NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    opportunityStatus CHAR(1) NOT NULL,
+    totalHires INT NOT NULL DEFAULT 0,
+    createdAt DATE NOT NULL,
+    managerEmail VARCHAR(255) NULL,
+    studentRollNo VARCHAR(255) NULL,
+
     PRIMARY KEY (id),
-    FOREIGN KEY (student_id) REFERENCES students (id),
-    FOREIGN KEY (job_id) REFERENCES jobs (id)
+    FOREIGN KEY (companyName) REFERENCES companyData(companyName),
+    FOREIGN KEY (managerEmail) REFERENCES managementData(managerEmail),
+    FOREIGN KEY (studentRollNo) REFERENCES studentData(studentRollNo),
+    UNIQUE (companyName, role, ctc)
 );
 
--- Career roadmaps table
+-- Placement table
 
-CREATE TABLE career_roadmaps (
+-- isIntern: 0 -> no, 1 -> yes
+-- isPPO: 0 -> no, 1 -> yes
+-- isOnCampus: 0 -> no, 1 -> yes
+
+CREATE TABLE placementData (
     id INT NOT NULL AUTO_INCREMENT,
-    student_id INT NOT NULL,
-    steps (array of strings),
-    FOREIGN KEY (student_id) REFERENCES students (id),
-    PRIMARY KEY (id)
+
+    studentRollNo VARCHAR(255) NOT NULL,
+    studentSection CHAR(1) NOT NULL,
+    studentGender CHAR(1) NOT NULL,
+
+    jobID INT NOT NULL,
+    isIntern VARCHAR(1) NOT NULL,
+    isPPO VARCHAR(1) NOT NULL,
+    isOnCampus VARCHAR(1) NOT NULL,
+    extra VARCHAR(500),
+    createdAt DATE NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (studentRollNo) REFERENCES studentData(studentRollNo),
+    FOREIGN KEY (jobID) REFERENCES jobData(id)
 );
 
--- Alumni network table
+/* Need */
 
-CREATE TABLE alumni_network (
-    id INT NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    company VARCHAR(255) NOT NULL,
-    designation VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES students (id),
-    PRIMARY KEY (id)
-);
+1. login
+2. register
 
--- Mentoring relationships table
+-- only managers
+3. placement_statistics
+    a. batch statistics
+    b. overall statistics
+4. all_students with placement_data
+    a. batch wise
+    b. section_wise
 
-CREATE TABLE mentoring_relationships (
-    id INT NOT NULL AUTO_INCREMENT,
-    mentor_id INT NOT NULL,
-    mentee_id INT NOT NULL,
-    FOREIGN KEY (mentor_id) REFERENCES students (id),
-    FOREIGN KEY (mentee_id) REFERENCES students (id),
-    PRIMARY KEY (id)
-);
+6. all_companies (UNIQUE companyName)
+7. get_comapany_data (ctc, role, opportunityStatus, totalHires, createdAt for a particular companyName (jobId will be UNIQUEID))
+8. get_student_for_ctc_role_company (get placementData by jobID joined with studentData on studentRollNo)
 
--- Job interview resources table
+7. add_student
+    a. student registers by themselves
+    b. manager adds student
+8. update_student
+    a. student updates their data
+    b. manager updates student data
+9. delete_student
+    b. manager deletes student data
+10. get_student_data by studentRollNo.
 
-CREATE TABLE job_interview_resources (
-    id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL,
-    link VARCHAR(255),
-    PRIMARY KEY (id)
-);
+10. add_teacher
+    a. teacher adds themselves
+    b. manager adds teacher
+11. update_teacher
+    a. teacher updates their data
+    b. admin updates teacher data
+12. delete_teacher
+    b. admin deletes teacher data
 
--- Career counseling resources table
+13. add_job
+    a. student adds job
+    b. manager adds job
 
-CREATE TABLE career_counseling_resources (
-    id INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(255) NOT NULL,
-    link VARCHAR(255),
-    PRIMARY KEY (id)
-);
+14. update_job
+    b. manager updates job data
+    c. student can modify only their job
+
+
+
+
