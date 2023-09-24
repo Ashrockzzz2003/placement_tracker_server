@@ -8,8 +8,6 @@ insert into managementData (managerEmail,managerPassword,managerName,managerRole
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('pranav@amrita.edu', 'gvvwgv2ty', 'Pranav Kakula', '0', '2023-09-25');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('guru@amrita.edu', '67vgvgtgty', 'Guru Prasad', '0', '2023-09-26');
 
-
-
 insert into studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentGender,studentBatch,studentDept,isHigherStudies,isPlaced,createdAt) values ('CB.EN.U4CSE18001','CB.EN.U4CSE18001@cb.student.amrita.edu','password','AAKASH KRISHNA R','A','M','2022','CSE','1','0','2023-09-24');
 insert into studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentGender,studentBatch,studentDept,isHigherStudies,isPlaced,createdAt) values ('CB.EN.U4CSE18002','CB.EN.U4CSE18002@cb.student.amrita.edu','password','ABHI SUWETHA','A','F','2022','CSE','0','1','2023-09-25');
 insert into studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentGender,studentBatch,studentDept,isHigherStudies,isPlaced,createdAt) values ('CB.EN.U4CSE18003','CB.EN.U4CSE18003@cb.student.amrita.edu','password','AKULA SUDHAMSHU','A','M','2022','CSE','0','1','2023-09-26');
