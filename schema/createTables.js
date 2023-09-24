@@ -1,3 +1,14 @@
+const mysql = require('mysql2');
+const db = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'sql003',
+    database: 'placement_tracker',
+    waitForConnections: true,
+    connectionLimit: 11,
+    queueLimit: 0
+});
+
 const createTables = async (db) => {
     try {
       await queryAsync(db, `CREATE TABLE managementData (
@@ -115,19 +126,18 @@ const createTables = async (db) => {
       console.log("[ERROR]: Failed to create placementData Table");
       console.error(err);
     }
-};
+  };
   
- // Function to promisify the database query
-const queryAsync = (db, query) => {
+  // Function to promisify the database query
+  const queryAsync = (db, query) => {
     return new Promise((resolve, reject) => {
-    db.query(query, (err, result) => {
+      db.query(query, (err, result) => {
         if (err) {
-            reject(err);
+          reject(err);
         } else {
-            resolve(result);
+          resolve(result);
         }
-        });
+      });
     });
-};
-
-module.exports = createTables;
+  };
+  createTables(db);

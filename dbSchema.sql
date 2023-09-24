@@ -9,7 +9,8 @@ CREATE TABLE managementData (
     managerName VARCHAR(255) NOT NULL,
     managerRole CHAR(1) NOT NULL,
     createdAt DATE NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1' OR managerRole='2')
 );
 -- This will act like a temporary table. Once the manager verifies their email, the data will be moved to managementData table.
 -- managerEmail is UNIQUE to ensure that only 1 entry for manager. If the manager tries to register again, new OTP will be updated.
@@ -44,7 +45,10 @@ CREATE TABLE studentData (
     isPlaced CHAR(1) NOT NULL DEFAULT '0',
     createdAt DATE NOT NULL,
     CGPA VARCHAR(4) NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CONSTRAINT CK_isHigherStudies CHECK ( isHigherStudies='0' OR isHigherStudies='1'),
+    CONSTRAINT CK_isPlaced CHECK ( isPlaced='0' OR isPlaced='1'),
+    CONSTRAINT CK_studentGender CHECK (studentGender = 'M' OR studentGender = 'F' OR studentGender = 'O')
 );
 -- This will act like a temporary table. Once the student verifies their email, the data will be moved to studentData table.
 CREATE TABLE studentRegister (
@@ -62,7 +66,7 @@ CREATE TABLE companyData (
     createdAt DATE NOT NULL,
     managerEmail VARCHAR(255) NULL,
     studentRollNo VARCHAR(255) NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 );
 -- Placement table
 -- isIntern: 0 -> no, 1 -> yes
@@ -79,11 +83,16 @@ CREATE TABLE placementData (
     isIntern VARCHAR(1) NOT NULL,
     isPPO VARCHAR(1) NOT NULL,
     isOnCampus VARCHAR(1) NOT NULL,
+    isGirlsDrive VARCHAR(1) NOT NULL,
     extraData VARCHAR(1000),
     createdAt DATE NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (studentId) REFERENCES studentData(studentId),
-    FOREIGN KEY (companyId) REFERENCES companyData(companyId)
+    FOREIGN KEY (studentId) REFERENCES studentData(id),
+    FOREIGN KEY (companyId) REFERENCES companyData(id),
+    CONSTRAINT CK_isIntern CHECK ( isIntern='0' OR isIntern='1'),
+    CONSTRAINT CK_isPPO CHECK ( isPPO='0' OR isPPO='1'),
+    CONSTRAINT CK_isOnCampus CHECK ( isOnCampus='0' OR isOnCampus='1'),
+    CONSTRAINT CK_isGirlsDrive CHECK ( isGirlsDrive='0' OR isGirlsDrive='1')
 );
 /*
  1. login

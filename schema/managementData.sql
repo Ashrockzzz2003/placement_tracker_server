@@ -7,3 +7,4 @@ insert into managementData (managerEmail,managerPassword,managerName,managerRole
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('adhvaith@amrita.edu', '890hyuio#', 'Adhvaith Sankar SS', '0', '2023-09-24');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('pranav@amrita.edu', 'gvvwgv2ty', 'Pranav Kakula', '0', '2023-09-25');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('guru@amrita.edu', '67vgvgtgty', 'Guru Prasad', '0', '2023-09-26');
+

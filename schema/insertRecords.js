@@ -1,3 +1,14 @@
+const mysql = require('mysql2');
+const db = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: 'sql003',
+    database: 'placement_tracker',
+    waitForConnections: true,
+    connectionLimit: 11,
+    queueLimit: 0
+});
+
 const fs = require('fs');
 
 const insertData = async (db) => {
@@ -46,5 +57,6 @@ const queryAsync = (db, query) => {
     });
 };
 
+insertData(db);
 
 module.exports = insertData;
