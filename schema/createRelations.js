@@ -98,15 +98,20 @@ const createTables = (db) => {
         companyId INT NOT NULL,
         ctc FLOAT NOT NULL,
         jobRole VARCHAR(255) NOT NULL,
-        placementDate VARCHAR(108) NOT NULL,
+        placementDate DATE NOT NULL,
         isIntern VARCHAR(1) NOT NULL,
         isPPO VARCHAR(1) NOT NULL,
         isOnCampus VARCHAR(1) NOT NULL,
+        isGirlsDrive VARCHAR(1) NOT NULL,
         extraData VARCHAR(1000),
-        createdAt VARCHAR(108) NOT NULL,
+        createdAt DATE NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (studentId) REFERENCES studentData(id),
-        FOREIGN KEY (companyId) REFERENCES companyData(id)
+        FOREIGN KEY (companyId) REFERENCES companyData(id),
+        CONSTRAINT CK_isIntern CHECK ( isIntern='0' OR isIntern='1'),
+        CONSTRAINT CK_isPPO CHECK ( isPPO='0' OR isPPO='1'),
+        CONSTRAINT CK_isOnCampus CHECK ( isOnCampus='0' OR isOnCampus='1'),
+        CONSTRAINT CK_isGirlsDrive CHECK ( isGirlsDrive='0' OR isGirlsDrive='1')
     );`, (err, result) => {
         if (err) {
             console.log("[ERROR]: Failed to create placementData table");
