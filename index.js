@@ -25,14 +25,11 @@ const fs = require('fs');
 const concurrencyLimit = os.cpus().length;
 const PORT = 5000;
 
-let ip = require('ip');
-let ipAddr = ip.address();
-
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
-server.use('/api/userWeb', userWebRouter);
+server.use('/api', userWebRouter);
 
 if (cluster.isPrimary) {
     console.log(`[MESSAGE]: Master ${process.pid} is running.`);
@@ -69,7 +66,7 @@ if (cluster.isPrimary) {
         if (err) {
             console.log('[ERROR]: Error starting server.');
         } else {
-            console.log(`[MESSAGE]: Process ${pid} listening on PORT ${ipAddr}:${PORT}/api/userWeb`);
+            console.log(`[MESSAGE]: Process ${pid} listening on PORT ${PORT}`);
         }
     })
 }
