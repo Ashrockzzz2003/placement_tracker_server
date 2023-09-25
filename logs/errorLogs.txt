@@ -10,3 +10,4 @@
 2023-09-23T18:13:40.510Z - managerRegister - Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 2023-09-23T18:17:11.335Z - managerRegister - Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 25-20020a17090a031900b00274bbfc34c8sm7562017pje.16 - gsmtp
+2023-09-25T15:02:50.937Z - registerOfficial - Error: Field 'createdAt' doesn't have a default value

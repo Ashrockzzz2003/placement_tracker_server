@@ -1,5 +1,6 @@
 /* Ashwin */
 -- role: 0 -> Teacher, 1 -> Admin, 2 -> Student.
+-- accountStatus: 0 -> WAITLIST, 1 -> ACTIVE, 2 -> BLOCKED
 -- all OTP valid only for 5 minutes.
 -- Management table
 CREATE TABLE managementData (
@@ -9,9 +10,11 @@ CREATE TABLE managementData (
     managerName VARCHAR(255) NOT NULL,
     managerRole CHAR(1) NOT NULL,
     createdAt DATE NOT NULL,
+    accountStatus CHAR(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (id),
-    CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1' OR managerRole='2')
+    CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1')
 );
+
 -- This will act like a temporary table. Once the manager verifies their email, the data will be moved to managementData table.
 -- managerEmail is UNIQUE to ensure that only 1 entry for manager. If the manager tries to register again, new OTP will be updated.
 CREATE TABLE managementRegister (
