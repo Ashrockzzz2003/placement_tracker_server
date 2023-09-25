@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const insertData = (db) => {
+const reInitDatabase = (db) => {
     try {
         fs.readFile('./schema/data/data.sql', 'utf8', (err, data) => {
             if (err) {
@@ -23,4 +23,4 @@ const insertData = (db) => {
 };
 
 
-module.exports = insertData;
+module.exports = reInitDatabase;

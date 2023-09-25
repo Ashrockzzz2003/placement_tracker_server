@@ -1,14 +1,12 @@
 const express = require('express');
 const helmet = require('helmet');
 
-const dropAndCreateTables = require('./schema/dropAndCreateRelations');
-
 const cluster = require('cluster');
 let os = require('os')
 
 const { pid } = require('process');
 
-const insertData = require('./schema/insertData');
+const reInitDatabase = require("./schema/reInitDatabase");
 
 const server = express();
 const cors = require('cors');
@@ -37,7 +35,7 @@ if (cluster.isPrimary) {
     const initializeOne = () => {
         // dropTables(db[0]);
         // createTables(db[0]);
-        dropAndCreateTables(db[0]);
+        // dropAndCreateTables(db[0]);
 
         if (fs.existsSync('./RSA/public_key.pem') && fs.existsSync('./RSA/private_key.pem')) {
             console.log("[MESSAGE]: Key Exists");
@@ -49,7 +47,7 @@ if (cluster.isPrimary) {
     }
 
     const initializeTwo = () => {
-        insertData(db[0]);
+        reInitDatabase(db[0]);
         console.log("[MESSAGE]: Initialization Step 2 done.");
     }
 

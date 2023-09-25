@@ -1,3 +1,108 @@
+DROP TABLE IF EXISTS placementData;
+DROP TABLE IF EXISTS companyData;
+DROP TABLE IF EXISTS studentRegister;
+DROP TABLE IF EXISTS studentData;
+DROP TABLE IF EXISTS managementRegister;
+DROP TABLE IF EXISTS managementData;
+CREATE TABLE managementData (
+    id INT NOT NULL AUTO_INCREMENT,
+    managerEmail VARCHAR(255) NOT NULL UNIQUE,
+    managerPassword VARCHAR(255) NOT NULL,
+    managerName VARCHAR(255) NOT NULL,
+    managerRole CHAR(1) NOT NULL,
+    createdAt DATE NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT CK_managerRole CHECK (
+        managerRole = '0'
+        OR managerRole = '1'
+        OR managerRole = '2'
+    )
+);
+CREATE TABLE managementRegister (
+    id INT NOT NULL AUTO_INCREMENT,
+    managerEmail VARCHAR(255) NOT NULL UNIQUE,
+    otp VARCHAR(6) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE studentData (
+    id INT NOT NULL AUTO_INCREMENT,
+    studentRollNo CHAR(16) NOT NULL UNIQUE,
+    studentEmail VARCHAR(255) NOT NULL UNIQUE,
+    studentPassword VARCHAR(255) NOT NULL,
+    studentName VARCHAR(255) NOT NULL,
+    studentSection CHAR(1) NOT NULL,
+    studentGender CHAR(1) NOT NULL,
+    studentBatch CHAR(4) NOT NULL,
+    studentDept VARCHAR(10) NOT NULL,
+    isHigherStudies CHAR(1) NOT NULL,
+    isPlaced CHAR(1) NOT NULL DEFAULT '0',
+    createdAt DATE NOT NULL,
+    CGPA VARCHAR(4) NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT CK_isHigherStudies CHECK (
+        isHigherStudies = '0'
+        OR isHigherStudies = '1'
+    ),
+    CONSTRAINT CK_isPlaced CHECK (
+        isPlaced = '0'
+        OR isPlaced = '1'
+    ),
+    CONSTRAINT CK_studentGender CHECK (
+        studentGender = 'M'
+        OR studentGender = 'F'
+        OR studentGender = 'O'
+    )
+);
+CREATE TABLE studentRegister (
+    id INT NOT NULL AUTO_INCREMENT,
+    studentEmail VARCHAR(255) NOT NULL,
+    otp VARCHAR(6) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE companyData (
+    id INT NOT NULL AUTO_INCREMENT,
+    companyName VARCHAR(255) NOT NULL UNIQUE,
+    createdAt DATE NOT NULL,
+    managerEmail VARCHAR(255) NULL,
+    studentRollNo VARCHAR(255) NULL,
+    PRIMARY KEY (id)
+);
+CREATE TABLE placementData (
+    id INT NOT NULL AUTO_INCREMENT,
+    studentId INT NOT NULL,
+    companyId INT NOT NULL,
+    ctc FLOAT NOT NULL,
+    jobRole VARCHAR(255) NOT NULL,
+    placementDate DATE NOT NULL,
+    isIntern VARCHAR(1) NOT NULL,
+    isPPO VARCHAR(1) NOT NULL,
+    isOnCampus VARCHAR(1) NOT NULL,
+    isGirlsDrive VARCHAR(1) NOT NULL,
+    extraData VARCHAR(1000),
+    createdAt DATE NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (studentId) REFERENCES studentData(id),
+    FOREIGN KEY (companyId) REFERENCES companyData(id),
+    CONSTRAINT CK_isIntern CHECK (
+        isIntern = '0'
+        OR isIntern = '1'
+    ),
+    CONSTRAINT CK_isPPO CHECK (
+        isPPO = '0'
+        OR isPPO = '1'
+    ),
+    CONSTRAINT CK_isOnCampus CHECK (
+        isOnCampus = '0'
+        OR isOnCampus = '1'
+    ),
+    CONSTRAINT CK_isGirlsDrive CHECK (
+        isGirlsDrive = '0'
+        OR isGirlsDrive = '1'
+    )
+);
+
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) values ('goxtham@gmail.com','#er5o6ui7$k89','Gowtham Govindh S', '1', '2023-09-24');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('saravana@amrita.edu', 'gyu32hr32', 'Saravanak Karthick', '1', '2023-09-24');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt) VALUES ('harish@amrita.edu', 'h57i4uenc', 'Harish TS', '1', '2023-09-25');
