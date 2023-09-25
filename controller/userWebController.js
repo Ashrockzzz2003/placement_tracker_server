@@ -44,7 +44,6 @@ module.exports = {
                 await db_connection.query(`UNLOCK TABLES`);
 
                 // check if manager already exists
-
                 await db_connection.query(`LOCK TABLES managementData READ`);
 
                 let [manager] = await db_connection.query(`SELECT * FROM managementData WHERE managerEmail = ?`, [req.body.managerEmail]);
@@ -84,6 +83,9 @@ module.exports = {
                 const time = new Date();
                 fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - newManager - ${err}\n`);
                 return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
             }
         },
     ],
