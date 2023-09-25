@@ -6,8 +6,6 @@ const otpTokenGenerator = require('../middleware/otpTokenGenerator');
 const otpTokenValidator = require('../middleware/otpTokenValidator');
 
 const generateOTP = require("../middleware/otpGenerator");
-const TEMPLATE_OTP = require("../mail/template_otp");
-const sendEmail = require("../mail/mailer");
 const passwordGenerator = require('secure-random-password');
 
 const crypto = require('crypto');
