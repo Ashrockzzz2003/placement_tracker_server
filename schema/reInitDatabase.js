@@ -12,7 +12,7 @@ const reInitDatabase = (db) => {
                         console.log(err);
                     }
                     else {
-                        console.log(`[MESSAGE]: Data Inserted into tables.`);
+                        console.log(`[MESSAGE]: Database Initialized Successfully.`);
                     }
                 });
             }
