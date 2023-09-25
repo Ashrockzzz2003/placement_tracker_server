@@ -1,4 +1,4 @@
-const TEMPLATE_OFFICIAL_CREATED = (managerEmail, managerName, managerPassword) => {
+const TEMPLATE_ACCOUNT_DEACTIVATED = (managerEmail, managerName) => {
     return `<!DOCTYPE html>
     <html lang="en">
 
@@ -18,11 +18,9 @@ const TEMPLATE_OFFICIAL_CREATED = (managerEmail, managerName, managerPassword) =
     <body>
         <p>Dear ${managerName},</p>
         <br />
-        <p>Greetings from Amrita Placement Tracker App. Welcome!</p>
-        <p>You have been registered by the admin to the app. Here is your credentials. Head to the login page to continue to login.</p>
+        <p>Your account "${managerEmail}" has been deactivated from Amrita Placement Tracker by the admin. If you think this is a mistake, please contact admin.</p>
         <br />
-        <p>EmailID: ${managerEmail}</p>
-        <p>Password: ${managerPassword}</p>
+
         <br />
         <p>Regards,</p>
         <p>Amrita Placement Tracker</p>
@@ -31,4 +29,4 @@ const TEMPLATE_OFFICIAL_CREATED = (managerEmail, managerName, managerPassword) =
     </html>`;
 }
 
-module.exports = TEMPLATE_OFFICIAL_CREATED;
+module.exports = TEMPLATE_ACCOUNT_DEACTIVATED;

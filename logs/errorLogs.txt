@@ -11,3 +11,6 @@
 2023-09-23T18:17:11.335Z - managerRegister - Error: Invalid login: 535-5.7.8 Username and Password not accepted. Learn more at
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 25-20020a17090a031900b00274bbfc34c8sm7562017pje.16 - gsmtp
 2023-09-25T15:02:50.937Z - registerOfficial - Error: Field 'createdAt' doesn't have a default value
+2023-09-25T17:10:54.278Z - userLogin - Error: Table 'managementRegister' was not locked with LOCK TABLES
+2023-09-25T17:11:57.819Z - userLogin - Error: Column count doesn't match value count at row 1
+2023-09-25T17:12:37.749Z - userLogin - TypeError: Cannot read properties of undefined (reading 'managerName')

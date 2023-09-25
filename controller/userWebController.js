@@ -12,6 +12,8 @@ const passwordGenerator = require('secure-random-password');
 
 const crypto = require('crypto');
 
+const mailer = require('../mail/mailer');
+
 const fs = require('fs');
 const validator = require('validator');
 
@@ -21,6 +23,17 @@ module.exports = {
     },
 
     toggleOfficialAccountStatus: [
+        /*
+        Headers: {
+            "Authorization": "Bearer <SECRET_TOKEN>"
+        }
+
+        JSON
+        {
+            "managerId": "<manager_id>",
+            "accountStatus": "<0/1/2>"
+        }
+        */
         webTokenValidator,
         async (req, res) => {
             if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || req.body.userRole !== "1") {
@@ -63,6 +76,12 @@ module.exports = {
                 if ((manager[0].accountStatus === "2" && req.body.accountStatus === "0") || (manager[0].accountStatus === "0" && req.body.accountStatus === "2") || (manager[0].accountStatus === "1" && req.body.accountStatus === "2")) {
                     await db_connection.query(`UPDATE managementData SET accountStatus = ? WHERE id = ?`, [req.body.accountStatus, req.body.managerId]);
                     await db_connection.query(`UNLOCK TABLES`);
+
+                    if (req.body.accountStatus === "2") {
+                        // send mail
+                        mailer.accountDeactivated(manager[0].managerName, manager[0].managerEmail);
+                    }
+
                     return res.status(200).send({ "message": "Account status updated!", "accountStatus": req.body.accountStatus });
                 }
 
@@ -175,8 +194,9 @@ module.exports = {
                 const passwordHashed = crypto.createHash('sha256').update(managerPassword).digest('hex');
 
                 // Email the password to the manager.
-                console.log(managerPassword);
-                console.log(passwordHashed);
+                mailer.officialCreated(req.body.managerName, req.body.managerEmail, managerPassword);
+                // console.log(managerPassword);
+                // console.log(passwordHashed);
 
                 await db_connection.query(`INSERT INTO managementData (managerEmail, managerName, managerPassword, managerRole, createdAt, accountStatus) VALUES (?, ?, ?, ?, ?, ?)`, [req.body.managerEmail, req.body.managerName, passwordHashed, "0", new Date(), "0"]);
 
@@ -242,8 +262,38 @@ module.exports = {
             let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ? AND managerPassword = ?`, [req.body.userEmail, req.body.userPassword]);
 
             if (manager.length > 0) {
-                if (manager.accountStatus === "0") {
+                if (manager[0].accountStatus === "0") {
                     // send otp to the manager's email. First time verification.
+                    const otp = generateOTP();
+
+                    await db_connection.query(`LOCK TABLES managementRegister WRITE`);
+
+                    let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
+
+                    if (manager_2.length === 0) {
+                        await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp, createdAt) VALUES (?, ?, ?)`, [req.body.userEmail, otp, new Date()]);
+                    } else {
+                        await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, new Date(), req.body.userEmail]);
+                    }
+
+                    
+
+                    // send mail
+                    mailer.loginOTP(manager[0].managerName, otp, manager[0].managerEmail);
+
+                    const secret_token = await otpTokenGenerator({
+                        "userEmail": manager[0].managerEmail,
+                        "userRole": manager[0].managerRole,
+                    });
+
+                    await db_connection.query(`UNLOCK TABLES`);
+
+                    return res.status(200).send({
+                        "message": "First time login! OTP sent to email.",
+                        "SECRET_TOKEN": secret_token,
+                        "managerEmail": manager[0].managerEmail,
+                        "managerName": manager[0].managerName,
+                    });
                 }
 
                 const secret_token = await webTokenGenerator({
@@ -276,6 +326,64 @@ module.exports = {
             await db_connection.query(`UNLOCK TABLES`);
             db_connection.release();
         }
-
     },
+
+    loginVerify: [
+        otpTokenValidator,
+        async (req, res) => {
+            if (req.authorization_tier !== "0" || req.managerEmail === null || req.managerEmail === undefined || req.managerEmail === "" || !validator.isEmail(req.managerEmail) || req.body.otp === null || req.body.otp === undefined || req.body.otp === "") {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+
+                await db_connection.query(`LOCK TABLES managementRegister WRITE, managementData WRITE`);
+
+                let [check_1] = await db_connection.query(`DELETE from managementRegister WHERE managerEmail = ? AND otp = ?`, [req.managerEmail, req.body.otp]);
+
+                if (check_1.affectedRows === 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Invalid OTP!" });
+                }
+
+                let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ?`, [req.managerEmail]);
+
+                if (manager.length === 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Manager doesn't exist!" });
+                }
+
+                await db_connection.query(`UPDATE managementData SET accountStatus = ? WHERE managerEmail = ?`, ["1", req.managerEmail]);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                const secret_token = await webTokenGenerator({
+                    "userEmail": req.managerEmail,
+                    "userRole": manager[0].managerRole,
+                });
+
+                return res.status(200).send({
+                    "message": "Manager verifed successfully!",
+                    "SECRET_TOKEN": secret_token,
+                    "managerEmail": manager[0].managerEmail,
+                    "managerName": manager[0].managerName,
+                    "managerRole": manager[0].managerRole,
+                    "managerId": manager[0].id,
+                    "accountStatus": manager[0].accountStatus,
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - loginVerify - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+
+        }
+    ]
 }

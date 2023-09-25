@@ -20,25 +20,10 @@ async function otpTokenValidator(req, res, next) {
         if (payLoad["secret_key"] == secret_key) {
             req.authorization_tier = payLoad["userRole"];
 
-            if (payLoad["userRole"] == "0" || payLoad["userRole"] == "1") {
-                req.body.userEmail = payLoad["userEmail"];
-                req.body.managerName = payLoad["managerName"];
-                req.body.managerPassword = payLoad["managerPassword"];
-            } else if (payLoad["userRole"] == "2") {
-                req.body.userEmail = payLoad["userEmail"];
-                req.body.studentRollNo = payLoad["studentRollNo"];
-                req.body.studentEmail = payLoad["studentEmail"];
-                req.body.studentPassword = payLoad["studentPassword"];
-                req.body.studentName = payLoad["studentName"];
-                req.body.studentSection = payLoad["studentSection"];
-                req.body.studentGender = payLoad["studentGender"];
-                req.body.studentBatch = payLoad["studentBatch"];
-                req.body.studentDept = payLoad["studentDept"];
-                req.body.isHigherStudies = payLoad["isHigherStudies"];
-                req.body.isPlaced = payLoad["isPlaced"];
-                req.body.CGPA = payLoad["CGPA"];
+            if (req.authorization_tier == "0") {
+                req.managerEmail = payLoad["userEmail"];
             }
-
+            
             next();
             return;
         } else {
