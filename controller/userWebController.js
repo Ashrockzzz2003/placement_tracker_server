@@ -109,7 +109,7 @@ module.exports = {
             try {
                 await db_connection.query(`LOCK TABLES managementData READ`);
 
-                let [manager] = await db_connection.query(`SELECT * from managerData WHERE managerEmail = ? AND managerPassword = ?`, [req.body.managerEmail, req.body.managerPassword]);
+                let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ? AND managerPassword = ?`, [req.body.managerEmail, req.body.managerPassword]);
 
                 if (manager.length === 0) {
                     return res.status(400).send({ "message": "Invalid email or password!" });
