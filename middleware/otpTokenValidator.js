@@ -22,6 +22,17 @@ async function otpTokenValidator(req, res, next) {
 
             if (req.authorization_tier == "0") {
                 req.managerEmail = payLoad["userEmail"];
+            } else if (req.authorization_tier == "2") {
+                req.body.studentEmail = payLoad["userEmail"];
+                req.body.studentRollNo = payLoad["studentRollNo"];
+                req.body.studentPassword = payLoad["studentPassword"];
+                req.body.studentName = payLoad["studentName"];
+                req.body.studentSection = payLoad["studentSection"];
+                req.body.studentGender = payLoad["studentGender"];
+                req.body.studentBatch = payLoad["studentBatch"];
+                req.body.studentDept = payLoad["studentDept"];
+                req.body.isHigherStudies = payLoad["isHigherStudies"];
+                req.body.isPlaced = payLoad["isPlaced"];
             }
             
             next();

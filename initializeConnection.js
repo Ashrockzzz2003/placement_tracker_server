@@ -5,7 +5,7 @@ const establishConnection = () => {
     const db = mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'password',
+        password: 'sql003',
         database: 'placement_tracker',
         multipleStatements: true
     });

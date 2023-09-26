@@ -14,3 +14,8 @@
 2023-09-25T17:10:54.278Z - userLogin - Error: Table 'managementRegister' was not locked with LOCK TABLES
 2023-09-25T17:11:57.819Z - userLogin - Error: Column count doesn't match value count at row 1
 2023-09-25T17:12:37.749Z - userLogin - TypeError: Cannot read properties of undefined (reading 'managerName')
+2023-09-26T15:55:12.689Z - studentRegister - Error: Table 'managementData' was not locked with LOCK TABLES
+2023-09-26T16:26:21.601Z - studentVerify - Error: Table 'studentRegister' was locked with a READ lock and can't be updated
+2023-09-26T16:27:12.581Z - studentVerify - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WRITE, studentData WRITE' at line 1
+2023-09-26T16:36:54.828Z - studentVerify - Error: Column count doesn't match value count at row 1
+2023-09-26T16:41:38.120Z - studentVerify - TypeError: Cannot read properties of undefined (reading 'studentEmail')

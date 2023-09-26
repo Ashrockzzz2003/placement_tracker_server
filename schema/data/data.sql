@@ -13,10 +13,8 @@ CREATE TABLE managementData (
     createdAt DATE NOT NULL,
     accountStatus CHAR(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (id),
-    CONSTRAINT CK_managerRole CHECK (
-        managerRole = '0'
-        OR managerRole = '1'
-    )
+    CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1'),
+    CONSTRAINT CK_accountStatus CHECK (accountStatus = '0' OR accountStatus = '1' OR accountStatus='2')
 );
 CREATE TABLE managementRegister (
     id INT NOT NULL AUTO_INCREMENT,
@@ -39,20 +37,12 @@ CREATE TABLE studentData (
     isPlaced CHAR(1) NOT NULL DEFAULT '0',
     createdAt DATE NOT NULL,
     CGPA VARCHAR(4) NULL,
+    studentAccountStatus VARCHAR(1) NOT NULL DEFAULT '1',
     PRIMARY KEY (id),
-    CONSTRAINT CK_isHigherStudies CHECK (
-        isHigherStudies = '0'
-        OR isHigherStudies = '1'
-    ),
-    CONSTRAINT CK_isPlaced CHECK (
-        isPlaced = '0'
-        OR isPlaced = '1'
-    ),
-    CONSTRAINT CK_studentGender CHECK (
-        studentGender = 'M'
-        OR studentGender = 'F'
-        OR studentGender = 'O'
-    )
+    CONSTRAINT CK_isHigherStudies CHECK ( isHigherStudies='0' OR isHigherStudies='1'),
+    CONSTRAINT CK_isPlaced CHECK ( isPlaced='0' OR isPlaced='1'),
+    CONSTRAINT CK_studentGender CHECK (studentGender = 'M' OR studentGender = 'F' OR studentGender = 'O'),
+    CONSTRAINT CK_studentAccountStatus CHECK (studentAccountStatus = '0' OR studentAccountStatus = '1' OR studentAccountStatus='2')
 );
 CREATE TABLE studentRegister (
     id INT NOT NULL AUTO_INCREMENT,

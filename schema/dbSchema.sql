@@ -13,6 +13,7 @@ CREATE TABLE managementData (
     accountStatus CHAR(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (id),
     CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1')
+    CONSTRAINT CK_accountStatus CHECK (accountStatus = '0' OR accountStatus = '1' OR accountStatus='2')
 );
 
 -- This will act like a temporary table. Once the manager verifies their email, the data will be moved to managementData table.
@@ -33,6 +34,7 @@ CREATE TABLE managementRegister (
 -- CGPA: 4 digit number (X.XX)
 -- studentRollNo: CB.EN.U4CSEXXXXX (X -> 0-9). Can be extended later.
 -- studentDob: YYYY-MM-DD
+-- studentAccountStatus 0 -> WaitList, 1 -> Active, 2 -> Deactivated.
 -- isPlaced: 0 -> NO, 1 -> INTERN, 2 -> JOB (Just to show a preview of the data. Can be extended with more options later.)
 CREATE TABLE studentData (
     id INT NOT NULL AUTO_INCREMENT,
@@ -48,10 +50,12 @@ CREATE TABLE studentData (
     isPlaced CHAR(1) NOT NULL DEFAULT '0',
     createdAt DATE NOT NULL,
     CGPA VARCHAR(4) NULL,
+    studentAccountStatus VARCHAR(1) NOT NULL DEFAULT '1',
     PRIMARY KEY (id),
     CONSTRAINT CK_isHigherStudies CHECK ( isHigherStudies='0' OR isHigherStudies='1'),
     CONSTRAINT CK_isPlaced CHECK ( isPlaced='0' OR isPlaced='1'),
-    CONSTRAINT CK_studentGender CHECK (studentGender = 'M' OR studentGender = 'F' OR studentGender = 'O')
+    CONSTRAINT CK_studentGender CHECK (studentGender = 'M' OR studentGender = 'F' OR studentGender = 'O'),
+    CONSTRAINT CK_studentAccountStatus CHECK (studentAccountStatus = '0' OR studentAccountStatus = '1' OR studentAccountStatus='2')
 );
 -- This will act like a temporary table. Once the student verifies their email, the data will be moved to studentData table.
 CREATE TABLE studentRegister (
@@ -139,4 +143,9 @@ CREATE TABLE placementData (
  14. update_job
  b. manager updates job data
  c. student can modify only their job
+ 
+ 
+ --FORGOT PASSWORD
+ --RESET PASSWORD
+ --RESEND OTP
  */
