@@ -19,3 +19,4 @@
 2023-09-26T16:27:12.581Z - studentVerify - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WRITE, studentData WRITE' at line 1
 2023-09-26T16:36:54.828Z - studentVerify - Error: Column count doesn't match value count at row 1
 2023-09-26T16:41:38.120Z - studentVerify - TypeError: Cannot read properties of undefined (reading 'studentEmail')
+2023-09-26T17:07:44.581Z - studentVerify - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LOCK TABLES studentData WRITE' at line 1

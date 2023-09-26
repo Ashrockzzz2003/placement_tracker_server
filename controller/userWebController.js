@@ -335,7 +335,7 @@ module.exports = {
 
             let db_connection = await db.promise().getConnection();
             try {
-                await db_connection.query(`LOCK TABLES studentRegister WRITE`);
+                await db_connection.query(`LOCK TABLES studentRegister WRITE, studentData WRITE`);
 
                 //let check = await db_connection.query(`Delete from studentRegister where studentEmail = ? and otp = ?`, [req.body.studentEmail,req.body.otp]);
                 //console.log(check);
@@ -345,17 +345,13 @@ module.exports = {
                     return res.status(400).send({ "message": "Invalid OTP!" });
                 }
 
-                await db_connection.query(`LOCK TABLES studentData READ`);
                 let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? or studentRollNo = ?`, [req.body.studentEmail, req.body.studentRollNo]);
-                await db_connection.query(`UNLOCK TABLES`);
-
-
+                
                 if (student.length > 0) {
                     await db_connection.query(`UNLOCK TABLES`);
                     return res.status(400).send({ "message": "Student already registered!" });
                 }
                 else {
-                    await db_connection.query(`LOCK TABLES studentData WRITE`);
                     await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, createdAt, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, req.body.studentPassword, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, new Date(), "1"]);
                     await db_connection.query(`UNLOCK TABLES`);
                 }
