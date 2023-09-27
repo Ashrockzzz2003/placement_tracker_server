@@ -11,7 +11,7 @@ router.post('/loginVerify', userWebController.loginVerify);
 router.post('/registerOfficial', userWebController.registerOfficial);
 router.get('/getRegisteredOfficials', userWebController.getRegisteredOfficials);
 router.post('/toggleOfficialStatus', userWebController.toggleOfficialAccountStatus);
-
+router.post('/forgotPassword', userWebController.forgotPassword);
 
 
 module.exports = router;
