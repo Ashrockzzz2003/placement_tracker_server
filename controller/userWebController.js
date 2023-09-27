@@ -3,7 +3,7 @@ const { db } = require('../connection')
 const webTokenGenerator = require('../middleware/webTokenGenerator');
 const webTokenValidator = require('../middleware/webTokenValidator');
 const otpTokenGenerator = require('../middleware/otpTokenGenerator');
-const otpTokenValidator = require('../middleware/otpTokenValidator');
+const [otpTokenValidator,resetPasswordValidator] = require('../middleware/otpTokenValidator');
 
 const generateOTP = require("../middleware/otpGenerator");
 const passwordGenerator = require('secure-random-password');
@@ -586,7 +586,7 @@ module.exports = {
 
             await db_connection.query(`LOCK TABLES studentData READ, managementData READ`);
             let [student] = await db_connection.query(`SELECT studentName from studentData where studentEmail = ?`, [req.body.userEmail]);
-            let [manager] = await db_connection.query(`SELECT managerName from managementData where managerEmail = ?`, [req.body.userEmail]);
+            let [manager] = await db_connection.query(`SELECT managerName,managerRole from managementData where managerEmail = ?`, [req.body.userEmail]);
 
             if (student.length === 0 && manager.length === 0) {
                 await db_connection.query(`UNLOCK TABLES`);
@@ -596,11 +596,13 @@ module.exports = {
 
             const otp = generateOTP();
             let name = "";
+            let userRole="";
 
-            if (student.length === 0) {
+            if (manager.length === 0) {
 
                 await db_connection.query(`LOCK TABLES studentRegister WRITE`);
-                name = manager[0]["managerName"];
+                name = student[0]["studentName"];
+                userRole = "2";
                 let [student_2] = await db_connection.query(`SELECT * from studentRegister WHERE studentEmail = ?`, [req.body.userEmail]);
 
                 if (student_2.length === 0) {
@@ -611,7 +613,8 @@ module.exports = {
                 await db_connection.query(`UNLOCK TABLES`);
             } else {
                 await db_connection.query(`LOCK TABLES managementRegister WRITE`);
-                name = student[0]["studentName"];
+                name = manager[0]["managerName"];
+                userRole = manager[0]["managerRole"];
                 let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
 
                 if (manager_2.length === 0) {
@@ -625,6 +628,7 @@ module.exports = {
 
             const secret_token = await otpTokenGenerator({
                 "userEmail": req.body.userEmail,
+                "userRole": userRole
             });
 
             mailer.reset_PW_OTP(name, otp, req.body.userEmail);
@@ -646,6 +650,53 @@ module.exports = {
             db_connection.release();
         }
 
-    }
+    },
+
+    resetPasswordVerify: [
+        resetPasswordValidator,
+        async (req, res) => {
+            if((req.authorization_tier !== "2" && req.authorization_tier !== "1" && req.authorization_tier !== "0") || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || req.body.otp === null || req.body.otp === undefined || req.body.otp === "") {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+        
+            let db_connection = await db.promise().getConnection();
+
+            try {
+
+                await db_connection.query(`LOCK TABLES studentRegister WRITE, managementRegister WRITE, studentData WRITE, managementData WRITE`);
+
+                let check_1 = null;
+                if (req.authorization_tier === "2") {
+                    [check_1] = await db_connection.query(`DELETE from studentRegister WHERE studentEmail = ? AND otp = ?`, [req.body.userEmail, req.body.otp]);
+                } else if (req.authorization_tier === "1" || req.authorization_tier === "0") {
+                    [check_1] = await db_connection.query(`DELETE from managementRegister WHERE managerEmail = ? AND otp = ?`, [req.body.userEmail, req.body.otp]);
+                }
+
+                if (check_1.affectedRows === 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Invalid OTP!" });
+                }
+
+                await db_connection.query(`UNLOCK TABLES`);
+            
+                const secret_token = await webTokenGenerator({  
+                    "userEmail": req.body.userEmail,
+                    "userRole": req.authorization_tier
+                });
+
+                return res.status(200).send({
+                    "message": "Otp verified successfully!"
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - resetPassword - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        }]
 
 }

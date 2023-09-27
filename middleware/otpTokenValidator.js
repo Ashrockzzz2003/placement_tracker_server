@@ -52,4 +52,40 @@ async function otpTokenValidator(req, res, next) {
 
 }
 
-module.exports = otpTokenValidator;
+async function resetPasswordValidator(req, res, next) {
+    const tokenHeader = req.headers.authorization;
+    //console.log("tokenHeader:", tokenHeader);
+    const token = tokenHeader && tokenHeader.split(' ')[1];
+    //console.log("token:", token);
+
+    if (tokenHeader == null || token == null) {
+        res.status(401).send({
+            "ERROR": "No Token. Warning."
+        });
+        return;
+    }
+
+    const public_key = fs.readFileSync('./RSA/public_key.pem');
+    try {
+        const payLoad = await verify(token, public_key);
+        if (payLoad["secret_key"] == secret_key) {
+            req.authorization_tier = payLoad["userRole"];
+            req.body.userEmail = payLoad["userEmail"];
+            next();
+            return;
+        } else {
+            res.status(401).send({
+                "ERROR": "Unauthorized access. Warning."
+            });
+            return;
+        }
+    } catch (err) {
+        res.status(401).send({
+            "ERROR": "Unauthorized access. Warning."
+        });
+        return;
+    }
+
+}
+
+module.exports = [otpTokenValidator, resetPasswordValidator];
