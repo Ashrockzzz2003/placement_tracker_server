@@ -212,6 +212,7 @@ module.exports = {
             }
         },
     ],
+    
     studentRegister: async (req, res) => {
         /*
         JSON
@@ -346,7 +347,7 @@ module.exports = {
                 }
 
                 let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? or studentRollNo = ?`, [req.body.studentEmail, req.body.studentRollNo]);
-                
+
                 if (student.length > 0) {
                     await db_connection.query(`UNLOCK TABLES`);
                     return res.status(400).send({ "message": "Student already registered!" });
@@ -569,37 +570,37 @@ module.exports = {
     ],
 
     forgotPassword: async (req, res) => {
-    /*
-    JSON
-    {
-        "userEmail": "<email_id>"
-    }
-    */
-    if (req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail)) {
-        return res.status(400).send({ "message": "Missing details." });
-    }
-    
-    let db_connection = await db.promise().getConnection();
-
-    try{
-
-        await db_connection.query(`LOCK TABLES studentData READ, managementData READ`);
-        let [student] = await db_connection.query(`SELECT studentName from studentData where studentEmail = ?`, [req.body.userEmail]);
-        let [manager] = await db_connection.query(`SELECT managerName from managementData where managerEmail = ?`, [req.body.userEmail]);
-        
-        if(student.length === 0 && manager.length === 0){
-            await db_connection.query(`UNLOCK TABLES`);
-            return res.status(401).send({ "message": "User doesn't exist!" });
+        /*
+        JSON
+        {
+            "userEmail": "<email_id>"
         }
-        await db_connection.query(`UNLOCK TABLES`);
-        
-        const otp = generateOTP();
-        let name = "";
+        */
+        if (req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail)) {
+            return res.status(400).send({ "message": "Missing details." });
+        }
 
-        if (student.length === 0) {
+        let db_connection = await db.promise().getConnection();
 
-            await db_connection.query(`LOCK TABLES studentRegister WRITE`);
-            name = manager[0]["managerName"];
+        try {
+
+            await db_connection.query(`LOCK TABLES studentData READ, managementData READ`);
+            let [student] = await db_connection.query(`SELECT studentName from studentData where studentEmail = ?`, [req.body.userEmail]);
+            let [manager] = await db_connection.query(`SELECT managerName from managementData where managerEmail = ?`, [req.body.userEmail]);
+
+            if (student.length === 0 && manager.length === 0) {
+                await db_connection.query(`UNLOCK TABLES`);
+                return res.status(401).send({ "message": "User doesn't exist!" });
+            }
+            await db_connection.query(`UNLOCK TABLES`);
+
+            const otp = generateOTP();
+            let name = "";
+
+            if (student.length === 0) {
+
+                await db_connection.query(`LOCK TABLES studentRegister WRITE`);
+                name = manager[0]["managerName"];
                 let [student_2] = await db_connection.query(`SELECT * from studentRegister WHERE studentEmail = ?`, [req.body.userEmail]);
 
                 if (student_2.length === 0) {
@@ -608,9 +609,9 @@ module.exports = {
                     await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, new Date(), req.body.userEmail]);
                 }
                 await db_connection.query(`UNLOCK TABLES`);
-        } else{
-            await db_connection.query(`LOCK TABLES managementRegister WRITE`);
-            name = student[0]["studentName"];
+            } else {
+                await db_connection.query(`LOCK TABLES managementRegister WRITE`);
+                name = student[0]["studentName"];
                 let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
 
                 if (manager_2.length === 0) {
@@ -619,31 +620,31 @@ module.exports = {
                     await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, new Date(), req.body.userEmail]);
                 }
                 await db_connection.query(`UNLOCK TABLES`);
+            }
+            //console.log(name);
+
+            const secret_token = await otpTokenGenerator({
+                "userEmail": req.body.userEmail,
+            });
+
+            mailer.reset_PW_OTP(name, otp, req.body.userEmail);
+
+            return res.status(200).send({
+                "message": "OTP sent to email.",
+                "SECRET_TOKEN": secret_token,
+                "studentEmail": req.body.userEmail
+            });
+
+
+        } catch (err) {
+            console.log(err);
+            const time = new Date();
+            fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - forgotPassword - ${err}\n`);
+            return res.status(500).send({ "message": "Internal Server Error." });
+        } finally {
+            await db_connection.query(`UNLOCK TABLES`);
+            db_connection.release();
         }
-        //console.log(name);
-
-        const secret_token = await otpTokenGenerator({
-            "userEmail": req.body.userEmail,
-        });
-
-        mailer.reset_PW_OTP(name, otp, req.body.userEmail);
-
-        return res.status(200).send({
-            "message": "OTP sent to email.",
-            "SECRET_TOKEN": secret_token,
-            "studentEmail": req.body.userEmail
-        });
-
-
-    } catch(err){
-        console.log(err);
-        const time = new Date();
-        fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - forgotPassword - ${err}\n`);
-        return res.status(500).send({ "message": "Internal Server Error." });
-    } finally {
-        await db_connection.query(`UNLOCK TABLES`);
-        db_connection.release();
-    }
 
     }
 
