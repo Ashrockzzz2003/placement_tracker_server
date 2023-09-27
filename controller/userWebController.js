@@ -325,6 +325,12 @@ module.exports = {
     },
 
     studentVerify: [
+        /*
+        JSON
+        {
+            "otp":"<otp>"
+        }
+        */
         otpTokenValidator,
         async (req, res) => {
             if (req.authorization_tier !== "2" || req.body.studentEmail === null || req.body.studentEmail === undefined ||
@@ -511,6 +517,12 @@ module.exports = {
     },
 
     loginVerify: [
+        /*
+        JSON
+        {
+            "otp":"<otp>"
+        }
+        */
         otpTokenValidator,
         async (req, res) => {
             if (req.authorization_tier !== "0" || req.managerEmail === null || req.managerEmail === undefined || req.managerEmail === "" || !validator.isEmail(req.managerEmail) || req.body.otp === null || req.body.otp === undefined || req.body.otp === "") {
@@ -654,6 +666,12 @@ module.exports = {
     },
 
     resetPasswordVerify: [
+        /*
+        JSON
+        {
+            "otp":"<otp>"
+        }
+        */
         resetPasswordValidator,
         async (req, res) => {
             if((req.authorization_tier !== "2" && req.authorization_tier !== "1" && req.authorization_tier !== "0") || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || req.body.otp === null || req.body.otp === undefined || req.body.otp === "") {
@@ -702,6 +720,12 @@ module.exports = {
         }],
 
     resetPassword: [
+        /*
+        JSON
+        {
+            "userPassword":"<userPassword>"
+        }
+        */
         tokenValidator,
         async (req, res) => {
             if((req.authorization_tier !== "2" && req.authorization_tier !== "1" && req.authorization_tier !== "0") || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || req.body.userPassword === null || req.body.userPassword === undefined || req.body.userPassword === "") {
