@@ -14,6 +14,7 @@ const mailer = require('../mail/mailer');
 
 const fs = require('fs');
 const validator = require('validator');
+const tokenValidator = require('../middleware/webTokenValidator');
 
 module.exports = {
     test: async (req, res) => {
@@ -685,7 +686,8 @@ module.exports = {
                 });
 
                 return res.status(200).send({
-                    "message": "Otp verified successfully!"
+                    "message": "Otp verified successfully!",
+                    "SECRET_TOKEN": secret_token
                 });
 
             } catch (err) {
@@ -697,6 +699,44 @@ module.exports = {
                 await db_connection.query(`UNLOCK TABLES`);
                 db_connection.release();
             }
-        }]
+        }],
+
+    resetPassword: [
+        tokenValidator,
+        async (req, res) => {
+            if((req.authorization_tier !== "2" && req.authorization_tier !== "1" && req.authorization_tier !== "0") || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || req.body.userPassword === null || req.body.userPassword === undefined || req.body.userPassword === "") {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+        
+            let db_connection = await db.promise().getConnection();
+
+            try {
+
+                await db_connection.query(`LOCK TABLES studentData WRITE, managementData WRITE`);
+
+                if (req.authorization_tier === "2") {
+                    await db_connection.query(`UPDATE studentData SET studentPassword = ? WHERE studentEmail = ?`, [req.body.userPassword, req.body.userEmail]);
+                } else if (req.authorization_tier === "1" || req.authorization_tier === "0") {
+                    await db_connection.query(`UPDATE managementData SET managerPassword = ? WHERE managerEmail = ?`, [req.body.userPassword, req.body.userEmail]);
+                }
+
+                await db_connection.query(`UNLOCK TABLES`);
+                    
+                return res.status(200).send({
+                    "message": "Password reset successfully!",
+                    "userEmail": req.body.userEmail
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - resetPassword - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        }
+    ]
 
 }

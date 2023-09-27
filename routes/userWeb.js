@@ -16,7 +16,7 @@ router.post('/toggleOfficialStatus', userWebController.toggleOfficialAccountStat
 
 router.post('/forgotPassword', userWebController.forgotPassword);
 router.post('/resetPasswordVerify', userWebController.resetPasswordVerify);   //verify otp
-
+router.post('/resetPassword', userWebController.resetPassword);   //reset password
 
 
 module.exports = router;
