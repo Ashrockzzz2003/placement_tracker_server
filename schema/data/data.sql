@@ -93,7 +93,7 @@ CREATE TABLE placementData (
     )
 );
 
-insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values ('ashrockzzz2003@gmail.com','As@131003','Ashwin Narayanan S', '1', '2023-09-22', '1');
+insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values ('ashrockzzz2003@gmail.com','6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258','Ashwin Narayanan S', '1', '2023-09-22', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values ('goxtham@gmail.com','#er5o6ui7$k89','Gowtham Govindh S', '0', '2023-09-24', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) VALUES ('saravana@amrita.edu', 'gyu32hr32', 'Saravanak Karthick', '0', '2023-09-24', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) VALUES ('harish@amrita.edu', 'h57i4uenc', 'Harish TS', '0', '2023-09-25', '1');
