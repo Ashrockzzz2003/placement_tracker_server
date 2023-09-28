@@ -19,5 +19,6 @@ router.post('/resetPasswordVerify', userWebController.resetPasswordVerify);   //
 router.post('/resetPassword', userWebController.resetPassword);   //reset password
 
 router.post('/addCompany', userWebController.addCompany);
+router.get('/getCompanies', userWebController.getCompanies);
 
 module.exports = router;

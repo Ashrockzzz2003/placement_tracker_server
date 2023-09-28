@@ -26,3 +26,4 @@
 2023-09-27T18:25:28.774Z - resetPassword - ReferenceError: check_1 is not defined
 2023-09-28T08:31:17.166Z - userLogin - Error: Unknown column 'managerEmail' in 'where clause'
 2023-09-28T08:37:59.475Z - userLogin - Error: Unknown column 'managerEmail' in 'where clause'
+2023-09-28T12:04:13.195Z - getCompanies - Error: Unknown column 'accountStatus' in 'field list'
