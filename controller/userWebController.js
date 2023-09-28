@@ -934,6 +934,9 @@ module.exports = {
                     }
 
                     [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentRollNo = ?`, [req.body.studentRollNo]);
+                    if(studentId.length===0){
+                        return res.status(401).send({ "message": "Student Not registered!" });
+                    }
                     studentId = studentId[0]["id"];
                     
                     try{
