@@ -68,6 +68,7 @@ CREATE TABLE placementData (
     companyId INT NOT NULL,
     ctc FLOAT NOT NULL,
     jobRole VARCHAR(255) NOT NULL,
+    jobLocation VARCHAR(255) DEFAULT NULL,
     placementDate DATE NOT NULL,
     isIntern VARCHAR(1) NOT NULL,
     isPPO VARCHAR(1) NOT NULL,

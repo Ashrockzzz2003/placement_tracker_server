@@ -693,7 +693,7 @@ module.exports = {
 
                 if (check_1.affectedRows === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(400).send({ "message": "Invalid OTP!" });
+                    return res.status(401).send({ "message": "Invalid OTP!" });
                 }
 
                 await db_connection.query(`UNLOCK TABLES`);
@@ -787,7 +787,7 @@ module.exports = {
                     let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
                     if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(401).send({ "message": "Access Restricted!" });
+                        return res.status(400).send({ "message": "Access Restricted!" });
                     }
 
                     try{
@@ -802,7 +802,7 @@ module.exports = {
                     
                     if (student.length===0 || student[0]["studentAccountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(401).send({ "message": "Access Restricted!" });
+                        return res.status(400).send({ "message": "Access Restricted!" });
                     }
 
                     try{
@@ -874,6 +874,130 @@ module.exports = {
                 console.log(err);
                 const time = new Date();
                 fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getCompanies - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        }
+    ],
+
+    addPlacementData: [
+        /*
+        JSON
+        {
+            "studentRollNo":"<studentRollNo>", //Optional for student, Compulsory if manager adds student
+            "companyId":<companyId> INTEGER,
+            "ctc":<ctc> FLOAT,
+            "jobRole":"<jobRole>",
+            "jobLocation":"<jobLocation>", //Optional
+            "placementDate":"<placementDate>",
+            "isIntern":"<0/1>",
+            "isPPO":"<0/1>",
+            "isOnCampus":"<0/1>",
+            "isGirlsDrive":"<0/1>",
+            "extraData":"<extraData>" //Optional
+        }
+        */
+        webTokenValidator,
+        async (req, res) => {
+            if(req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || (req.body.userRole !== "1" && req.body.userRole !== "0" && req.body.userRole !=="2") ||
+             req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+             req.body.companyId === null || req.body.companyId === undefined || req.body.companyId === "" || isNaN(req.body.companyId) ||
+             req.body.ctc === null || req.body.ctc === undefined || req.body.ctc === "" || isNaN(req.body.ctc) ||
+             req.body.jobRole === null || req.body.jobRole === undefined || req.body.jobRole === "" ||
+             req.body.placementDate === null || req.body.placementDate === undefined || req.body.placementDate === "" ||
+             req.body.isIntern === null || req.body.isIntern === undefined || req.body.isIntern === "" || (req.body.isIntern !== "0" && req.body.isIntern !== "1") ||
+             req.body.isPPO === null || req.body.isPPO === undefined || req.body.isPPO === "" || (req.body.isPPO !== "0" && req.body.isPPO !== "1") ||
+             req.body.isOnCampus === null || req.body.isOnCampus === undefined || req.body.isOnCampus === "" || (req.body.isOnCampus !== "0" && req.body.isOnCampus !== "1") ||
+             req.body.isGirlsDrive === null || req.body.isGirlsDrive === undefined || req.body.isGirlsDrive === "" || (req.body.isGirlsDrive !== "0" && req.body.isGirlsDrive !== "1") 
+             ){
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+
+            let db_connection = await db.promise().getConnection();
+
+            try{
+                await db_connection.query(`LOCK TABLES managementData READ, studentData READ, placementData WRITE`);
+                
+                if (req.body.userRole === "0" || req.body.userRole === "1") {
+                    
+                    let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                    if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(400).send({ "message": "Access Restricted!" });
+                    }
+
+                    if(req.body.studentRollNo === null || req.body.studentRollNo === undefined || req.body.studentRollNo === "" ){
+                        return res.status(401).send({ "message": "Missing Details!" });
+                    }
+
+                    [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentRollNo = ?`, [req.body.studentRollNo]);
+                    studentId = studentId[0]["id"];
+                    
+                    try{
+                        if((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "")&&
+                        (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")){
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        else if((req.jobLocation !== null || req.body.jobLocation !== undefined || req.body.jobLocation !== "")&&
+                        (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")){
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        else if((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "")&&
+                        (req.body.extraData !== null || req.body.extraData !== undefined || req.body.extraData !== "")){
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, extraData, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        else{
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, extraData, placementDate, isIntern, isPPo, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        
+                    }catch(err){
+                        return res.status(401).send({ "message": "Placement Registered Already!" });
+                    }                   
+
+                }
+                else if (req.body.userRole === "2") {
+                    let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
+                    
+                    if (student.length===0 || student[0]["studentAccountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(400).send({ "message": "Access Restricted!" });
+                    }
+
+                    [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
+                    studentId = studentId[0]["id"];
+                    try{
+                        if((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "")&&
+                        (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")){
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        else if((req.jobLocation !== null || req.body.jobLocation !== undefined || req.body.jobLocation !== "")&&
+                        (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")){
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        else if((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "")&&
+                        (req.body.extraData !== null || req.body.extraData !== undefined || req.body.extraData !== "")){
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, extraData, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+                        else{
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, extraData, placementDate, isIntern, isPPo, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                        }
+
+                    }catch(err){
+                        return res.status(401).send({ "message": "Placement Registered Already!" });
+                    }
+                }
+                
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({ "message": "Placement Data added!" });
+                
+            } catch(err){
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - addPlacementData - ${err}\n`);
                 return res.status(500).send({ "message": "Internal Server Error." });
             } finally {
                 await db_connection.query(`UNLOCK TABLES`);

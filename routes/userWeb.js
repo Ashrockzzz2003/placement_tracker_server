@@ -20,5 +20,6 @@ router.post('/resetPassword', userWebController.resetPassword);   //reset passwo
 
 router.post('/addCompany', userWebController.addCompany);
 router.get('/getCompanies', userWebController.getCompanies);
+router.post('/addPlacementData', userWebController.addPlacementData);
 
 module.exports = router;
