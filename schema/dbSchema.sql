@@ -100,7 +100,8 @@ CREATE TABLE placementData (
     CONSTRAINT CK_isIntern CHECK ( isIntern='0' OR isIntern='1'),
     CONSTRAINT CK_isPPO CHECK ( isPPO='0' OR isPPO='1'),
     CONSTRAINT CK_isOnCampus CHECK ( isOnCampus='0' OR isOnCampus='1'),
-    CONSTRAINT CK_isGirlsDrive CHECK ( isGirlsDrive='0' OR isGirlsDrive='1')
+    CONSTRAINT CK_isGirlsDrive CHECK ( isGirlsDrive='0' OR isGirlsDrive='1'),
+    CONSTRAINT CK_Unique UNIQUE (studentId, companyId, ctc, jobRole)
 );
 /*
  1. login
@@ -156,6 +157,4 @@ CREATE TABLE placementData (
  select s.studentRollNo, s.studentEmail, s.studentName, s.studentGender, s.studentDept, s.studentBatch, s.isHigherStudies, s.isPlaced, s.cgpa, s.studentAccountStatus, p.companyId, c.companyName, p.ctc, p.jobRole, p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive, p.extraData from studentData s left join placementData p on s.id=p.studentId left join companyData c on p.companyId=c.id;
  */
 
- /*
-  select p.companyId, c.companyName, p.ctc, p.jobRole, count(p.id) from placementData p left join companyData c on p.companyId = c.id group by p.companyId, p.ctc, p.jobRole order by p.companyId;
-  */
+ 

@@ -94,7 +94,8 @@ CREATE TABLE placementData (
     CONSTRAINT CK_isGirlsDrive CHECK (
         isGirlsDrive = '0'
         OR isGirlsDrive = '1'
-    )
+    ),
+    CONSTRAINT CK_Unique UNIQUE (studentId, companyId, ctc, jobRole)
 );
 
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values ('ashrockzzz2003@gmail.com','6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258','Ashwin Narayanan S', '1', '2023-09-22', '1');
