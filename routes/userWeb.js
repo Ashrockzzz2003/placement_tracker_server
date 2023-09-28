@@ -22,4 +22,7 @@ router.post('/addCompany', userWebController.addCompany);
 router.get('/getCompanies', userWebController.getCompanies);
 router.post('/addPlacementData', userWebController.addPlacementData);
 
+router.get('/getCompanyHireData',userWebController.getCompanyHireData);
+//router.get('/getCompanyHireData/:id',userWebController.getCompanyHireDataById);
+
 module.exports = router;

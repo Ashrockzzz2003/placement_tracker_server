@@ -29,3 +29,4 @@
 2023-09-28T12:04:13.195Z - getCompanies - Error: Unknown column 'accountStatus' in 'field list'
 2023-09-28T14:14:31.540Z - addPlacementData - Error: Column count doesn't match value count at row 1
 2023-09-28T14:34:34.002Z - addPlacementData - TypeError: Cannot read properties of undefined (reading 'id')
+2023-09-28T19:22:16.069Z - getCompanyHireData - Error: Table 'p' was not locked with LOCK TABLES
