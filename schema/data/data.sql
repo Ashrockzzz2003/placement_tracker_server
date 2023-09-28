@@ -14,7 +14,7 @@ CREATE TABLE managementData (
     accountStatus CHAR(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (id),
     CONSTRAINT CK_managerRole CHECK (managerRole='0' OR managerRole='1'),
-    CONSTRAINT CK_accountStatus CHECK (accountStatus = '0' OR accountStatus = '1' OR accountStatus='2')
+    CONSTRAINT CK_accountStatus CHECK (accountStatus = '0' OR accountStatus = '1' OR accountStatus=2)
 );
 CREATE TABLE managementRegister (
     id INT NOT NULL AUTO_INCREMENT,
@@ -42,7 +42,7 @@ CREATE TABLE studentData (
     CONSTRAINT CK_isHigherStudies CHECK ( isHigherStudies='0' OR isHigherStudies='1'),
     CONSTRAINT CK_isPlaced CHECK ( isPlaced='0' OR isPlaced='1'),
     CONSTRAINT CK_studentGender CHECK (studentGender = 'M' OR studentGender = 'F' OR studentGender = 'O'),
-    CONSTRAINT CK_studentAccountStatus CHECK (studentAccountStatus = '0' OR studentAccountStatus = '1' OR studentAccountStatus='2')
+    CONSTRAINT CK_studentAccountStatus CHECK (studentAccountStatus = '0' OR studentAccountStatus = '1' OR studentAccountStatus=2)
 );
 CREATE TABLE studentRegister (
     id INT NOT NULL AUTO_INCREMENT,
@@ -55,9 +55,12 @@ CREATE TABLE companyData (
     id INT NOT NULL AUTO_INCREMENT,
     companyName VARCHAR(255) NOT NULL UNIQUE,
     createdAt DATE NOT NULL,
-    managerEmail VARCHAR(255) NULL,
-    studentRollNo VARCHAR(255) NULL,
-    PRIMARY KEY (id)
+    managerId INT NULL,
+    studentId INT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (managerId) REFERENCES managementData(id),
+    FOREIGN KEY (studentId) REFERENCES studentData(id),
+    CONSTRAINT CK_NotNull CHECK (managerId IS NOT NULL OR studentId IS NOT NULL)
 );
 CREATE TABLE placementData (
     id INT NOT NULL AUTO_INCREMENT,
@@ -94,7 +97,7 @@ CREATE TABLE placementData (
 );
 
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values ('ashrockzzz2003@gmail.com','6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258','Ashwin Narayanan S', '1', '2023-09-22', '1');
-insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values ('goxtham@gmail.com','#er5o6ui7$k89','Gowtham Govindh S', '0', '2023-09-24', '1');
+insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) values (2,'#er5o6ui7$k89','Gowtham Govindh S', '0', '2023-09-24', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) VALUES ('saravana@amrita.edu', 'gyu32hr32', 'Saravanak Karthick', '0', '2023-09-24', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) VALUES ('harish@amrita.edu', 'h57i4uenc', 'Harish TS', '0', '2023-09-25', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole,createdAt, accountStatus) VALUES ('hirthick@amrita.edu', '7yb2fvs#@', 'Hirthick Raj D', '0', '2023-09-26', '1');
@@ -151,69 +154,69 @@ insert into studentData (studentRollNo,studentEmail,studentPassword,studentName,
 insert into studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentGender,studentBatch,studentDept,isHigherStudies,isPlaced,createdAt) values ('CB.EN.U4CSE21008','CB.EN.U4CSE21008@cb.students.amrita.edu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Ashwin Narayanan S','A','M','2023','CSE','0','0', '2023-10-01');
 
 
-insert into companyData (companyName,createdAt,managerEmail) values('CISCO ','2021-08-07','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('INTUIT','2021-08-07','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ROOT QUOTIENT','2021-12-07','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ARISTA','2021-12-08','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('SAHAJ','2021-12-09','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('EPIKINDIFI','2021-12-10','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('PROVIDENCE GLOBAL','2021-12-11','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('NIELSENIQ','2021-12-12','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('INCREFF','2021-12-13','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('MCKINSEY','2021-12-14','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('APPVIEWX ','2021-12-15','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('FIDILITY ','2021-12-16','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('SAP LABS','2021-12-17','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('MICROSOFT','2021-12-18','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('TALLY SOLUTIONS','2021-12-19','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('INFOSYS','2021-12-20','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('EY INDIA','2021-12-21','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ORACLE','2021-08-07','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('VERSA NETWORKS','2021-08-08','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('AMAZON','2021-08-09','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('IBM','2021-08-10','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('KLA TENCOR','2021-08-11','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('WONKSKNOW TECHNOLOGIES','2021-08-12','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('HYPERVERGE','2021-08-13','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('FRACTAL ANALYSIS','2021-08-14','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('RAZOR PAY','2021-08-15','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('VM WARE','2021-08-16','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('PWC','2021-08-17','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ZOOM RX','2021-08-18','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('CATTERPILLAR','2021-08-19','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('TCS-DIGITAL','2021-08-20','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('TCS-NINJA','2021-08-21','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ATLASSIAN','2021-08-22','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ROBERT BOSCH','2021-08-23','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('[24]7.AI','2021-08-24','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('HASHED IN','2021-08-25','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('COGNIZANT-GENC NEXT','2021-08-26','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('COGNIZANT-GENC ELEVATE ','2021-08-27','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('COGNIZANT-GENC','2021-08-28','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('PAY U','2021-08-29','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ALSTOM','2021-08-30','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('VANENBURG','2021-08-31','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('VERIZON','2021-09-01','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('THE MATH COMPANY','2021-09-02','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('LISTER TECHNOLOGIES','2021-09-03','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('MERCEDES BENZ- TRUCK','2021-09-04','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('MERECEDES BENZ-CARS','2021-09-05','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('CHARGEBEE','2021-09-06','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('OPTUM','2021-09-07','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('MICRO FOCUS','2021-09-08','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('SS&C EZE','2021-09-09','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('ZSCALER','2021-09-10','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('TIGER ANALYTICS','2021-09-11','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('DATAFOUNDRY.AI','2021-09-12','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('CAPEGEMINI','2021-09-13','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('WIPRO','2021-09-14','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('SCHNEIDER ELECTRIC','2021-09-15','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('KPMG','2021-09-16','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('TARGET ','2021-09-17','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('L&T Technology services','2021-09-18','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('Toshiba','2021-09-19','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('CERNER','2021-09-20','goxtham@gmail.com');
-insert into companyData (companyName,createdAt,managerEmail) values('NPCI','2021-09-21','goxtham@gmail.com');
+insert into companyData (companyName,createdAt,managerId) values('CISCO ','2021-08-07',2);
+insert into companyData (companyName,createdAt,managerId) values('INTUIT','2021-08-07',2);
+insert into companyData (companyName,createdAt,managerId) values('ROOT QUOTIENT','2021-12-07',2);
+insert into companyData (companyName,createdAt,managerId) values('ARISTA','2021-12-08',2);
+insert into companyData (companyName,createdAt,managerId) values('SAHAJ','2021-12-09',2);
+insert into companyData (companyName,createdAt,managerId) values('EPIKINDIFI','2021-12-10',2);
+insert into companyData (companyName,createdAt,managerId) values('PROVIDENCE GLOBAL','2021-12-11',2);
+insert into companyData (companyName,createdAt,managerId) values('NIELSENIQ','2021-12-12',2);
+insert into companyData (companyName,createdAt,managerId) values('INCREFF','2021-12-13',2);
+insert into companyData (companyName,createdAt,managerId) values('MCKINSEY','2021-12-14',2);
+insert into companyData (companyName,createdAt,managerId) values('APPVIEWX ','2021-12-15',2);
+insert into companyData (companyName,createdAt,managerId) values('FIDILITY ','2021-12-16',2);
+insert into companyData (companyName,createdAt,managerId) values('SAP LABS','2021-12-17',2);
+insert into companyData (companyName,createdAt,managerId) values('MICROSOFT','2021-12-18',2);
+insert into companyData (companyName,createdAt,managerId) values('TALLY SOLUTIONS','2021-12-19',2);
+insert into companyData (companyName,createdAt,managerId) values('INFOSYS','2021-12-20',2);
+insert into companyData (companyName,createdAt,managerId) values('EY INDIA','2021-12-21',2);
+insert into companyData (companyName,createdAt,managerId) values('ORACLE','2021-08-07',2);
+insert into companyData (companyName,createdAt,managerId) values('VERSA NETWORKS','2021-08-08',2);
+insert into companyData (companyName,createdAt,managerId) values('AMAZON','2021-08-09',2);
+insert into companyData (companyName,createdAt,managerId) values('IBM','2021-08-10',2);
+insert into companyData (companyName,createdAt,managerId) values('KLA TENCOR','2021-08-11',2);
+insert into companyData (companyName,createdAt,managerId) values('WONKSKNOW TECHNOLOGIES','2021-08-12',2);
+insert into companyData (companyName,createdAt,managerId) values('HYPERVERGE','2021-08-13',2);
+insert into companyData (companyName,createdAt,managerId) values('FRACTAL ANALYSIS','2021-08-14',2);
+insert into companyData (companyName,createdAt,managerId) values('RAZOR PAY','2021-08-15',2);
+insert into companyData (companyName,createdAt,managerId) values('VM WARE','2021-08-16',2);
+insert into companyData (companyName,createdAt,managerId) values('PWC','2021-08-17',2);
+insert into companyData (companyName,createdAt,managerId) values('ZOOM RX','2021-08-18',2);
+insert into companyData (companyName,createdAt,managerId) values('CATTERPILLAR','2021-08-19',2);
+insert into companyData (companyName,createdAt,managerId) values('TCS-DIGITAL','2021-08-20',2);
+insert into companyData (companyName,createdAt,managerId) values('TCS-NINJA','2021-08-21',2);
+insert into companyData (companyName,createdAt,managerId) values('ATLASSIAN','2021-08-22',2);
+insert into companyData (companyName,createdAt,managerId) values('ROBERT BOSCH','2021-08-23',2);
+insert into companyData (companyName,createdAt,managerId) values('[24]7.AI','2021-08-24',2);
+insert into companyData (companyName,createdAt,managerId) values('HASHED IN','2021-08-25',2);
+insert into companyData (companyName,createdAt,managerId) values('COGNIZANT-GENC NEXT','2021-08-26',2);
+insert into companyData (companyName,createdAt,managerId) values('COGNIZANT-GENC ELEVATE ','2021-08-27',2);
+insert into companyData (companyName,createdAt,managerId) values('COGNIZANT-GENC','2021-08-28',2);
+insert into companyData (companyName,createdAt,managerId) values('PAY U','2021-08-29',2);
+insert into companyData (companyName,createdAt,managerId) values('ALSTOM','2021-08-30',2);
+insert into companyData (companyName,createdAt,managerId) values('VANENBURG','2021-08-31',2);
+insert into companyData (companyName,createdAt,managerId) values('VERIZON','2021-09-01',2);
+insert into companyData (companyName,createdAt,managerId) values('THE MATH COMPANY','2021-09-02',2);
+insert into companyData (companyName,createdAt,managerId) values('LISTER TECHNOLOGIES','2021-09-03',2);
+insert into companyData (companyName,createdAt,managerId) values('MERCEDES BENZ- TRUCK','2021-09-04',2);
+insert into companyData (companyName,createdAt,managerId) values('MERECEDES BENZ-CARS','2021-09-05',2);
+insert into companyData (companyName,createdAt,managerId) values('CHARGEBEE','2021-09-06',2);
+insert into companyData (companyName,createdAt,managerId) values('OPTUM','2021-09-07',2);
+insert into companyData (companyName,createdAt,managerId) values('MICRO FOCUS','2021-09-08',2);
+insert into companyData (companyName,createdAt,managerId) values('SS&C EZE','2021-09-09',2);
+insert into companyData (companyName,createdAt,managerId) values('ZSCALER','2021-09-10',2);
+insert into companyData (companyName,createdAt,managerId) values('TIGER ANALYTICS','2021-09-11',2);
+insert into companyData (companyName,createdAt,managerId) values('DATAFOUNDRY.AI','2021-09-12',2);
+insert into companyData (companyName,createdAt,managerId) values('CAPEGEMINI','2021-09-13',2);
+insert into companyData (companyName,createdAt,managerId) values('WIPRO','2021-09-14',2);
+insert into companyData (companyName,createdAt,managerId) values('SCHNEIDER ELECTRIC','2021-09-15',2);
+insert into companyData (companyName,createdAt,managerId) values('KPMG','2021-09-16',2);
+insert into companyData (companyName,createdAt,managerId) values('TARGET ','2021-09-17',2);
+insert into companyData (companyName,createdAt,managerId) values('L&T Technology services','2021-09-18',2);
+insert into companyData (companyName,createdAt,managerId) values('Toshiba','2021-09-19',2);
+insert into companyData (companyName,createdAt,managerId) values('CERNER','2021-09-20',2);
+insert into companyData (companyName,createdAt,managerId) values('NPCI','2021-09-21',2);
 
 insert into placementData(studentID,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,createdAt) values( 3 , 51 , 8.0 , 'Associate SE' , '2021-05-05' , '0' , '0' , '1' , '0' , '2021-05-05'); 
 insert into placementData(studentID,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,createdAt) values( 3 , 39 , 4.0 , 'Systems Analyst' , '2021-05-06' , '0' , '0' , '1' , '0' , '2021-05-06'); 

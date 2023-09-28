@@ -18,5 +18,6 @@ router.post('/forgotPassword', userWebController.forgotPassword);
 router.post('/resetPasswordVerify', userWebController.resetPasswordVerify);   //verify otp
 router.post('/resetPassword', userWebController.resetPassword);   //reset password
 
+router.post('/addCompany', userWebController.addCompany);
 
 module.exports = router;
