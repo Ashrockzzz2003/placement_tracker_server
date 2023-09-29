@@ -1065,6 +1065,12 @@ module.exports = {
         }
     ],
     getCompanyHireDataById: [
+        /*
+        JSON
+        {
+            "companyId":<companyId> INTEGER
+        }
+        */
         webTokenValidator,
         async (req, res) => {
             if(req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || (req.body.userRole !== "1" && req.body.userRole !== "0" && req.body.userRole !=="2") ||
@@ -1097,18 +1103,18 @@ module.exports = {
 
                 }
 
-                [companyName] = await db_connection.query(`select c.companyName from companyData c where id = ?`,[req.params.id]);
+                [companyName] = await db_connection.query(`select c.companyName from companyData c where id = ?`,[req.body.companyId]);
                 companyName = companyName[0]["companyName"];
 
                 [companyHireData] = await db_connection.query(` select s.studentDept,s.studentSection,count(p.id) as totalHires
                 from placementData p left join studentData s on p.studentId = s.id
-                where companyId = ? group by s.studentDept,s.studentSection;`,[req.params.id]);
+                where companyId = ? group by s.studentDept,s.studentSection;`,[req.body.companyId]);
 
                 [companyHireData2] = await db_connection.query(`select s.studentRollNo, s.studentEmail, s.studentName,
                 s.studentGender, s.studentBatch, s.studentDept, s.isHigherStudies, 
                 s.isPlaced, s.CGPA, p.ctc, p.jobRole, p.jobLocation, p.placementDate, p.isIntern, p.isPPO, p.isOnCampus, 
                 p.isGirlsDrive, p.extraData from studentData s right join placementData p on 
-                s.id = p.studentId where p.companyId = ?;`,[req.params.id]);
+                s.id = p.studentId where p.companyId = ?;`,[req.body.companyId]);
                                       
                 await db_connection.query(`UNLOCK TABLES`);
                 
