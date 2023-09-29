@@ -341,6 +341,12 @@ module.exports = {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
 
+            if (req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" || req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" || req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" || req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" || req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" || req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" || req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
+                console.log(req);
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+    
+
             let db_connection = await db.promise().getConnection();
             try {
                 await db_connection.query(`LOCK TABLES studentRegister WRITE, studentData WRITE`);

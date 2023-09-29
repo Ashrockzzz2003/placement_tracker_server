@@ -33,6 +33,7 @@ async function otpTokenValidator(req, res, next) {
                 req.body.studentDept = payLoad["studentDept"];
                 req.body.isHigherStudies = payLoad["isHigherStudies"];
                 req.body.isPlaced = payLoad["isPlaced"];
+                req.body.CGPA = payLoad["CGPA"];
             }
             
             next();
