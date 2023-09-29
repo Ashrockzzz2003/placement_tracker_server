@@ -482,7 +482,7 @@ module.exports = {
 
                     await db_connection.query(`UNLOCK TABLES`);
 
-                    return res.status(200).send({
+                    return res.status(201).send({
                         "message": "First time login! OTP sent to email.",
                         "SECRET_TOKEN": secret_token,
                         "managerEmail": manager[0].managerEmail,
@@ -526,12 +526,13 @@ module.exports = {
         /*
         JSON
         {
-            "otp":"<otp>"
+            "otp":"<otp>",
+            "newPassword": "<password>"
         }
         */
         otpTokenValidator,
         async (req, res) => {
-            if (req.authorization_tier !== "0" || req.managerEmail === null || req.managerEmail === undefined || req.managerEmail === "" || !validator.isEmail(req.managerEmail) || req.body.otp === null || req.body.otp === undefined || req.body.otp === "") {
+            if (req.authorization_tier !== "0" || req.managerEmail === null || req.managerEmail === undefined || req.managerEmail === "" || !validator.isEmail(req.managerEmail) || req.body.otp === null || req.body.otp === undefined || req.body.otp === "" || req.body.newPassword === null || req.body.newPassword === undefined || req.body.newPassword === "") {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
 
@@ -550,13 +551,12 @@ module.exports = {
 
                 let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ?`, [req.managerEmail]);
 
-
                 if (manager.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
                     return res.status(400).send({ "message": "Manager doesn't exist!" });
                 }
 
-                await db_connection.query(`UPDATE managementData SET accountStatus = ? WHERE managerEmail = ?`, ["1", req.managerEmail]);
+                await db_connection.query(`UPDATE managementData SET accountStatus = ?, managerPassword = ? WHERE managerEmail = ?`, ["1",  req.body.newPassword, req.managerEmail]);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
