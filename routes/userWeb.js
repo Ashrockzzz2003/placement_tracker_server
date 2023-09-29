@@ -25,5 +25,6 @@ router.post('/addPlacementData', userWebController.addPlacementData);
 router.get('/getCompanyHireData',userWebController.getCompanyHireData);
 router.post('/getCompanyHireDataById',userWebController.getCompanyHireDataById);
 
+router.post('/getAllStudentData',userWebController.getAllStudentData);
 
 module.exports = router;

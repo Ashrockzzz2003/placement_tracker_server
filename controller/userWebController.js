@@ -1074,7 +1074,8 @@ module.exports = {
         webTokenValidator,
         async (req, res) => {
             if(req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || (req.body.userRole !== "1" && req.body.userRole !== "0" && req.body.userRole !=="2") ||
-            req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) )
+            req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+            req.body.companyId === null || req.body.companyId === undefined || req.body.companyId === "" || isNaN(req.body.companyId))
             {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
@@ -1104,6 +1105,10 @@ module.exports = {
                 }
 
                 [companyName] = await db_connection.query(`select c.companyName from companyData c where id = ?`,[req.body.companyId]);
+                if(companyName.length===0)
+                {
+                    return res.status(401).send({ "message": "Access Restricted!" });
+                }                
                 companyName = companyName[0]["companyName"];
 
                 [companyHireData] = await db_connection.query(` select s.studentDept,s.studentSection,count(p.id) as totalHires
@@ -1135,5 +1140,62 @@ module.exports = {
                 db_connection.release();
             }
         }
+    ],
+
+    getAllStudentData: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || 
+            req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || 
+            (req.authorization_tier !== "0" && req.authorization_tier !== "1") || 
+            req.body.batch === null || req.body.batch === undefined || req.body.batch === "") 
+            {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try{
+                await db_connection.query(`LOCK TABLES managementData READ, studentData s READ, companyData c READ, placementData p READ`);
+                
+                let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Access Restricted!" });
+                }
+
+                [students]=await db_connection.query(`select s.id as studentId,s.studentRollNo, s.studentEmail,
+                s.studentName, s.studentGender, s.studentDept, s.studentBatch,
+                s.isHigherStudies, s.isPlaced, s.cgpa, s.studentAccountStatus,
+                p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
+                p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive,
+                p.extraData from studentData s left join placementData p on s.id=p.studentId left join
+                companyData c on p.companyId=c.id;`);
+
+                if(students.length===0)
+                {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "No Student Data Found!" });
+                }
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({
+                    "message": "All Student Data Fetched!",
+                    "students": students
+                });
+
+            }catch(err)
+            {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getAllStudentData - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            }finally{
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        }
     ]
+
 }
