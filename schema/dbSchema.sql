@@ -162,3 +162,6 @@ CREATE TABLE placementData (
 
 
 -- select s.id, s.studentRollNo, s.studentName, s.studentGender, s.isHigherStudies, s.isPlaced, p.id AS placementId, c.id AS companyId, c.companyName, p.jobRole, p.ctc, p.isOnCampus, p.isIntern, p.isPPO, p.placementDate, p.extraData from studentData s left join placementData p on s.id=p.studentId left join companyData c on p.companyId=c.id where s.studentBatch="2022";
+
+
+select p.companyId, c.companyName, p.ctc, p.jobRole, s.studentSection, COUNT(p.id) AS totalHires FROM placementData p join companyData c on p.companyId=c.id join studentData s on p.studentId=s.id where s.studentBatch="2022" group by p.companyId, p.ctc, p.jobRole, s.studentSection order by p.companyId, p.ctc, p.jobRole, s.studentSection;

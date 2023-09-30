@@ -34,3 +34,13 @@
 2023-09-28T23:22:19.124Z - getCompanyHireData - Error: Table 'companyData' was not locked with LOCK TABLES
 2023-09-28T23:23:15.529Z - getCompanyHireData - Error: Table 'companyData' was not locked with LOCK TABLES
 2023-09-30T09:52:21.059Z - getAllStudentData - Error: Expression #12 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'placement_tracker.p.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+2023-09-30T10:44:20.517Z - getCompanyHireData - Error: Table 's' was not locked with LOCK TABLES
+2023-09-30T10:50:45.706Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyID')
+2023-09-30T10:51:18.090Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:52:36.878Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:53:09.921Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:53:26.418Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:53:43.761Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:54:37.478Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:55:34.362Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-09-30T10:56:06.771Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')

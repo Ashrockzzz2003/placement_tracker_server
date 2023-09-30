@@ -1061,7 +1061,7 @@ module.exports = {
             let db_connection = await db.promise().getConnection();
 
             try {
-                await db_connection.query(`LOCK TABLES managementData READ, studentData READ, placementData p READ, companyData c READ`);
+                await db_connection.query(`LOCK TABLES managementData READ, studentData READ, placementData p READ, companyData c READ, studentData s READ`);
 
                 if (req.body.userRole === "0" || req.body.userRole === "1") {
 
@@ -1082,9 +1082,13 @@ module.exports = {
 
                 }
 
-                [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, 
-                    count(p.id) as totalHires from placementData p left join companyData c 
-                    on p.companyId = c.id group by p.companyId, p.ctc, p.jobRole order by p.companyId;`);
+                // extract section wise hire count for each company
+
+                // [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, 
+                //     count(p.id) as totalHires from placementData p left join companyData c 
+                //     on p.companyId = c.id group by p.companyId, p.ctc, p.jobRole order by p.companyId;`);
+
+                [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, s.studentSection, COUNT(p.id) AS totalHires FROM placementData p join companyData c on p.companyId=c.id join studentData s on p.studentId=s.id where s.studentBatch="2022" group by p.companyId, p.ctc, p.jobRole, s.studentSection order by p.companyId, p.ctc, p.jobRole, s.studentSection;`);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
