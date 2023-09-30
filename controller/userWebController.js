@@ -1049,6 +1049,7 @@ module.exports = {
             }
         }
     ],
+    
     getCompanyHireData: [
         webTokenValidator,
         async (req, res) => {
@@ -1202,12 +1203,12 @@ module.exports = {
                 }
 
                 [students] = await db_connection.query(`select s.id as studentId,s.studentRollNo, s.studentEmail,
-                s.studentName, s.studentGender, s.studentDept, s.studentBatch,
+                s.studentName, s.studentGender, s.studentDept, s.studentBatch, s.studentSection, s.studentEmail,
                 s.isHigherStudies, s.isPlaced, s.cgpa, s.studentAccountStatus,
                 p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
                 p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive,
                 p.extraData from studentData s left join placementData p on s.id=p.studentId left join
-                companyData c on p.companyId=c.id WHERE s.studentBatch = ?;`, [req.body.batch]);
+                companyData c on p.companyId=c.id WHERE s.studentBatch = ? ORDER BY s.studentSection;`, [req.body.batch]);
 
                 if (students.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
