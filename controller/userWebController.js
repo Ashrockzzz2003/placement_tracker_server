@@ -1207,7 +1207,7 @@ module.exports = {
                 p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
                 p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive,
                 p.extraData from studentData s left join placementData p on s.id=p.studentId left join
-                companyData c on p.companyId=c.id;`);
+                companyData c on p.companyId=c.id WHERE s.studentBatch = ?;`, [req.body.batch]);
 
                 if (students.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);

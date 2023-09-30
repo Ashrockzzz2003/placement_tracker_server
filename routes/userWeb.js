@@ -15,8 +15,8 @@ router.get('/getRegisteredOfficials', userWebController.getRegisteredOfficials);
 router.post('/toggleOfficialStatus', userWebController.toggleOfficialAccountStatus);
 
 router.post('/forgotPassword', userWebController.forgotPassword);
-router.post('/resetPasswordVerify', userWebController.resetPasswordVerify);   //verify otp
-router.post('/resetPassword', userWebController.resetPassword);   //reset password
+router.post('/resetPasswordVerify', userWebController.resetPasswordVerify);
+router.post('/resetPassword', userWebController.resetPassword);
 
 router.post('/addCompany', userWebController.addCompany);
 router.get('/getCompanies', userWebController.getCompanies);
