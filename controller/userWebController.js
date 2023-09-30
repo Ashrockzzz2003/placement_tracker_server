@@ -870,6 +870,48 @@ module.exports = {
         }
     ],
 
+    getTop5Placements: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || (req.body.userRole !== "1" && req.body.userRole !== "0")) {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                await db_connection.query(`LOCK TABLES managementData READ, studentData READ`);
+
+                const [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+
+                if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Access Restricted!" });
+                }
+
+                await db_connection.query(`LOCK TABLES placementData READ, studentData READ, companyData READ`);
+
+                const [placements] = await db_connection.query(`SELECT studentName,studentRollNo,companyName,ctc,jobRole,jobLocation,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,extraData from placementData INNER JOIN studentData ON placementData.studentId = studentData.id INNER JOIN companyData ON placementData.companyId = companyData.id ORDER BY ctc DESC LIMIT 5`);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({
+                    "message": "Top 5 placements fetched!",
+                    "placements": placements
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getTop5Placements - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        },
+    ],
+
     getCompanies: [
         webTokenValidator,
         async (req, res) => {
