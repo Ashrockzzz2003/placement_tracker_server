@@ -424,6 +424,15 @@ module.exports = {
             let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? AND studentPassword = ?`, [req.body.userEmail, req.body.userPassword]);
 
             if (student.length > 0) {
+
+                if (student[0].studentAccountStatus === "2") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Your Account has been deactivated. Check you mail for further instructions." });
+                } else if (student[0].studentAccountStatus !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Access Restricted." });
+                }
+
                 const secret_token = await webTokenGenerator({
                     "userEmail": req.body.userEmail,
                     "userRole": "2",
@@ -488,6 +497,9 @@ module.exports = {
                         "managerEmail": manager[0].managerEmail,
                         "managerName": manager[0].managerName,
                     });
+                } else if (manager[0].accountStatus !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Access Restricted." });
                 }
 
                 const secret_token = await webTokenGenerator({
