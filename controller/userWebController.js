@@ -822,40 +822,42 @@ module.exports = {
 
             let db_connection = await db.promise().getConnection();
 
+            let company = null;
+
             try {
                 await db_connection.query(`LOCK TABLES managementData READ, studentData READ, companyData WRITE`);
                 if (req.body.userRole === "0" || req.body.userRole === "1") {
-                    let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                    let [manager] = await db_connection.query(`SELECT accountStatus,id from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
                     if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                     try {
-                        await db_connection.query(`INSERT INTO companyData (companyName, createdAt, managerId) VALUES (?, ?, ?)`, [req.body.companyName, new Date(), manager[0]["id"]]);
+                        company = await db_connection.query(`INSERT INTO companyData (companyName, createdAt, managerId) VALUES (?, ?, ?)`, [req.body.companyName, new Date(), manager[0]["id"]]);
                     } catch (err) {
-                        return res.status(401).send({ "message": "Company Registered Already!" });
+                        return res.status(400).send({ "message": "Company Registered Already!" });
                     }
 
                 }
                 else if (req.body.userRole === "2") {
                     let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
 
-                    if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
+                    if (student.length === 0 || student["studentAccountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                     try {
-                        await db_connection.query(`INSERT INTO companyData (companyName, createdAt, studentId) VALUES (?, ?, ?)`, [req.body.companyName, new Date(), student[0]["id"]]);
+                        company = await db_connection.query(`INSERT INTO companyData (companyName, createdAt, studentId) VALUES (?, ?, ?)`, [req.body.companyName, new Date(), student["id"]]);
                     } catch (err) {
-                        return res.status(401).send({ "message": "Company Registered Already!" });
+                        return res.status(400).send({ "message": "Company Registered Already!" });
                     }
                 }
 
                 await db_connection.query(`UNLOCK TABLES`);
 
-                return res.status(200).send({ "message": "Company added!" });
+                return res.status(200).send({ "message": "Company added!", "companyId": company[0]["insertId"], "companyName": req.body.companyName});
 
             } catch (err) {
                 console.log(err);
@@ -1006,19 +1008,19 @@ module.exports = {
 
                 if (req.body.userRole === "0" || req.body.userRole === "1") {
 
-                    let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                    let [manager] = await db_connection.query(`SELECT accountStatus,id from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
                     if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                     if (req.body.studentRollNo === null || req.body.studentRollNo === undefined || req.body.studentRollNo === "") {
-                        return res.status(401).send({ "message": "Missing Details!" });
+                        return res.status(400).send({ "message": "Missing Details!" });
                     }
 
                     [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentRollNo = ?`, [req.body.studentRollNo]);
                     if (studentId.length === 0) {
-                        return res.status(401).send({ "message": "Student Not registered!" });
+                        return res.status(400).send({ "message": "Student Not registered!" });
                     }
                     studentId = studentId[0]["id"];
 
@@ -1040,7 +1042,7 @@ module.exports = {
                         }
 
                     } catch (err) {
-                        return res.status(401).send({ "message": "Placement Registered Already!" });
+                        return res.status(400).send({ "message": "Placement Registered Already!" });
                     }
 
                 }
@@ -1049,7 +1051,7 @@ module.exports = {
 
                     if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                     [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
@@ -1072,7 +1074,7 @@ module.exports = {
                         }
 
                     } catch (err) {
-                        return res.status(401).send({ "message": "Placement Registered Already!" });
+                        return res.status(400).send({ "message": "Placement Registered Already!" });
                     }
                 }
 
