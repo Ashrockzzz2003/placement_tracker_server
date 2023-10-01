@@ -341,7 +341,15 @@ module.exports = {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
 
-            if (req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" || req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" || req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" || req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" || req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" || req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" || req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
+            if (req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" ||
+            req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" ||
+            req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" ||
+            req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" ||
+            req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" ||
+            req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" ||
+            req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" ||
+            req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") 
+            {
                 console.log(req);
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
@@ -565,7 +573,7 @@ module.exports = {
 
                 if (manager.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(400).send({ "message": "Manager doesn't exist!" });
+                    return res.status(401).send({ "message": "Manager doesn't exist!" });
                 }
 
                 await db_connection.query(`UPDATE managementData SET accountStatus = ?, managerPassword = ? WHERE managerEmail = ?`, ["1", req.body.newPassword, req.managerEmail]);
@@ -733,7 +741,7 @@ module.exports = {
 
                 if (check_1.affectedRows === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(401).send({ "message": "Invalid OTP!" });
+                    return res.status(400).send({ "message": "Invalid OTP!" });
                 }
 
                 await db_connection.query(`UNLOCK TABLES`);
@@ -1113,7 +1121,7 @@ module.exports = {
 
                     if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
                 }
                 else if (req.body.userRole === "2") {
@@ -1121,7 +1129,7 @@ module.exports = {
 
                     if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                 }
@@ -1179,7 +1187,7 @@ module.exports = {
 
                     if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
                 }
                 else if (req.body.userRole === "2") {
@@ -1187,14 +1195,14 @@ module.exports = {
 
                     if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
-                        return res.status(400).send({ "message": "Access Restricted!" });
+                        return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                 }
 
                 [companyName] = await db_connection.query(`select c.companyName from companyData c where id = ?`, [req.body.companyId]);
                 if (companyName.length === 0) {
-                    return res.status(401).send({ "message": "Access Restricted!" });
+                    return res.status(400).send({ "message": "Company Not Registered!" });
                 }
                 companyName = companyName[0]["companyName"];
 
@@ -1247,7 +1255,7 @@ module.exports = {
                 let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
                 if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(400).send({ "message": "Access Restricted!" });
+                    return res.status(401).send({ "message": "Access Restricted!" });
                 }
 
                 [students] = await db_connection.query(`select s.id as studentId,s.studentRollNo, s.studentEmail,
@@ -1260,7 +1268,7 @@ module.exports = {
 
                 if (students.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(401).send({ "message": "No Student Data Found!" });
+                    return res.status(400).send({ "message": "No Student Data Found!" });
                 }
 
                 await db_connection.query(`UNLOCK TABLES`);
