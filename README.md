@@ -5,3 +5,5 @@
 `ExpressJS`
 
 `MySQL`
+
+> The mailer is hidden for security reasons.
