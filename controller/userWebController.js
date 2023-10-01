@@ -891,7 +891,7 @@ module.exports = {
 
                 await db_connection.query(`LOCK TABLES placementData READ, studentData READ, companyData READ`);
 
-                const [placements] = await db_connection.query(`SELECT studentName,studentRollNo,companyName,ctc,jobRole,jobLocation,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,extraData from placementData INNER JOIN studentData ON placementData.studentId = studentData.id INNER JOIN companyData ON placementData.companyId = companyData.id ORDER BY ctc DESC LIMIT 5`);
+                const [placements] = await db_connection.query(`SELECT studentName,studentRollNo,companyName,ctc,jobRole,jobLocation,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,extraData from placementData INNER JOIN studentData ON placementData.studentId = studentData.id INNER JOIN companyData ON placementData.companyId = companyData.id ORDER BY ctc DESC LIMIT 10`);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
