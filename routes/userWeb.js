@@ -11,6 +11,7 @@ router.post('/studentLoginVerify', userWebController.studentVerify);
 router.post('/studentRegister', userWebController.studentRegister);
 
 router.post('/registerOfficial', userWebController.registerOfficial);
+router.post('/addStudent', userWebController.addStudent);
 router.get('/getRegisteredOfficials', userWebController.getRegisteredOfficials);
 router.post('/toggleOfficialStatus', userWebController.toggleOfficialAccountStatus);
 

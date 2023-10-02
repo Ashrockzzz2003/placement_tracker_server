@@ -214,6 +214,105 @@ module.exports = {
         },
     ],
 
+    addStudent:[
+        /*
+        JSON
+        {
+            "studentRollNo": "<roll_no>",
+            "studentEmail": "<email_id>",
+            "studentName": "<name>",
+            "studentSection": "<section>",
+            "studentGender": "<M/F/O>"
+            "studentBatch": "<batch>",
+            "studentDept": "<dept>",
+            "isHigherStudies": "<0/1>",
+            "isPlaced": "<0/1>",
+            "CGPA": "<XX.XX>"
+        }
+        */
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) || (req.body.userRole !== "1" && req.body.userRole !== "0")) {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail)) {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+    
+            if (req.body.studentRollNo === null || req.body.studentRollNo === undefined || req.body.studentRollNo === "" || req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" || req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" || req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" || req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" || req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" || req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" || req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+    
+            if (req.body.studentGender !== "M" && req.body.studentGender !== "F" && req.body.studentGender !== "O") {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+    
+            if (req.body.isHigherStudies !== "0" && req.body.isHigherStudies !== "1") {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+    
+            if (req.body.isPlaced !== "0" && req.body.isPlaced !== "1") {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+    
+            if (parseFloat(req.body.CGPA) < 0 || parseFloat(req.body.CGPA) > 10) {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+    
+            if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
+                return res.status(400).send({ "message": "Missing details." });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                
+                await db_connection.query(`LOCK TABLES studentData WRITE, managementData READ`);
+
+                // check if actually admin or manager
+                let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+
+                if (manager.length === 0 || manager[0].accountStatus !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Access Restricted!" });
+                }
+
+                let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.studentEmail]);
+                if (student.length > 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Student already registered!" });
+                }
+
+                // generate a random password for the manager.
+                const studentPassword = passwordGenerator.randomPassword({
+                    length: 8,
+                    characters: [passwordGenerator.lower, passwordGenerator.upper, passwordGenerator.digits]
+                });
+
+                // sha256 hash the password.
+                const passwordHashed = crypto.createHash('sha256').update(studentPassword).digest('hex');
+
+                // Email the password to the student.
+                mailer.studentCreated(req.body.studentName, req.body.studentEmail, studentPassword);
+                
+                await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, createdAt, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, passwordHashed, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, new Date(), "1"]);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({ "message": "Added Student!" });
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - addStudent - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        },
+    ],
+
     studentRegister: async (req, res) => {
         /*
         JSON
@@ -232,7 +331,8 @@ module.exports = {
         }
         */
 
-        if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail) || req.body.studentPassword === null || req.body.studentPassword === undefined || req.body.studentPassword === "") {
+        if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail) ||
+        req.body.studentPassword === null || req.body.studentPassword === undefined || req.body.studentPassword === "") {
             return res.status(400).send({ "message": "Missing details." });
         }
 
