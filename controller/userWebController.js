@@ -342,14 +342,13 @@ module.exports = {
             }
 
             if (req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" ||
-            req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" ||
-            req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" ||
-            req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" ||
-            req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" ||
-            req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" ||
-            req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" ||
-            req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") 
-            {
+                req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" ||
+                req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" ||
+                req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" ||
+                req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" ||
+                req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" ||
+                req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" ||
+                req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
                 console.log(req);
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
@@ -865,7 +864,7 @@ module.exports = {
 
                 await db_connection.query(`UNLOCK TABLES`);
 
-                return res.status(200).send({ "message": "Company added!", "companyId": company[0]["insertId"], "companyName": req.body.companyName});
+                return res.status(200).send({ "message": "Company added!", "companyId": company[0]["insertId"], "companyName": req.body.companyName });
 
             } catch (err) {
                 console.log(err);
@@ -901,7 +900,7 @@ module.exports = {
 
                 await db_connection.query(`LOCK TABLES placementData READ, studentData READ, companyData READ`);
 
-                const [placements] = await db_connection.query(`SELECT studentName,studentRollNo,companyName,ctc,jobRole,jobLocation,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,extraData from placementData INNER JOIN studentData ON placementData.studentId = studentData.id INNER JOIN companyData ON placementData.companyId = companyData.id ORDER BY ctc DESC LIMIT 10`);
+                const [placements] = await db_connection.query(`SELECT studentName,studentRollNo,studentSection,studentDept,companyName,ctc,jobRole,jobLocation,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,extraData from placementData INNER JOIN studentData ON placementData.studentId = studentData.id INNER JOIN companyData ON placementData.companyId = companyData.id ORDER BY ctc DESC LIMIT 10`);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
@@ -1101,7 +1100,7 @@ module.exports = {
             }
         }
     ],
-    
+
     getCompanyHireData: [
         webTokenValidator,
         async (req, res) => {
@@ -1140,7 +1139,7 @@ module.exports = {
                 //     count(p.id) as totalHires from placementData p left join companyData c 
                 //     on p.companyId = c.id group by p.companyId, p.ctc, p.jobRole order by p.companyId;`);
 
-                [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, s.studentSection, COUNT(p.id) AS totalHires FROM placementData p join companyData c on p.companyId=c.id join studentData s on p.studentId=s.id where s.studentBatch="2022" group by p.companyId, p.ctc, p.jobRole, s.studentSection order by p.companyId, p.ctc, p.jobRole, s.studentSection;`);
+                [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, s.studentSection, COUNT(p.id) AS totalHires FROM placementData p join companyData c on p.companyId=c.id join studentData s on p.studentId=s.id group by p.companyId, p.ctc, p.jobRole, s.studentSection order by p.companyId, p.ctc, p.jobRole, s.studentSection;`);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
@@ -1161,6 +1160,7 @@ module.exports = {
 
         }
     ],
+
     getCompanyHireDataById: [
         /*
         JSON
@@ -1258,7 +1258,7 @@ module.exports = {
                     return res.status(401).send({ "message": "Access Restricted!" });
                 }
 
-                [students] = await db_connection.query(`select s.id as studentId,s.studentRollNo, s.studentEmail,
+                [students] = await db_connection.query(`select s.id as studentId, s.studentRollNo, s.studentEmail,
                 s.studentName, s.studentGender, s.studentDept, s.studentBatch, s.studentSection, s.studentEmail,
                 s.isHigherStudies, s.isPlaced, s.cgpa, s.studentAccountStatus,
                 p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
@@ -1268,7 +1268,7 @@ module.exports = {
 
                 if (students.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(400).send({ "message": "No Student Data Found!" });
+                    return res.status(200).send({ "message": "No Student Data Found!", "students": students });
                 }
 
                 await db_connection.query(`UNLOCK TABLES`);
@@ -1288,6 +1288,59 @@ module.exports = {
                 db_connection.release();
             }
         }
-    ]
+    ],
+
+    getAllPlacedStudentsData: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" ||
+                req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+                (req.authorization_tier !== "0" && req.authorization_tier !== "1") ||
+                req.body.batch === null || req.body.batch === undefined || req.body.batch === "") {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                await db_connection.query(`LOCK TABLES managementData READ, studentData s READ, companyData c READ, placementData p READ`);
+
+                let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Access Restricted!" });
+                }
+
+                [students] = await db_connection.query(`select s.id as studentId, s.studentRollNo, s.studentEmail,
+                s.studentName, s.studentGender, s.studentDept, s.studentBatch, s.studentSection, s.studentEmail,
+                s.isHigherStudies, s.cgpa, s.studentAccountStatus,
+                p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
+                p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive,
+                p.extraData from studentData s left join placementData p on s.id=p.studentId left join
+                companyData c on p.companyId=c.id WHERE s.studentBatch = ? AND p.id IS NOT NULL ORDER BY s.studentSection, s.studentEmail;`, [req.body.batch]);
+
+                if (students.length === 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(200).send({ "message": "No Student Data Found!", "placementData": students });
+                }
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({
+                    "message": "All Student Data Fetched!",
+                    "placementData": students
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getAllStudentData - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        }
+    ],
 
 }
