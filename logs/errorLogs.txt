@@ -44,3 +44,4 @@
 2023-09-30T10:54:37.478Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
 2023-09-30T10:55:34.362Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
 2023-09-30T10:56:06.771Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
+2023-10-03T15:00:02.950Z - getCompanyHireData - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.studentBatch = '2022'' at line 3

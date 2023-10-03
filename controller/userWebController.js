@@ -119,7 +119,7 @@ module.exports = {
 
                 // select all fields except password.
 
-                let [managers] = await db_connection.query(`SELECT id, managerEmail, managerName, managerRole, createdAt, accountStatus from managementData WHERE managerRole = ?`, ["0"]);
+                let [managers] = await db_connection.query(`SELECT id, managerEmail, managerName, managerRole, createdAt, accountStatus from managementData WHERE id != ?`, [admin[0].id]);
 
                 if (managers.length === 0) {
                     await db_connection.query(`UNLOCK TABLES`);
@@ -214,7 +214,7 @@ module.exports = {
         },
     ],
 
-    addStudent:[
+    addStudent: [
         /*
         JSON
         {
@@ -239,27 +239,27 @@ module.exports = {
             if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail)) {
                 return res.status(400).send({ "message": "Missing details." });
             }
-    
+
             if (req.body.studentRollNo === null || req.body.studentRollNo === undefined || req.body.studentRollNo === "" || req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" || req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" || req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" || req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" || req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" || req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" || req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
                 return res.status(400).send({ "message": "Missing details." });
             }
-    
+
             if (req.body.studentGender !== "M" && req.body.studentGender !== "F" && req.body.studentGender !== "O") {
                 return res.status(400).send({ "message": "Missing details." });
             }
-    
+
             if (req.body.isHigherStudies !== "0" && req.body.isHigherStudies !== "1") {
                 return res.status(400).send({ "message": "Missing details." });
             }
-    
+
             if (req.body.isPlaced !== "0" && req.body.isPlaced !== "1") {
                 return res.status(400).send({ "message": "Missing details." });
             }
-    
+
             if (parseFloat(req.body.CGPA) < 0 || parseFloat(req.body.CGPA) > 10) {
                 return res.status(400).send({ "message": "Missing details." });
             }
-    
+
             if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
                 return res.status(400).send({ "message": "Missing details." });
             }
@@ -267,7 +267,7 @@ module.exports = {
             let db_connection = await db.promise().getConnection();
 
             try {
-                
+
                 await db_connection.query(`LOCK TABLES studentData WRITE, managementData READ`);
 
                 // check if actually admin or manager
@@ -295,7 +295,7 @@ module.exports = {
 
                 // Email the password to the student.
                 mailer.studentCreated(req.body.studentName, req.body.studentEmail, studentPassword);
-                
+
                 await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, createdAt, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, passwordHashed, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, new Date(), "1"]);
 
                 await db_connection.query(`UNLOCK TABLES`);
@@ -332,7 +332,7 @@ module.exports = {
         */
 
         if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail) ||
-        req.body.studentPassword === null || req.body.studentPassword === undefined || req.body.studentPassword === "") {
+            req.body.studentPassword === null || req.body.studentPassword === undefined || req.body.studentPassword === "") {
             return res.status(400).send({ "message": "Missing details." });
         }
 
@@ -1261,11 +1261,79 @@ module.exports = {
         }
     ],
 
+    getCompanyHireDatabyBatch: [
+        /*
+        JSON
+        {
+            "studentBatch": "<studentBatch>"
+        }
+        */
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || (req.body.userRole !== "1" && req.body.userRole !== "0" && req.body.userRole !== "2") ||
+                req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+                (req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || isNaN(req.body.studentBatch))) {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                await db_connection.query(`LOCK TABLES managementData READ, studentData READ, placementData p READ, companyData c READ, studentData s READ`);
+
+                if (req.body.userRole === "0" || req.body.userRole === "1") {
+
+                    let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+
+                    if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(401).send({ "message": "Access Restricted!" });
+                    }
+                }
+                else if (req.body.userRole === "2") {
+                    let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
+
+                    if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(401).send({ "message": "Access Restricted!" });
+                    }
+
+                }
+
+                // extract section wise hire count for each company
+
+                // [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, 
+                //     count(p.id) as totalHires from placementData p left join companyData c 
+                //     on p.companyId = c.id group by p.companyId, p.ctc, p.jobRole order by p.companyId;`);
+
+                [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, s.studentSection, COUNT(p.id) AS totalHires FROM placementData p join companyData c on p.companyId=c.id join studentData s on p.studentId=s.id WHERE s.studentBatch = ? group by p.companyId, p.ctc, p.jobRole, s.studentSection order by p.companyId, p.ctc, p.jobRole, s.studentSection;`, [req.body.studentBatch]);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({
+                    "message": "Company Wise Placement Data Fetched!",
+                    "companyHireData": companyHireData
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getCompanyHireData - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+
+        }
+    ],
+
     getCompanyHireDataById: [
         /*
         JSON
         {
-            "companyId":<companyId> INTEGER
+            "companyId":<companyId> INTEGER,
+            "studentBatch": "<studentBatch>"
         }
         */
         webTokenValidator,
@@ -1306,15 +1374,27 @@ module.exports = {
                 }
                 companyName = companyName[0]["companyName"];
 
-                [companyHireData] = await db_connection.query(` select s.studentDept,s.studentSection,count(p.id) as totalHires
+                if (req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "") {
+                    [companyHireData] = await db_connection.query(` select s.studentDept,s.studentSection,count(p.id) as totalHires
                 from placementData p left join studentData s on p.studentId = s.id
                 where companyId = ? group by s.studentDept,s.studentSection;`, [req.body.companyId]);
 
-                [companyHireData2] = await db_connection.query(`select s.studentRollNo, s.studentEmail, s.studentName,
-                s.studentGender, s.studentBatch, s.studentDept, s.isHigherStudies, 
+                    [companyHireData2] = await db_connection.query(`select s.studentRollNo, s.studentEmail, s.studentName,
+                s.studentGender, s.studentBatch, s.studentDept, s.isHigherStudies, s.studentSection, 
                 s.isPlaced, s.CGPA, p.ctc, p.jobRole, p.jobLocation, p.placementDate, p.isIntern, p.isPPO, p.isOnCampus, 
                 p.isGirlsDrive, p.extraData from studentData s right join placementData p on 
                 s.id = p.studentId where p.companyId = ?;`, [req.body.companyId]);
+                } else {
+                    [companyHireData] = await db_connection.query(` select s.studentDept,s.studentSection,count(p.id) as totalHires
+                from placementData p left join studentData s on p.studentId = s.id
+                where companyId = ? AND s.studentBatch = ? group by s.studentDept,s.studentSection`, [req.body.companyId, req.body.studentBatch]);
+
+                    [companyHireData2] = await db_connection.query(`select s.studentRollNo, s.studentEmail, s.studentName,
+                s.studentGender, s.studentBatch, s.studentDept, s.isHigherStudies, s.studentSection, 
+                s.isPlaced, s.CGPA, p.ctc, p.jobRole, p.jobLocation, p.placementDate, p.isIntern, p.isPPO, p.isOnCampus, 
+                p.isGirlsDrive, p.extraData from studentData s right join placementData p on 
+                s.id = p.studentId where p.companyId = ? AND s.studentBatch = ?`, [req.body.companyId, req.body.studentBatch]);
+                }
 
                 await db_connection.query(`UNLOCK TABLES`);
 

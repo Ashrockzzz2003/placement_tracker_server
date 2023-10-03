@@ -24,6 +24,7 @@ router.get('/getCompanies', userWebController.getCompanies);
 router.post('/addPlacementData', userWebController.addPlacementData);
 
 router.get('/getCompanyHireData',userWebController.getCompanyHireData);
+router.post('/getCompanyHireDataByBatch',userWebController.getCompanyHireDatabyBatch);
 router.post('/getCompanyHireDataById',userWebController.getCompanyHireDataById);
 
 router.post('/getAllStudentData',userWebController.getAllStudentData);
