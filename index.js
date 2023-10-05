@@ -25,6 +25,7 @@ const PORT = 5000;
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
+server.disable('x-powered-by');
 
 server.use('/api', userWebRouter);
 
