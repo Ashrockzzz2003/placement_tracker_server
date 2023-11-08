@@ -43,7 +43,7 @@ CREATE TABLE studentData (
     studentPassword VARCHAR(255) NOT NULL,
     studentName VARCHAR(255) NOT NULL,
     studentSection CHAR(1) NOT NULL,
-    studentGender CHAR(1) NOT NULL,
+    studentGender CHAR(1) NULL,
     studentBatch CHAR(4) NOT NULL,
     studentDept VARCHAR(10) NOT NULL,
     isHigherStudies CHAR(1) NOT NULL,
