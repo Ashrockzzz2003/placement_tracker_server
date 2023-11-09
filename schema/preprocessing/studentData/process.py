@@ -1,4 +1,4 @@
-f = open("d:\Projects\Placements\placement_tracker_server\schema\StudentData.txt", "r")
+f = open("StudentData.txt", "r")
 
 dataList = []
 
@@ -7,7 +7,7 @@ for line in f:
     dataList.append(data)
 
 
-g = open("d:\Projects\Placements\placement_tracker_server\schema\placementData.sql", "w")
+g = open("./schema\placementData.sql", "w")
 for data in dataList:
     g.write(f"insert into placementData(studentID,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive,createdAt) values( {int(data[0])} , {int(data[1])} , {float(data[2])} , '{data[3]}' , '{data[4]}' , '{data[5]}' , '{data[6]}' , '{data[7]}' , '{data[8]}' , '{data[9]}'); \n")
 g.close()

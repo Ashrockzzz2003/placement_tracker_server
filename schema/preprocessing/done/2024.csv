@@ -1,130 +1,130 @@
-studentEmail,studentName,studentSection,companyName,placementDate,jobLocation,jobRole,ctc,isOnCampus,studentRollNo,isIntern,isPPO,isGirlsDrive,isHigherStudies,studentDept,studentBatch,isPlaced,studentPassword
-cb.en.u4cse20108@cb.students.amrita.edu,N.Apoorva ,B,ABOBE ,2022-10-17,Bengaluru,Technical Consultant,10.71,1,CB.EN.U4CSE20108,0,0,0,0,CSE,2024,1,cb.en.u4cse20108@cb.students.amrita.edu_B
-cb.en.u4cse20121@cb.students.amrita.edu,Gadde Uday Kiran ,B,ACCENTURE,2022-11-11,Bangalore,Advanced Application Engineering Analyst,"11,89,000",1,CB.EN.U4CSE20121,0,0,0,0,CSE,2024,1,cb.en.u4cse20121@cb.students.amrita.edu_B
-cb.en.u4cse20153@cb.students.amrita.edu,G Rama Vamsidhar Reddy ,B,ACCENTURE,2022-11-11,Banglore,Advanced App Engineering Analyst,"11,89,000",1,CB.EN.U4CSE20153,0,0,0,0,CSE,2024,1,cb.en.u4cse20153@cb.students.amrita.edu_B
-cb.en.u4cse20466@cb.students.amrita.edu,T SUBHASH GUPTA ,E,ACCENTURE,2023-08-26,Bangalaore,Accenture Advanced Engineering Hiring,"11,89,000",1,CB.EN.U4CSE20466,0,0,0,0,CSE,2024,1,cb.en.u4cse20466@cb.students.amrita.edu_E
-cb.en.u4cse20640@cb.students.amrita.edu,Nallabantu Sri Charan ,F,ACCENTURE,2023-08-24,Coimbatore,Advanced App Engineering Analyst,"11,89,000",1,CB.EN.U4CSE20640,0,0,0,0,CSE,2024,1,cb.en.u4cse20640@cb.students.amrita.edu_F
-cb.en.u4cse20068@cb.students.amrita.edu,THATAVARTHI HARSHITH ,A,ACCENTURE ,2023-08-24,Bangalore ,Advance Application Engineer Analyst (AEH),"11,89,000",1,CB.EN.U4CSE20068,0,0,0,0,CSE,2024,1,cb.en.u4cse20068@cb.students.amrita.edu_A
-cb.en.u4cse20139@cb.students.amrita.edu,Mallavarapu Jashritha Reddy ,B,ALSTOM,2023-08-07,Hyderabad,Graduate Engineer Trainee,680000,1,CB.EN.U4CSE20139,0,0,0,0,CSE,2024,1,cb.en.u4cse20139@cb.students.amrita.edu_B
-cb.en.u4cse20008@cb.students.amrita.edu,APARNA A ,A,AMADEUS LABS,2023-08-05,Bangalore,Software Engineer (SWE),"12,62,217",1,CB.EN.U4CSE20008,0,1,0,0,CSE,2024,1,cb.en.u4cse20008@cb.students.amrita.edu_A
-cb.en.u4cse20337@cb.students.amrita.edu,MEKA VENKATA SAI TARUN ,D,AMADEUS LABS,2023-08-05,Bangalore,SDE-1,"12,62,217",1,CB.EN.U4CSE20337,0,1,0,0,CSE,2024,1,cb.en.u4cse20337@cb.students.amrita.edu_D
-cb.en.u4cse20624@cb.students.amrita.edu,Kabilan ,F,AMADEUS LABS,2023-08-12,Bangalore ,Software development engineer ,"12,62,217",1,CB.EN.U4CSE20624,0,1,0,0,CSE,2024,1,cb.en.u4cse20624@cb.students.amrita.edu_F
-cb.en.u4cse20662@cb.students.amrita.edu,SRIRAM .R ,F,AMADEUS LABS,2023-08-05,Bangalore,Software Engineer - Development,"12,62,217",1,CB.EN.U4CSE20662,0,1,0,0,CSE,2024,1,cb.en.u4cse20662@cb.students.amrita.edu_F
-cb.en.u4cse20648@cb.students.amrita.edu,S S PRAVIN SABARI BALA ,F,APPVIEWX,2023-08-23,Coimbatore,Software Engineer ,1200000,1,CB.EN.U4CSE20648,0,1,0,0,CSE,2024,1,cb.en.u4cse20648@cb.students.amrita.edu_F
-cb.en.u4cse20025@cb.students.amrita.edu,V Harish Kumar ,A,APPVIEWX,2023-08-23,Coimbatore,Product Engineer,1200000,1,CB.EN.U4CSE20025,0,1,0,0,CSE,2024,1,cb.en.u4cse20025@cb.students.amrita.edu_A
-cb.en.u4cse20150@cb.students.amrita.edu,Pranesh R ,B,APPVIEWX,2023-08-23,Coimbatore ,Software Developer ,1200000,1,CB.EN.U4CSE20150,0,1,0,0,CSE,2024,1,cb.en.u4cse20150@cb.students.amrita.edu_B
-cb.en.u4cse20611@cb.students.amrita.edu,Chowta Yashasvi ,F,APPVIEWX,2023-08-23,Coimbatore ,Software Engineer ,1200000,1,CB.EN.U4CSE20611,0,0,0,0,CSE,2024,1,cb.en.u4cse20611@cb.students.amrita.edu_F
-cb.en.u4cse20235@cb.students.amrita.edu,MAHASRI V ,C,ARCADIA,2023-08-25,CHENNAI ,SOFTWARE ENGINEER,1500000,1,CB.EN.U4CSE20235,0,1,0,0,CSE,2024,1,cb.en.u4cse20235@cb.students.amrita.edu_C
-cb.en.u4cse20606@cb.students.amrita.edu,Ayyagari Sai Anish ,F,ARCADIA,2023-08-25,Chennai,Software Engineer,1500000,1,CB.EN.U4CSE20606,0,1,0,0,CSE,2024,1,cb.en.u4cse20606@cb.students.amrita.edu_F
-cb.en.u4cse20138@cb.students.amrita.edu,LALITH GUPTHA. B ,B,BNP PARIBAS,2023-09-13,Chennai,Application Developer,50000,1,CB.EN.U4CSE20138,1,0,0,0,CSE,2024,1,cb.en.u4cse20138@cb.students.amrita.edu_B
-cb.en.u4cse20163@cb.students.amrita.edu,SUDIREDDY SHANMUKHI ,B,BNP PARIBAS ,2023-09-13,Chennai ,Developer ,50000,1,CB.EN.U4CSE20163,1,0,0,0,CSE,2024,1,cb.en.u4cse20163@cb.students.amrita.edu_B
-cb.en.u4cse20346@cb.students.amrita.edu,Pranav Deepak ,D,BNP PARIBAS ISPL,2023-09-13,"Chennai, TamilNadu",Software Development Intern,50000,1,CB.EN.U4CSE20346,1,0,0,0,CSE,2024,1,cb.en.u4cse20346@cb.students.amrita.edu_D
-cb.en.u4cse20266@cb.students.amrita.edu,TEJASWINI BOYAPATI ,C,BNY MELLON,2023-09-05,Pune or Chennai,Software Developer ,2164308,1,CB.EN.U4CSE20266,0,0,0,0,CSE,2024,1,cb.en.u4cse20266@cb.students.amrita.edu_C
-cb.en.u4cse20311@cb.students.amrita.edu,CHARITHA UPPALAPATI ,D,BNY MELLON,2023-09-05,Chennai/Pune,Software Development Engineer,2164308,1,CB.EN.U4CSE20311,0,0,0,0,CSE,2024,1,cb.en.u4cse20311@cb.students.amrita.edu_D
-cb.en.u4cse20636@cb.students.amrita.edu,Malavika Vinodkumar ,F,BNY MELLON,2023-09-05,Chennai,Software Developer,2164308,1,CB.EN.U4CSE20636,0,0,0,0,CSE,2024,1,cb.en.u4cse20636@cb.students.amrita.edu_F
-cb.en.u4cse20626@cb.students.amrita.edu,KARISHRAM B ,F,BOSCH,2023-09-15,Coimbatore,Associate Software Engineer ,700000,1,CB.EN.U4CSE20626,0,0,0,0,CSE,2024,1,cb.en.u4cse20626@cb.students.amrita.edu_F
-cb.en.u4cse20616@cb.students.amrita.edu,Dineshsuriya D ,F,BOSCH GLOBAL SOFTWARE SOLUTIONS,2023-09-15,Bangalore,Mobility Software Development,700000,1,CB.EN.U4CSE20616,0,0,0,0,CSE,2024,1,cb.en.u4cse20616@cb.students.amrita.edu_F
-cb.en.u4cse20642@cb.students.amrita.edu,K N NISHAANTH ,F,BOSCH GLOBAL SOFTWARE TECHNOLOGIES PVT LTD,2023-09-15,Bangalore ,Mobility Software Development (Embedded),700000,1,CB.EN.U4CSE20642,0,0,0,0,CSE,2024,1,cb.en.u4cse20642@cb.students.amrita.edu_F
-cb.en.u4cse20622@cb.students.amrita.edu,Jai Kishoore R ,F,CAMS(COMPUTER AGE MANAGEMENT SEVICES),2023-09-28,Chennai,Not specified,600000,1,CB.EN.U4CSE20622,0,0,0,0,CSE,2024,1,cb.en.u4cse20622@cb.students.amrita.edu_F
-cb.en.u4cse20604@cb.students.amrita.edu,Ardra Vinod ,F,CATERPILLAR,2023-07-25,Bengaluru ,Associate Engineer ,1223000,1,CB.EN.U4CSE20604,0,1,0,0,CSE,2024,1,cb.en.u4cse20604@cb.students.amrita.edu_F
-cb.en.u4cse20665@cb.students.amrita.edu,SYED ASHFAQ AHMED ,F,CATERPILLAR,2023-07-25,Chennai / Bangalore,Associate Software Engineer,1223000,1,CB.EN.U4CSE20665,0,1,0,0,CSE,2024,1,cb.en.u4cse20665@cb.students.amrita.edu_F
-cb.en.u4cse20352@cb.students.amrita.edu,Sai Sidharth Sriram ,D,CATERPILLAR INC,2023-07-25,Chennai or Bangalore,Associate Software Engineer,1600000,1,CB.EN.U4CSE20352,0,1,0,0,CSE,2024,1,cb.en.u4cse20352@cb.students.amrita.edu_D
-cb.en.u4cse20034@cb.students.amrita.edu,KONAKALLA BHAVA BHARATH SUHAS ,A,CISCO,2023-08-18,Banglore ,Business System Analyst,1223000,1,CB.EN.U4CSE20034,0,1,0,0,CSE,2024,1,cb.en.u4cse20034@cb.students.amrita.edu_A
-cb.en.u4cse20071@cb.students.amrita.edu,VIGNESH KUMAR A ,A,COMVIVA,2023-08-31,Bangalore,Product Development Engineer,650000,1,CB.EN.U4CSE20071,0,0,0,0,CSE,2024,1,cb.en.u4cse20071@cb.students.amrita.edu_A
-cb.en.u4cse20204@cb.students.amrita.edu,Akash P ,C,COMVIVA,2023-08-31,Bangalore,Product development engineer,650000,1,CB.EN.U4CSE20204,0,0,0,0,CSE,2024,1,cb.en.u4cse20204@cb.students.amrita.edu_C
-cb.en.u4cse20218@cb.students.amrita.edu,DUPPALA VIJAYA RAGHAVA ,C,COMVIVA,2023-08-30,Bangalore,Product developer,650000,1,CB.EN.U4CSE20218,0,0,0,0,CSE,2024,1,cb.en.u4cse20218@cb.students.amrita.edu_C
-cb.en.u4cse20617@cb.students.amrita.edu,ELAMBHARATHI P T ,F,COMVIVA,2023-08-30,Gurugram,Software Development Engineer,650000,1,CB.EN.U4CSE20617,0,0,0,0,CSE,2024,1,cb.en.u4cse20617@cb.students.amrita.edu_F
-cb.en.u4cse20404@cb.students.amrita.edu,T S Aishwarya ,E,E2OPEN,2023-09-25,Bangalore,Associate Implementation Engineer,800000,1,CB.EN.U4CSE20404,0,0,0,0,CSE,2024,1,cb.en.u4cse20404@cb.students.amrita.edu_E
-cb.en.u4cse20602@cb.students.amrita.edu,Ajay Thayaananth P ,F,E2OPEN,2023-09-25,Bangalore,Associate Software Engineer,800000,1,CB.EN.U4CSE20602,0,0,0,0,CSE,2024,1,cb.en.u4cse20602@cb.students.amrita.edu_F
-cb.en.u4cse20447@cb.students.amrita.edu,Pradeep Karthik M ,E,FIDELITY INVESTMENTS,2023-09-11,Banglore,Software Engineer,1200000,1,CB.EN.U4CSE20447,0,1,0,0,CSE,2024,1,cb.en.u4cse20447@cb.students.amrita.edu_E
-cb.en.u4cse20069@cb.students.amrita.edu,K VAISAKHKRISHNAN ,A,GE DIGITAL,2023-08-07,Banglore/Hyderabad,Digital Technology Intern/Software Engineering Specialist,1737088,1,CB.EN.U4CSE20069,0,1,0,0,CSE,2024,1,cb.en.u4cse20069@cb.students.amrita.edu_A
-cb.en.u4cse20258@cb.students.amrita.edu,Sharon Bianca R ,C,GE HEALTHCARE ,2023-09-05,Pan India ,SW,1511088,1,CB.EN.U4CSE20258,0,0,0,0,CSE,2024,1,cb.en.u4cse20258@cb.students.amrita.edu_C
-cb.en.u4cse20422@cb.students.amrita.edu,Harini S ,E,GE HEALTHCARE ,2023-09-05,Bangalore,SW,1511089,1,CB.EN.U4CSE20422,0,0,0,0,CSE,2024,1,cb.en.u4cse20422@cb.students.amrita.edu_E
-cb.en.u4cse20252@cb.students.amrita.edu,Sai Ramya Illuri ,C,GE-GENERAL ELECTRIC (AVIATION),2023-09-01,Bengaluru,Did not Mention,40000,1,CB.EN.U4CSE20252,1,0,0,0,CSE,2024,1,cb.en.u4cse20252@cb.students.amrita.edu_C
-cb.en.u4cse20015@cb.students.amrita.edu,Chetanya Miglani ,A,GENPACT ,2023-10-09,Banglore/Hyderabad ,,1100000,1,CB.EN.U4CSE20015,1,0,0,0,CSE,2024,1,cb.en.u4cse20015@cb.students.amrita.edu_A
-cb.en.u4cse20469@cb.students.amrita.edu,R Triambak ,E,GENPACT ,2023-10-09,Bangalore/Hyderabad/Chennai ,Analyst/Developer,1100000,1,CB.EN.U4CSE20469,1,0,0,0,CSE,2024,1,cb.en.u4cse20469@cb.students.amrita.edu_E
-cb.en.u4cse20332@cb.students.amrita.edu,K LAKSHANA ,D,HONEYWELL,2023-09-13,Bangalore ,Data scientist ,Not discussed ,1,CB.EN.U4CSE20332,1,0,0,0,CSE,2024,1,cb.en.u4cse20332@cb.students.amrita.edu_D
-cb.en.u4cse20053@cb.students.amrita.edu,RAM GOPAL ,A,IBM,2023-10-04,Kochi,Not informed,800000,1,CB.EN.U4CSE20053,0,1,0,0,CSE,2024,1,cb.en.u4cse20053@cb.students.amrita.edu_A
-cb.en.u4cse20668@cb.students.amrita.edu,Vaidehi Sridhar ,F,IBM,2023-10-27,Kochi,Software Developer Intern,"30,000 per month",1,CB.EN.U4CSE20668,1,0,0,0,CSE,2024,1,cb.en.u4cse20668@cb.students.amrita.edu_F
-cb.en.u4cse20468@cb.students.amrita.edu,R C Tharan ,E,IBM ,2023-09-06,Banglore ,Associate Systems Engineer ,450000,1,CB.EN.U4CSE20468,0,0,0,0,CSE,2024,1,cb.en.u4cse20468@cb.students.amrita.edu_E
-cb.en.u4cse20330@cb.students.amrita.edu,Kota Venkata Leela Tejaswini ,D,INTUIT,2023-03-09,Banglore,Software Engineer,4400000,1,CB.EN.U4CSE20330,0,1,0,0,CSE,2024,1,cb.en.u4cse20330@cb.students.amrita.edu_D
-cb.en.u4cse20327@cb.students.amrita.edu,Keshav S ,D,LATENT VIEW,2023-08-23,Chennai,Data Analyst,850000,1,CB.EN.U4CSE20327,0,0,0,0,CSE,2024,1,cb.en.u4cse20327@cb.students.amrita.edu_D
-cb.en.u4cse20208@cb.students.amrita.edu,Aravind S ,C,LATENT VIEW ANALYTICS,2023-08-23,Bangalore,Analyst,850000,1,CB.EN.U4CSE20208,0,0,0,0,CSE,2024,1,cb.en.u4cse20208@cb.students.amrita.edu_C
-cb.en.u4cse20212@cb.students.amrita.edu,BHAVVUK D KALRA ,C,LATENT VIEW ANALYTICS,2023-08-23,Chennai,Analyst (Level 01),850000,1,CB.EN.U4CSE20212,0,0,0,0,CSE,2024,1,cb.en.u4cse20212@cb.students.amrita.edu_C
-cb.en.u4cse20354@cb.students.amrita.edu,Sanjay Balaji P ,D,LATENT VIEW ANALYTICS,2023-08-23,Chennai,Data Analyst,1075000,1,CB.EN.U4CSE20354,0,0,0,0,CSE,2024,1,cb.en.u4cse20354@cb.students.amrita.edu_D
-cb.en.u4cse20362@cb.students.amrita.edu,Srinithi R ,D,LATENT VIEW ANALYTICS,2023-08-23,Chennai/bengaluru,Data Analyst,650000,1,CB.EN.U4CSE20362,0,0,0,0,CSE,2024,1,cb.en.u4cse20362@cb.students.amrita.edu_D
-cb.en.u4cse20041@cb.students.amrita.edu,K U Mukuntan ,A,MICROCHIP,2023-10-18,Banglore,Protocol System Test Engineer,1075000,1,CB.EN.U4CSE20041,0,1,0,0,CSE,2024,1,cb.en.u4cse20041@cb.students.amrita.edu_A
-cb.en.u4cse20326@cb.students.amrita.edu,KAUSALYAA SRI ,D,MICROSOFT,2023-08-30,Hyderabad,SWE,4875000,0,CB.EN.U4CSE20326,0,0,0,0,CSE,2024,1,cb.en.u4cse20326@cb.students.amrita.edu_D
-cb.en.u4cse20432@cb.students.amrita.edu,KOLLURI VENKATA SRAVANI ,E,NOKIA,2023-10-05,Chennai,Networking,820000,1,CB.EN.U4CSE20432,0,0,0,0,CSE,2024,1,cb.en.u4cse20432@cb.students.amrita.edu_E
-cb.en.u4cse20045@cb.students.amrita.edu,NISHANTH K ,A,ORACLE,2023-07-24,Bangalore/Hyderabad ,Associate Software Engineer / Associate Application Developer ,1918300,1,CB.EN.U4CSE20045,0,1,0,0,CSE,2024,1,cb.en.u4cse20045@cb.students.amrita.edu_A
-cb.en.u4cse20141@cb.students.amrita.edu,MEGHADHARSAN B ,B,ORACLE,2023-07-24,Bangalore/Hyderabad ,Associate Software Engineer,19.2 LPA,1,CB.EN.U4CSE20141,0,1,0,0,CSE,2024,1,cb.en.u4cse20141@cb.students.amrita.edu_B
-cb.en.u4cse20231@cb.students.amrita.edu,KISHORE A V ,C,ORACLE,2023-07-24,Hyderabad/Bangalore,Associate Software Engineer / Associate Application Developer ,19.2,1,CB.EN.U4CSE20231,0,1,0,0,CSE,2024,1,cb.en.u4cse20231@cb.students.amrita.edu_C
-cb.en.u4cse20344@cb.students.amrita.edu,PAYILA RAMA PRAHARSH ,D,ORACLE,2023-07-24,Bangalore,FSGBU,"19,18,300",1,CB.EN.U4CSE20344,0,0,0,0,CSE,2024,1,cb.en.u4cse20344@cb.students.amrita.edu_D
-cb.en.u4cse20418@cb.students.amrita.edu,DUVVURI ANANYA ,E,ORACLE,2023-07-24,Bangalore ,Associate software engineer,19.1L,1,CB.EN.U4CSE20418,0,1,0,0,CSE,2024,1,cb.en.u4cse20418@cb.students.amrita.edu_E
-cb.en.u4cse20659@cb.students.amrita.edu,SNEHA VARSHA M ,F,ORACLE,2023-07-24,Bangalore/Hyderabad,Associate Software Engineer / Associate Application Developer,"19,20,000",1,CB.EN.U4CSE20659,0,1,0,0,CSE,2024,1,cb.en.u4cse20659@cb.students.amrita.edu_F
-cb.en.u4cse20131@cb.students.amrita.edu,KATHERAM VENKATA SAI RAM REDDY ,B,ORACLE ,2023-07-24,Bangalore,Associate Application Developer ,19.18L,1,CB.EN.U4CSE20131,0,0,0,0,CSE,2024,1,cb.en.u4cse20131@cb.students.amrita.edu_B
-cb.en.u4cse20631@cb.students.amrita.edu,KOMMULA S S S SREE RAMA SERATH CHANDRA ,F,ORACLE ,2023-07-24,Hyderabad/Bangalore ,GBU,19.1 LPA,1,CB.EN.U4CSE20631,0,1,0,0,CSE,2024,1,cb.en.u4cse20631@cb.students.amrita.edu_F
-cb.en.u4cse20151@cb.students.amrita.edu,B PRIYADHARSHINI ,B,PROVIDENCE INDIA,2023-07-19,Hyderabad,Software Development Engineer,20 LPA,1,CB.EN.U4CSE20151,0,1,0,0,CSE,2024,1,cb.en.u4cse20151@cb.students.amrita.edu_B
-cb.en.u4cse20159@cb.students.amrita.edu,SHARATH S R ,B,PROVIDENCE INDIA,2023-08-26,Hyderabad,Software Development Engineer,20 LPA,1,CB.EN.U4CSE20159,0,1,0,0,CSE,2024,1,cb.en.u4cse20159@cb.students.amrita.edu_B
-cb.en.u4cse20048@cb.students.amrita.edu,POKURI SAISAMHITHA ,A,PWC,2023-08-20,Bangalore/Hyderabad ,TC,8.9,1,CB.EN.U4CSE20048,0,1,0,0,CSE,2024,1,cb.en.u4cse20048@cb.students.amrita.edu_A
-cb.en.u4cse20049@cb.students.amrita.edu,PRADISHWARAN D ,A,PWC,2023-08-29,CHENNAI,RC,9,1,CB.EN.U4CSE20049,0,0,0,0,CSE,2024,1,cb.en.u4cse20049@cb.students.amrita.edu_A
-cb.en.u4cse20110@cb.students.amrita.edu,Aswinkumar K ,B,PWC,2023-09-26,Online Interview,Salesforce,9,1,CB.EN.U4CSE20110,0,0,0,0,CSE,2024,1,cb.en.u4cse20110@cb.students.amrita.edu_B
-cb.en.u4cse20250@cb.students.amrita.edu,Rishi Kunnath ,C,PWC,2023-08-24,Bangalore,Risk Consultant,9,1,CB.EN.U4CSE20250,0,0,0,0,CSE,2024,1,cb.en.u4cse20250@cb.students.amrita.edu_C
-cb.en.u4cse20002@cb.students.amrita.edu,Abinaya.s ,A,PWC ,2023-08-22,Pan india,Technical consultant ,8.99 LPA,1,CB.EN.U4CSE20002,0,1,0,0,CSE,2024,1,cb.en.u4cse20002@cb.students.amrita.edu_A
-cb.en.u4cse20415@cb.students.amrita.edu,DEVAGANGA V V ,E,PWC ,2023-08-23,Not confirmed ,Technology consultant ,8.9L ,1,CB.EN.U4CSE20415,0,1,0,0,CSE,2024,1,cb.en.u4cse20415@cb.students.amrita.edu_E
-cb.en.u4cse20621@cb.students.amrita.edu,G Harshavardhan Tadikonda ,F,PWC ,2023-08-24,Bangalore,Risk Consultant,9,1,CB.EN.U4CSE20621,0,0,0,0,CSE,2024,1,cb.en.u4cse20621@cb.students.amrita.edu_F
-cb.en.u4cse20646@cb.students.amrita.edu,PRADEEP PRABHAKARAN ,F,PWC ,2023-08-24,Chennai,Risk Consultant,9 LPA,1,CB.EN.U4CSE20646,0,0,0,0,CSE,2024,1,cb.en.u4cse20646@cb.students.amrita.edu_F
-cb.en.u4cse20650@cb.students.amrita.edu,RAJKUMAR ,F,PWC ,2023-08-22,Bangalore,Technical consultant,9,1,CB.EN.U4CSE20650,0,1,0,0,CSE,2024,1,cb.en.u4cse20650@cb.students.amrita.edu_F
-cb.en.u4cse20006@cb.students.amrita.edu,S AKASH ,A,SAHAJ SOFTWARE ,2023-08-16,Chennai,Solutions consultant,13.07,1,CB.EN.U4CSE20006,0,1,0,0,CSE,2024,1,cb.en.u4cse20006@cb.students.amrita.edu_A
-cb.en.u4cse20303@cb.students.amrita.edu,Adithi Balaji ,D,SAMSUNG ELECTRO MECHANICS SOFTWARE,2023-09-01,Bangalore,UI/ UX Developer,35k per month,1,CB.EN.U4CSE20303,1,0,0,0,CSE,2024,1,cb.en.u4cse20303@cb.students.amrita.edu_D
-cb.en.u4cse20018@cb.students.amrita.edu,Dharun N ,A,SAMSUNG ELECTRO-MECHANICS,2023-08-31,Bangalore,Machine Learning Engineer (Image Processing),7-12,1,CB.EN.U4CSE20018,1,0,0,0,CSE,2024,1,cb.en.u4cse20018@cb.students.amrita.edu_A
-cb.en.u4cse20052@cb.students.amrita.edu,Puvvada Sai Kiran ,A,SAP LABS,2023-10-17,Banglore,Associate Software Developer,24.5,1,CB.EN.U4CSE20052,0,1,0,0,CSE,2024,1,cb.en.u4cse20052@cb.students.amrita.edu_A
-cb.en.u4cse20630@cb.students.amrita.edu,Kishore V ,F,SAP LABS INDIA,2023-08-28,Banglore,Software Developer,24,1,CB.EN.U4CSE20630,0,1,0,0,CSE,2024,1,cb.en.u4cse20630@cb.students.amrita.edu_F
-cb.en.u4cse20267@cb.students.amrita.edu,THISHI R ,C,SCHLUMBERGER (SLB),2023-03-27,Coimbatore,Test Analyst,15,1,CB.EN.U4CSE20267,0,0,0,0,CSE,2024,1,cb.en.u4cse20267@cb.students.amrita.edu_C
-cb.en.u4cse20062@cb.students.amrita.edu,Shriinidhi Laxmanan ,A,SCHNEIDER ELECTRIC,2023-08-02,Bangalore,"Graduate Engineer Trainee,R&D ",12LPA,1,CB.EN.U4CSE20062,0,1,0,0,CSE,2024,1,cb.en.u4cse20062@cb.students.amrita.edu_A
-cb.en.u4cse20202@cb.students.amrita.edu,ABIRAMI S ,C,SCHNEIDER ELECTRIC,2023-07-28,Bangalore,R&D,12,1,CB.EN.U4CSE20202,0,1,0,0,CSE,2024,1,cb.en.u4cse20202@cb.students.amrita.edu_C
-cb.en.u4cse20239@cb.students.amrita.edu,P MEGHANA ,C,SCHNEIDER ELECTRIC,2023-04-05,Bangalore,R&D,12,1,CB.EN.U4CSE20239,1,0,0,0,CSE,2024,1,cb.en.u4cse20239@cb.students.amrita.edu_C
-cb.en.u4cse20434@cb.students.amrita.edu,LAKSHANA S ,E,SCHNEIDER ELECTRIC,2023-07-28,Bangalore,R&D,12 LPA,1,CB.EN.U4CSE20434,0,1,0,0,CSE,2024,1,cb.en.u4cse20434@cb.students.amrita.edu_E
-cb.en.u4cse20134@cb.students.amrita.edu,KODURU ANUSHA ,B,SIGNIFY INNOVATION LABS,2023-09-15,BENGALURU,IT TECHNICAL ROLE,10.2 LAKHS,1,CB.EN.U4CSE20134,0,1,0,0,CSE,2024,1,cb.en.u4cse20134@cb.students.amrita.edu_B
-cb.en.u4cse20236@cb.students.amrita.edu,Manaswini Kar ,C,SIGNIFY INNOVATION LABS,2023-09-15,Bangalore,IT Technical Engineer,10.20 LPA,1,CB.EN.U4CSE20236,0,0,0,0,CSE,2024,1,cb.en.u4cse20236@cb.students.amrita.edu_C
-cb.en.u4cse20426@cb.students.amrita.edu,KAARTHIK R ,E,SIGNIFY INNOVATION LABS,2023-09-15,Bengaluru,IT Technical Engineer,"10,20,000",1,CB.EN.U4CSE20426,0,1,0,0,CSE,2024,1,cb.en.u4cse20426@cb.students.amrita.edu_E
-cb.en.u4cse20427@cb.students.amrita.edu,KANAKAM HARIKA ,E,SIGNIFY INNOVATION LABS,2023-09-15,Bangalore ,IT technical Engineer,10.2,1,CB.EN.U4CSE20427,0,0,0,0,CSE,2024,1,cb.en.u4cse20427@cb.students.amrita.edu_E
-cb.en.u4cse20145@cb.students.amrita.edu,M Nishanth ,B,SIGNIFY INNOVATIONS,2023-09-15,Bengaluru,Not assigned,10.2,1,CB.EN.U4CSE20145,0,1,0,0,CSE,2024,1,cb.en.u4cse20145@cb.students.amrita.edu_B
-cb.en.u4cse20205@cb.students.amrita.edu,Akshita Prasanth Pallithodiyil ,C,SLB (SCHLUMBERGER),2023-09-09,Pune,Fullstack Developer,"19,73,626",1,CB.EN.U4CSE20205,0,0,0,0,CSE,2024,1,cb.en.u4cse20205@cb.students.amrita.edu_C
-cb.en.u4cse20666@cb.students.amrita.edu,Tarun Ramaswamy ,F,TALLY SOLUTIONS,2023-08-10,Bangalore,Trainee- Software Engineer/DevOps Engineer,"11,30,000 per annum",1,CB.EN.U4CSE20666,0,1,0,0,CSE,2024,1,cb.en.u4cse20666@cb.students.amrita.edu_F
-cb.en.u4cse20654@cb.students.amrita.edu,SATHI LAKSHMI PRIYATHA REDDY ,F,TALLY SOLUTIONS ,2023-08-10,Banglore ,Software Engineer/ DevOps Engineer ,"11,30,000",1,CB.EN.U4CSE20654,0,0,0,0,CSE,2024,1,cb.en.u4cse20654@cb.students.amrita.edu_F
-cb.en.u4cse20217@cb.students.amrita.edu,DHEEPTHI PRIYANGHA S J ,C,TATA COMMUNICATIONS ,2023-10-09,Chennai/Mumbai ,Application and software developer ,7.5,1,CB.EN.U4CSE20217,0,0,0,0,CSE,2024,1,cb.en.u4cse20217@cb.students.amrita.edu_C
-cb.en.u4cse20154@cb.students.amrita.edu,Rengaraj R ,B,TOSHIBA,2023-08-08,Bengaluru,Software Engineer,9 lakhs,1,CB.EN.U4CSE20154,0,1,0,0,CSE,2024,1,cb.en.u4cse20154@cb.students.amrita.edu_B
-cb.en.u4cse20164@cb.students.amrita.edu,SURAJ S ,B,TREDENCE ANALYTICS,2023-09-28,Bangalore,Data Analyst,10,1,CB.EN.U4CSE20164,0,0,0,0,CSE,2024,1,cb.en.u4cse20164@cb.students.amrita.edu_B
-cb.en.u4cse20437@cb.students.amrita.edu,MANISH S ,E,TREDENCE ANALYTICS ,2023-09-29,Online,Analyst,10,1,CB.EN.U4CSE20437,0,0,0,0,CSE,2024,1,cb.en.u4cse20437@cb.students.amrita.edu_E
-cb.en.u4cse20023@cb.students.amrita.edu,PA.GURUDEV ,A,TRIANZ,2023-09-04,BANGLORE,NOT YET DECIDED,10L,1,CB.EN.U4CSE20023,0,0,0,0,CSE,2024,1,cb.en.u4cse20023@cb.students.amrita.edu_A
-cb.en.u4cse20050@cb.students.amrita.edu,M PRANAV ,A,TRIANZ,2023-09-04,Bangalore/Chennai,Software Developer,10 LPA,1,CB.EN.U4CSE20050,0,0,0,0,CSE,2024,1,cb.en.u4cse20050@cb.students.amrita.edu_A
-cb.en.u4cse20122@cb.students.amrita.edu,GIRI PRASATH R ,B,TRIANZ,2023-09-04,"Bangalore,Chennai,Hyderabad",Software Engineer,10,1,CB.EN.U4CSE20122,0,0,0,0,CSE,2024,1,cb.en.u4cse20122@cb.students.amrita.edu_B
-cb.en.u4cse20213@cb.students.amrita.edu,Chintapalli Jithendra Durga Kumar ,C,TRIANZ,2023-09-05,Hyderabad,Software Engineer,1000000,1,CB.EN.U4CSE20213,0,0,0,0,CSE,2024,1,cb.en.u4cse20213@cb.students.amrita.edu_C
-cb.en.u4cse20251@cb.students.amrita.edu,N Roshith Sai Sriram ,C,TRIANZ,2023-09-04,Bengaluru,Software Developer,10LPA,1,CB.EN.U4CSE20251,0,0,0,0,CSE,2024,1,cb.en.u4cse20251@cb.students.amrita.edu_C
-cb.en.u4cse20264@cb.students.amrita.edu,SUGRIVU ROHIT ,C,TRIANZ,2023-09-04,Hyderabad/Bangalore ,Software Engineer,9L,1,CB.EN.U4CSE20264,0,0,0,0,CSE,2024,1,cb.en.u4cse20264@cb.students.amrita.edu_C
-cb.en.u4cse20317@cb.students.amrita.edu,GALI LAHARESH ,D,TRIANZ,2023-09-04,Hyderabad ,Software engineer ,10,1,CB.EN.U4CSE20317,0,0,0,0,CSE,2024,1,cb.en.u4cse20317@cb.students.amrita.edu_D
-cb.en.u4cse20405@cb.students.amrita.edu,Akash R Prabhu ,E,TRIANZ,2023-09-04,Banglore/Hyderabad/Chennai ,Software Engineer ,10,1,CB.EN.U4CSE20405,0,0,0,0,CSE,2024,1,cb.en.u4cse20405@cb.students.amrita.edu_E
-cb.en.u4cse20414@cb.students.amrita.edu,Dasari Harshavardhan Reddy ,E,TRIANZ,2023-09-04,Bengaluru,Software Engineer,1000000,1,CB.EN.U4CSE20414,0,1,0,0,CSE,2024,1,cb.en.u4cse20414@cb.students.amrita.edu_E
-cb.en.u4cse20428@cb.students.amrita.edu,Karishma R S ,E,TRIANZ,2023-09-04,BANGALORE,SOFTWARE ENGINEER,10,1,CB.EN.U4CSE20428,0,0,0,0,CSE,2024,1,cb.en.u4cse20428@cb.students.amrita.edu_E
-cb.en.u4cse20443@cb.students.amrita.edu,NIRUPAMASHREE M A ,E,TRIANZ,2023-09-04,Bangalore,Not mentioned,10,1,CB.EN.U4CSE20443,0,0,0,0,CSE,2024,1,cb.en.u4cse20443@cb.students.amrita.edu_E
-cb.en.u4cse20607@cb.students.amrita.edu,BANDARU VENKATA SATYA SAI CHARAN KUMAR ,F,TRIANZ,2023-09-04,Hyderabad/banglore/chennai,Software Engineer,10,1,CB.EN.U4CSE20607,0,0,0,0,CSE,2024,1,cb.en.u4cse20607@cb.students.amrita.edu_F
-cb.en.u4cse20635@cb.students.amrita.edu,Logkesh M ,F,TRIANZ,2023-09-04,Banglore,Software Developer,10,1,CB.EN.U4CSE20635,0,0,0,0,CSE,2024,1,cb.en.u4cse20635@cb.students.amrita.edu_F
-cb.en.u4cse20639@cb.students.amrita.edu,Mukkanti venkata sai karthik ,F,TRIANZ,2023-09-05,Bangalore,Software Engineer,10,1,CB.EN.U4CSE20639,0,0,0,0,CSE,2024,1,cb.en.u4cse20639@cb.students.amrita.edu_F
-cb.en.u4cse20246@cb.students.amrita.edu,PRANAV A S ,C,TRIANZ ,2023-09-04,,,10,1,CB.EN.U4CSE20246,0,0,0,0,CSE,2024,1,cb.en.u4cse20246@cb.students.amrita.edu_C
-cb.en.u4cse20227@cb.students.amrita.edu,Kanishk Aadhaw P ,C,VALEO,2023-10-17,"Ettimadai,Coimbatore",Software R&D,5lpa,1,CB.EN.U4CSE20227,1,0,0,0,CSE,2024,1,cb.en.u4cse20227@cb.students.amrita.edu_C
-cb.en.u4cse20309@cb.students.amrita.edu,Avantika Balaji ,D,VALEO,2023-10-17,Chennai,Software RD Intern,15K/month stipend,1,CB.EN.U4CSE20309,1,0,0,0,CSE,2024,1,cb.en.u4cse20309@cb.students.amrita.edu_D
-cb.en.u4cse20653@cb.students.amrita.edu,SANGIREDDY SAINATH REDDY ,F,VALEO,2023-10-17,Chennai ,Software Engineer ,,1,CB.EN.U4CSE20653,1,0,0,0,CSE,2024,1,cb.en.u4cse20653@cb.students.amrita.edu_F
-cb.en.u4cse20201@cb.students.amrita.edu,M Abhinav ,C,VANENBURG ,2023-09-18,Coimbatore ,Associate Software Engineer,"7,00,000",1,CB.EN.U4CSE20201,0,1,0,0,CSE,2024,1,cb.en.u4cse20201@cb.students.amrita.edu_C
-cb.en.u4cse20055@cb.students.amrita.edu,ROHITH P ,A,VERIZON,2023-09-06,Bengaluru,software engineer,9.74,1,CB.EN.U4CSE20055,0,1,0,0,CSE,2024,1,cb.en.u4cse20055@cb.students.amrita.edu_A
-cb.en.u4cse20222@cb.students.amrita.edu,S HARISH SANKARANARAYANAN ,C,VERIZON,2023-09-06,Chennai,SDE,9.74,1,CB.EN.U4CSE20222,0,1,0,0,CSE,2024,1,cb.en.u4cse20222@cb.students.amrita.edu_C
-cb.en.u4cse20245@cb.students.amrita.edu,PARIPOORNA ,C,VERIZON,2023-09-06,Bangalore,Software Developer,974000,1,CB.EN.U4CSE20245,0,1,0,0,CSE,2024,1,cb.en.u4cse20245@cb.students.amrita.edu_C
-cb.en.u4cse20304@cb.students.amrita.edu,Aksita.G ,D,VERIZON,2023-09-06,Banglore,SDE,9.72,1,CB.EN.U4CSE20304,0,0,0,0,CSE,2024,1,cb.en.u4cse20304@cb.students.amrita.edu_D
-cb.en.u4cse20307@cb.students.amrita.edu,Anne Sai Venkata Lokesh ,D,VERIZON,2023-09-06,Chennai,Software Engineer,974000,1,CB.EN.U4CSE20307,0,1,0,0,CSE,2024,1,cb.en.u4cse20307@cb.students.amrita.edu_D
-cb.en.u4cse20343@cb.students.amrita.edu,Nouduri Sreenivas ,D,VERIZON,2023-09-06,Hyderabad/Banglore ,Software Developer ,974000,1,CB.EN.U4CSE20343,0,1,0,0,CSE,2024,1,cb.en.u4cse20343@cb.students.amrita.edu_D
-cb.en.u4cse20464@cb.students.amrita.edu,Sri Bhuvana Pathaneni ,E,VERIZON,2023-09-06,Bengaluru,,9.74,1,CB.EN.U4CSE20464,0,0,0,0,CSE,2024,1,cb.en.u4cse20464@cb.students.amrita.edu_E
-cb.en.u4cse20615@cb.students.amrita.edu,Dharshita R ,F,VERIZON,2023-09-06,Chennai,Software Engineer,"9,74,000",1,CB.EN.U4CSE20615,0,0,0,0,CSE,2024,1,cb.en.u4cse20615@cb.students.amrita.edu_F
-cb.en.u4cse20425@cb.students.amrita.edu,S Jayandar ,E,VISTEON CORPORATION,2023-08-25,Coimbatore ,Software Engineer,7,1,CB.EN.U4CSE20425,0,0,0,0,CSE,2024,1,cb.en.u4cse20425@cb.students.amrita.edu_E
-cb.en.u4cse20051@cb.students.amrita.edu,Preethi Prabha ,A,VOLVO,2023-09-15,Bangalore,Associate Engineer,7.5,1,CB.EN.U4CSE20051,0,0,0,0,CSE,2024,1,cb.en.u4cse20051@cb.students.amrita.edu_A
-cb.en.u4cse20109@cb.students.amrita.edu,Arvapalli Alekhya ,B,VOLVO,2023-09-15,Bangalore,Associate Engineer,7.5 LPA,1,CB.EN.U4CSE20109,0,0,0,0,CSE,2024,1,cb.en.u4cse20109@cb.students.amrita.edu_B
-cb.en.u4cse20348@cb.students.amrita.edu,PRIYANKA K ,D,VOLVO,2023-09-25,Bangalore,Associate Engineer,7.5,1,CB.EN.U4CSE20348,0,0,0,0,CSE,2024,1,cb.en.u4cse20348@cb.students.amrita.edu_D
+studentEmail,studentName,studentSection,companyId,placementDate,jobLocation,jobRole,ctc,isOnCampus,studentRollNo,isIntern,isPPO,isGirlsDrive,isHigherStudies,studentDept,studentBatch,isPlaced,studentPassword
+cb.en.u4cse20108@cb.students.amrita.edu,N.Apoorva ,B,1,2022-10-17,Bengaluru,Technical Consultant,10.71,1,CB.EN.U4CSE20108,0,0,0,0,CSE,2024,1,cb.en.u4cse20108@cb.students.amrita.edu_B
+cb.en.u4cse20121@cb.students.amrita.edu,Gadde Uday Kiran ,B,2,2022-11-11,Bangalore,Advanced Application Engineering Analyst,11.89,1,CB.EN.U4CSE20121,0,0,0,0,CSE,2024,1,cb.en.u4cse20121@cb.students.amrita.edu_B
+cb.en.u4cse20153@cb.students.amrita.edu,G Rama Vamsidhar Reddy ,B,2,2022-11-11,Banglore,Advanced App Engineering Analyst,11.89,1,CB.EN.U4CSE20153,0,0,0,0,CSE,2024,1,cb.en.u4cse20153@cb.students.amrita.edu_B
+cb.en.u4cse20466@cb.students.amrita.edu,T SUBHASH GUPTA ,E,2,2023-08-26,Bangalaore,Accenture Advanced Engineering Hiring,11.89,1,CB.EN.U4CSE20466,0,0,0,0,CSE,2024,1,cb.en.u4cse20466@cb.students.amrita.edu_E
+cb.en.u4cse20640@cb.students.amrita.edu,Nallabantu Sri Charan ,F,2,2023-08-24,Coimbatore,Advanced App Engineering Analyst,11.89,1,CB.EN.U4CSE20640,0,0,0,0,CSE,2024,1,cb.en.u4cse20640@cb.students.amrita.edu_F
+cb.en.u4cse20068@cb.students.amrita.edu,THATAVARTHI HARSHITH ,A,2,2023-08-24,Bangalore ,Advance Application Engineer Analyst (AEH),11.89,1,CB.EN.U4CSE20068,0,0,0,0,CSE,2024,1,cb.en.u4cse20068@cb.students.amrita.edu_A
+cb.en.u4cse20139@cb.students.amrita.edu,Mallavarapu Jashritha Reddy ,B,3,2023-08-07,Hyderabad,Graduate Engineer Trainee,6.8,1,CB.EN.U4CSE20139,0,0,0,0,CSE,2024,1,cb.en.u4cse20139@cb.students.amrita.edu_B
+cb.en.u4cse20008@cb.students.amrita.edu,APARNA A ,A,4,2023-08-05,Bangalore,Software Engineer (SWE),12.62,1,CB.EN.U4CSE20008,0,1,0,0,CSE,2024,1,cb.en.u4cse20008@cb.students.amrita.edu_A
+cb.en.u4cse20337@cb.students.amrita.edu,MEKA VENKATA SAI TARUN ,D,4,2023-08-05,Bangalore,SDE-1,12.62,1,CB.EN.U4CSE20337,0,1,0,0,CSE,2024,1,cb.en.u4cse20337@cb.students.amrita.edu_D
+cb.en.u4cse20624@cb.students.amrita.edu,Kabilan ,F,4,2023-08-12,Bangalore ,Software development engineer ,12.62,1,CB.EN.U4CSE20624,0,1,0,0,CSE,2024,1,cb.en.u4cse20624@cb.students.amrita.edu_F
+cb.en.u4cse20662@cb.students.amrita.edu,SRIRAM .R ,F,4,2023-08-05,Bangalore,Software Engineer - Development,12.62,1,CB.EN.U4CSE20662,0,1,0,0,CSE,2024,1,cb.en.u4cse20662@cb.students.amrita.edu_F
+cb.en.u4cse20648@cb.students.amrita.edu,S S PRAVIN SABARI BALA ,F,6,2023-08-23,Coimbatore,Software Engineer ,12,1,CB.EN.U4CSE20648,0,1,0,0,CSE,2024,1,cb.en.u4cse20648@cb.students.amrita.edu_F
+cb.en.u4cse20025@cb.students.amrita.edu,V Harish Kumar ,A,6,2023-08-23,Coimbatore,Product Engineer,12,1,CB.EN.U4CSE20025,0,1,0,0,CSE,2024,1,cb.en.u4cse20025@cb.students.amrita.edu_A
+cb.en.u4cse20150@cb.students.amrita.edu,Pranesh R ,B,6,2023-08-23,Coimbatore ,Software Developer ,12,1,CB.EN.U4CSE20150,0,1,0,0,CSE,2024,1,cb.en.u4cse20150@cb.students.amrita.edu_B
+cb.en.u4cse20611@cb.students.amrita.edu,Chowta Yashasvi ,F,6,2023-08-23,Coimbatore ,Software Engineer ,12,1,CB.EN.U4CSE20611,0,0,0,0,CSE,2024,1,cb.en.u4cse20611@cb.students.amrita.edu_F
+cb.en.u4cse20235@cb.students.amrita.edu,MAHASRI V ,C,7,2023-08-25,CHENNAI ,SOFTWARE ENGINEER,15,1,CB.EN.U4CSE20235,0,1,0,0,CSE,2024,1,cb.en.u4cse20235@cb.students.amrita.edu_C
+cb.en.u4cse20606@cb.students.amrita.edu,Ayyagari Sai Anish ,F,7,2023-08-25,Chennai,Software Engineer,15,1,CB.EN.U4CSE20606,0,1,0,0,CSE,2024,1,cb.en.u4cse20606@cb.students.amrita.edu_F
+cb.en.u4cse20138@cb.students.amrita.edu,LALITH GUPTHA. B ,B,10,2023-09-13,Chennai,Application Developer,6,1,CB.EN.U4CSE20138,1,0,0,0,CSE,2024,1,cb.en.u4cse20138@cb.students.amrita.edu_B
+cb.en.u4cse20163@cb.students.amrita.edu,SUDIREDDY SHANMUKHI ,B,10,2023-09-13,Chennai ,Developer ,6,1,CB.EN.U4CSE20163,1,0,0,0,CSE,2024,1,cb.en.u4cse20163@cb.students.amrita.edu_B
+cb.en.u4cse20346@cb.students.amrita.edu,Pranav Deepak ,D,11,2023-09-13,"Chennai, TamilNadu",Software Development Intern,6,1,CB.EN.U4CSE20346,1,0,0,0,CSE,2024,1,cb.en.u4cse20346@cb.students.amrita.edu_D
+cb.en.u4cse20266@cb.students.amrita.edu,TEJASWINI BOYAPATI ,C,12,2023-09-05,Pune or Chennai,Software Developer ,21.64,1,CB.EN.U4CSE20266,0,0,0,0,CSE,2024,1,cb.en.u4cse20266@cb.students.amrita.edu_C
+cb.en.u4cse20311@cb.students.amrita.edu,CHARITHA UPPALAPATI ,D,12,2023-09-05,Chennai/Pune,Software Development Engineer,21.64,1,CB.EN.U4CSE20311,0,0,0,0,CSE,2024,1,cb.en.u4cse20311@cb.students.amrita.edu_D
+cb.en.u4cse20636@cb.students.amrita.edu,Malavika Vinodkumar ,F,12,2023-09-05,Chennai,Software Developer,21.64,1,CB.EN.U4CSE20636,0,0,0,0,CSE,2024,1,cb.en.u4cse20636@cb.students.amrita.edu_F
+cb.en.u4cse20626@cb.students.amrita.edu,KARISHRAM B ,F,13,2023-09-15,Coimbatore,Associate Software Engineer ,7,1,CB.EN.U4CSE20626,0,0,0,0,CSE,2024,1,cb.en.u4cse20626@cb.students.amrita.edu_F
+cb.en.u4cse20616@cb.students.amrita.edu,Dineshsuriya D ,F,13,2023-09-15,Bangalore,Mobility Software Development,7,1,CB.EN.U4CSE20616,0,0,0,0,CSE,2024,1,cb.en.u4cse20616@cb.students.amrita.edu_F
+cb.en.u4cse20642@cb.students.amrita.edu,K N NISHAANTH ,F,13,2023-09-15,Bangalore ,Mobility Software Development (Embedded),7,1,CB.EN.U4CSE20642,0,0,0,0,CSE,2024,1,cb.en.u4cse20642@cb.students.amrita.edu_F
+cb.en.u4cse20622@cb.students.amrita.edu,Jai Kishoore R ,F,14,2023-09-28,Chennai,Not specified,6,1,CB.EN.U4CSE20622,0,0,0,0,CSE,2024,1,cb.en.u4cse20622@cb.students.amrita.edu_F
+cb.en.u4cse20604@cb.students.amrita.edu,Ardra Vinod ,F,16,2023-07-25,Bengaluru ,Associate Engineer ,12.23,1,CB.EN.U4CSE20604,0,1,0,0,CSE,2024,1,cb.en.u4cse20604@cb.students.amrita.edu_F
+cb.en.u4cse20665@cb.students.amrita.edu,SYED ASHFAQ AHMED ,F,16,2023-07-25,Chennai / Bangalore,Associate Software Engineer,12.23,1,CB.EN.U4CSE20665,0,1,0,0,CSE,2024,1,cb.en.u4cse20665@cb.students.amrita.edu_F
+cb.en.u4cse20352@cb.students.amrita.edu,Sai Sidharth Sriram ,D,16,2023-07-25,Chennai or Bangalore,Associate Software Engineer,16,1,CB.EN.U4CSE20352,0,1,0,0,CSE,2024,1,cb.en.u4cse20352@cb.students.amrita.edu_D
+cb.en.u4cse20034@cb.students.amrita.edu,KONAKALLA BHAVA BHARATH SUHAS ,A,19,2023-08-18,Banglore ,Business System Analyst,12.23,1,CB.EN.U4CSE20034,0,1,0,0,CSE,2024,1,cb.en.u4cse20034@cb.students.amrita.edu_A
+cb.en.u4cse20071@cb.students.amrita.edu,VIGNESH KUMAR A ,A,21,2023-08-31,Bangalore,Product Development Engineer,6.5,1,CB.EN.U4CSE20071,0,0,0,0,CSE,2024,1,cb.en.u4cse20071@cb.students.amrita.edu_A
+cb.en.u4cse20204@cb.students.amrita.edu,Akash P ,C,21,2023-08-31,Bangalore,Product development engineer,6.5,1,CB.EN.U4CSE20204,0,0,0,0,CSE,2024,1,cb.en.u4cse20204@cb.students.amrita.edu_C
+cb.en.u4cse20218@cb.students.amrita.edu,DUPPALA VIJAYA RAGHAVA ,C,21,2023-08-30,Bangalore,Product developer,6.5,1,CB.EN.U4CSE20218,0,0,0,0,CSE,2024,1,cb.en.u4cse20218@cb.students.amrita.edu_C
+cb.en.u4cse20617@cb.students.amrita.edu,ELAMBHARATHI P T ,F,21,2023-08-30,Gurugram,Software Development Engineer,6.5,1,CB.EN.U4CSE20617,0,0,0,0,CSE,2024,1,cb.en.u4cse20617@cb.students.amrita.edu_F
+cb.en.u4cse20404@cb.students.amrita.edu,T S Aishwarya ,E,23,2023-09-25,Bangalore,Associate Implementation Engineer,8,1,CB.EN.U4CSE20404,0,0,0,0,CSE,2024,1,cb.en.u4cse20404@cb.students.amrita.edu_E
+cb.en.u4cse20602@cb.students.amrita.edu,Ajay Thayaananth P ,F,23,2023-09-25,Bangalore,Associate Software Engineer,8,1,CB.EN.U4CSE20602,0,0,0,0,CSE,2024,1,cb.en.u4cse20602@cb.students.amrita.edu_F
+cb.en.u4cse20447@cb.students.amrita.edu,Pradeep Karthik M ,E,26,2023-09-11,Banglore,Software Engineer,12,1,CB.EN.U4CSE20447,0,1,0,0,CSE,2024,1,cb.en.u4cse20447@cb.students.amrita.edu_E
+cb.en.u4cse20069@cb.students.amrita.edu,K VAISAKHKRISHNAN ,A,28,2023-08-07,Banglore/Hyderabad,Digital Technology Intern/Software Engineering Specialist,17.37,1,CB.EN.U4CSE20069,0,1,0,0,CSE,2024,1,cb.en.u4cse20069@cb.students.amrita.edu_A
+cb.en.u4cse20258@cb.students.amrita.edu,Sharon Bianca R ,C,28,2023-09-05,Pan India ,SW,15.11,1,CB.EN.U4CSE20258,0,0,0,0,CSE,2024,1,cb.en.u4cse20258@cb.students.amrita.edu_C
+cb.en.u4cse20422@cb.students.amrita.edu,Harini S ,E,28,2023-09-05,Bangalore,SW,15.11,1,CB.EN.U4CSE20422,0,0,0,0,CSE,2024,1,cb.en.u4cse20422@cb.students.amrita.edu_E
+cb.en.u4cse20252@cb.students.amrita.edu,Sai Ramya Illuri ,C,28,2023-09-01,Bengaluru,Did not Mention,4.8,1,CB.EN.U4CSE20252,1,0,0,0,CSE,2024,1,cb.en.u4cse20252@cb.students.amrita.edu_C
+cb.en.u4cse20015@cb.students.amrita.edu,Chetanya Miglani ,A,29,2023-10-09,Banglore/Hyderabad ,,11,1,CB.EN.U4CSE20015,1,0,0,0,CSE,2024,1,cb.en.u4cse20015@cb.students.amrita.edu_A
+cb.en.u4cse20469@cb.students.amrita.edu,R Triambak ,E,29,2023-10-09,Bangalore/Hyderabad/Chennai ,Analyst/Developer,11,1,CB.EN.U4CSE20469,1,0,0,0,CSE,2024,1,cb.en.u4cse20469@cb.students.amrita.edu_E
+cb.en.u4cse20332@cb.students.amrita.edu,K LAKSHANA ,D,31,2023-09-13,Bangalore ,Data scientist ,-1,1,CB.EN.U4CSE20332,1,0,0,0,CSE,2024,1,cb.en.u4cse20332@cb.students.amrita.edu_D
+cb.en.u4cse20053@cb.students.amrita.edu,RAM GOPAL ,A,33,2023-10-04,Kochi,Not informed,8,1,CB.EN.U4CSE20053,0,1,0,0,CSE,2024,1,cb.en.u4cse20053@cb.students.amrita.edu_A
+cb.en.u4cse20668@cb.students.amrita.edu,Vaidehi Sridhar ,F,33,2023-10-27,Kochi,Software Developer Intern,3.6,1,CB.EN.U4CSE20668,1,0,0,0,CSE,2024,1,cb.en.u4cse20668@cb.students.amrita.edu_F
+cb.en.u4cse20468@cb.students.amrita.edu,R C Tharan ,E,33,2023-09-06,Banglore ,Associate Systems Engineer ,4.5,1,CB.EN.U4CSE20468,0,0,0,0,CSE,2024,1,cb.en.u4cse20468@cb.students.amrita.edu_E
+cb.en.u4cse20330@cb.students.amrita.edu,Kota Venkata Leela Tejaswini ,D,36,2023-03-09,Banglore,Software Engineer,44,1,CB.EN.U4CSE20330,0,1,0,0,CSE,2024,1,cb.en.u4cse20330@cb.students.amrita.edu_D
+cb.en.u4cse20327@cb.students.amrita.edu,Keshav S ,D,40,2023-08-23,Chennai,Data Analyst,8.5,1,CB.EN.U4CSE20327,0,0,0,0,CSE,2024,1,cb.en.u4cse20327@cb.students.amrita.edu_D
+cb.en.u4cse20208@cb.students.amrita.edu,Aravind S ,C,40,2023-08-23,Bangalore,Analyst,8.5,1,CB.EN.U4CSE20208,0,0,0,0,CSE,2024,1,cb.en.u4cse20208@cb.students.amrita.edu_C
+cb.en.u4cse20212@cb.students.amrita.edu,BHAVVUK D KALRA ,C,40,2023-08-23,Chennai,Analyst (Level 01),8.5,1,CB.EN.U4CSE20212,0,0,0,0,CSE,2024,1,cb.en.u4cse20212@cb.students.amrita.edu_C
+cb.en.u4cse20354@cb.students.amrita.edu,Sanjay Balaji P ,D,40,2023-08-23,Chennai,Data Analyst,10.75,1,CB.EN.U4CSE20354,0,0,0,0,CSE,2024,1,cb.en.u4cse20354@cb.students.amrita.edu_D
+cb.en.u4cse20362@cb.students.amrita.edu,Srinithi R ,D,40,2023-08-23,Chennai/bengaluru,Data Analyst,6.5,1,CB.EN.U4CSE20362,0,0,0,0,CSE,2024,1,cb.en.u4cse20362@cb.students.amrita.edu_D
+cb.en.u4cse20041@cb.students.amrita.edu,K U Mukuntan ,A,45,2023-10-18,Banglore,Protocol System Test Engineer,10.75,1,CB.EN.U4CSE20041,0,1,0,0,CSE,2024,1,cb.en.u4cse20041@cb.students.amrita.edu_A
+cb.en.u4cse20326@cb.students.amrita.edu,KAUSALYAA SRI ,D,46,2023-08-30,Hyderabad,SWE,48.75,0,CB.EN.U4CSE20326,0,0,0,0,CSE,2024,1,cb.en.u4cse20326@cb.students.amrita.edu_D
+cb.en.u4cse20432@cb.students.amrita.edu,KOLLURI VENKATA SRAVANI ,E,48,2023-10-05,Chennai,Networking,8.2,1,CB.EN.U4CSE20432,0,0,0,0,CSE,2024,1,cb.en.u4cse20432@cb.students.amrita.edu_E
+cb.en.u4cse20045@cb.students.amrita.edu,NISHANTH K ,A,51,2023-07-24,Bangalore/Hyderabad ,Associate Software Engineer / Associate Application Developer ,19.18,1,CB.EN.U4CSE20045,0,1,0,0,CSE,2024,1,cb.en.u4cse20045@cb.students.amrita.edu_A
+cb.en.u4cse20141@cb.students.amrita.edu,MEGHADHARSAN B ,B,51,2023-07-24,Bangalore/Hyderabad ,Associate Software Engineer,19.2,1,CB.EN.U4CSE20141,0,1,0,0,CSE,2024,1,cb.en.u4cse20141@cb.students.amrita.edu_B
+cb.en.u4cse20231@cb.students.amrita.edu,KISHORE A V ,C,51,2023-07-24,Hyderabad/Bangalore,Associate Software Engineer / Associate Application Developer ,19.2,1,CB.EN.U4CSE20231,0,1,0,0,CSE,2024,1,cb.en.u4cse20231@cb.students.amrita.edu_C
+cb.en.u4cse20344@cb.students.amrita.edu,PAYILA RAMA PRAHARSH ,D,51,2023-07-24,Bangalore,FSGBU,19.18,1,CB.EN.U4CSE20344,0,0,0,0,CSE,2024,1,cb.en.u4cse20344@cb.students.amrita.edu_D
+cb.en.u4cse20418@cb.students.amrita.edu,DUVVURI ANANYA ,E,51,2023-07-24,Bangalore ,Associate software engineer,19.1,1,CB.EN.U4CSE20418,0,1,0,0,CSE,2024,1,cb.en.u4cse20418@cb.students.amrita.edu_E
+cb.en.u4cse20659@cb.students.amrita.edu,SNEHA VARSHA M ,F,51,2023-07-24,Bangalore/Hyderabad,Associate Software Engineer / Associate Application Developer,19.2,1,CB.EN.U4CSE20659,0,1,0,0,CSE,2024,1,cb.en.u4cse20659@cb.students.amrita.edu_F
+cb.en.u4cse20131@cb.students.amrita.edu,KATHERAM VENKATA SAI RAM REDDY ,B,51,2023-07-24,Bangalore,Associate Application Developer ,19.18,1,CB.EN.U4CSE20131,0,0,0,0,CSE,2024,1,cb.en.u4cse20131@cb.students.amrita.edu_B
+cb.en.u4cse20631@cb.students.amrita.edu,KOMMULA S S S SREE RAMA SERATH CHANDRA ,F,51,2023-07-24,Hyderabad/Bangalore ,GBU,19.1,1,CB.EN.U4CSE20631,0,1,0,0,CSE,2024,1,cb.en.u4cse20631@cb.students.amrita.edu_F
+cb.en.u4cse20151@cb.students.amrita.edu,B PRIYADHARSHINI ,B,53,2023-07-19,Hyderabad,Software Development Engineer,20,1,CB.EN.U4CSE20151,0,1,0,0,CSE,2024,1,cb.en.u4cse20151@cb.students.amrita.edu_B
+cb.en.u4cse20159@cb.students.amrita.edu,SHARATH S R ,B,53,2023-08-26,Hyderabad,Software Development Engineer,20,1,CB.EN.U4CSE20159,0,1,0,0,CSE,2024,1,cb.en.u4cse20159@cb.students.amrita.edu_B
+cb.en.u4cse20048@cb.students.amrita.edu,POKURI SAISAMHITHA ,A,54,2023-08-20,Bangalore/Hyderabad ,TC,8.9,1,CB.EN.U4CSE20048,0,1,0,0,CSE,2024,1,cb.en.u4cse20048@cb.students.amrita.edu_A
+cb.en.u4cse20049@cb.students.amrita.edu,PRADISHWARAN D ,A,54,2023-08-29,CHENNAI,RC,9,1,CB.EN.U4CSE20049,0,0,0,0,CSE,2024,1,cb.en.u4cse20049@cb.students.amrita.edu_A
+cb.en.u4cse20110@cb.students.amrita.edu,Aswinkumar K ,B,54,2023-09-26,Online Interview,Salesforce,9,1,CB.EN.U4CSE20110,0,0,0,0,CSE,2024,1,cb.en.u4cse20110@cb.students.amrita.edu_B
+cb.en.u4cse20250@cb.students.amrita.edu,Rishi Kunnath ,C,54,2023-08-24,Bangalore,Risk Consultant,9,1,CB.EN.U4CSE20250,0,0,0,0,CSE,2024,1,cb.en.u4cse20250@cb.students.amrita.edu_C
+cb.en.u4cse20002@cb.students.amrita.edu,Abinaya.s ,A,54,2023-08-22,Pan india,Technical consultant ,8.99,1,CB.EN.U4CSE20002,0,1,0,0,CSE,2024,1,cb.en.u4cse20002@cb.students.amrita.edu_A
+cb.en.u4cse20415@cb.students.amrita.edu,DEVAGANGA V V ,E,54,2023-08-23,Not confirmed ,Technology consultant ,8.9,1,CB.EN.U4CSE20415,0,1,0,0,CSE,2024,1,cb.en.u4cse20415@cb.students.amrita.edu_E
+cb.en.u4cse20621@cb.students.amrita.edu,G Harshavardhan Tadikonda ,F,54,2023-08-24,Bangalore,Risk Consultant,9,1,CB.EN.U4CSE20621,0,0,0,0,CSE,2024,1,cb.en.u4cse20621@cb.students.amrita.edu_F
+cb.en.u4cse20646@cb.students.amrita.edu,PRADEEP PRABHAKARAN ,F,54,2023-08-24,Chennai,Risk Consultant,9,1,CB.EN.U4CSE20646,0,0,0,0,CSE,2024,1,cb.en.u4cse20646@cb.students.amrita.edu_F
+cb.en.u4cse20650@cb.students.amrita.edu,RAJKUMAR ,F,54,2023-08-22,Bangalore,Technical consultant,9,1,CB.EN.U4CSE20650,0,1,0,0,CSE,2024,1,cb.en.u4cse20650@cb.students.amrita.edu_F
+cb.en.u4cse20006@cb.students.amrita.edu,S AKASH ,A,58,2023-08-16,Chennai,Solutions consultant,13.07,1,CB.EN.U4CSE20006,0,1,0,0,CSE,2024,1,cb.en.u4cse20006@cb.students.amrita.edu_A
+cb.en.u4cse20303@cb.students.amrita.edu,Adithi Balaji ,D,60,2023-09-01,Bangalore,UI/ UX Developer,4.2,1,CB.EN.U4CSE20303,1,0,0,0,CSE,2024,1,cb.en.u4cse20303@cb.students.amrita.edu_D
+cb.en.u4cse20018@cb.students.amrita.edu,Dharun N ,A,60,2023-08-31,Bangalore,Machine Learning Engineer (Image Processing),7.12,1,CB.EN.U4CSE20018,1,0,0,0,CSE,2024,1,cb.en.u4cse20018@cb.students.amrita.edu_A
+cb.en.u4cse20052@cb.students.amrita.edu,Puvvada Sai Kiran ,A,60,2023-10-17,Banglore,Associate Software Developer,24.5,1,CB.EN.U4CSE20052,0,1,0,0,CSE,2024,1,cb.en.u4cse20052@cb.students.amrita.edu_A
+cb.en.u4cse20630@cb.students.amrita.edu,Kishore V ,F,60,2023-08-28,Banglore,Software Developer,24,1,CB.EN.U4CSE20630,0,1,0,0,CSE,2024,1,cb.en.u4cse20630@cb.students.amrita.edu_F
+cb.en.u4cse20267@cb.students.amrita.edu,THISHI R ,C,61,2023-03-27,Coimbatore,Test Analyst,15,1,CB.EN.U4CSE20267,0,0,0,0,CSE,2024,1,cb.en.u4cse20267@cb.students.amrita.edu_C
+cb.en.u4cse20062@cb.students.amrita.edu,Shriinidhi Laxmanan ,A,62,2023-08-02,Bangalore,"Graduate Engineer Trainee,R&D ",12,1,CB.EN.U4CSE20062,0,1,0,0,CSE,2024,1,cb.en.u4cse20062@cb.students.amrita.edu_A
+cb.en.u4cse20202@cb.students.amrita.edu,ABIRAMI S ,C,62,2023-07-28,Bangalore,R&D,12,1,CB.EN.U4CSE20202,0,1,0,0,CSE,2024,1,cb.en.u4cse20202@cb.students.amrita.edu_C
+cb.en.u4cse20239@cb.students.amrita.edu,P MEGHANA ,C,62,2023-04-05,Bangalore,R&D,12,1,CB.EN.U4CSE20239,1,0,0,0,CSE,2024,1,cb.en.u4cse20239@cb.students.amrita.edu_C
+cb.en.u4cse20434@cb.students.amrita.edu,LAKSHANA S ,E,62,2023-07-28,Bangalore,R&D,12,1,CB.EN.U4CSE20434,0,1,0,0,CSE,2024,1,cb.en.u4cse20434@cb.students.amrita.edu_E
+cb.en.u4cse20134@cb.students.amrita.edu,KODURU ANUSHA ,B,63,2023-09-15,BENGALURU,IT TECHNICAL ROLE,10.2,1,CB.EN.U4CSE20134,0,1,0,0,CSE,2024,1,cb.en.u4cse20134@cb.students.amrita.edu_B
+cb.en.u4cse20236@cb.students.amrita.edu,Manaswini Kar ,C,63,2023-09-15,Bangalore,IT Technical Engineer,10.2,1,CB.EN.U4CSE20236,0,0,0,0,CSE,2024,1,cb.en.u4cse20236@cb.students.amrita.edu_C
+cb.en.u4cse20426@cb.students.amrita.edu,KAARTHIK R ,E,63,2023-09-15,Bengaluru,IT Technical Engineer,10.2,1,CB.EN.U4CSE20426,0,1,0,0,CSE,2024,1,cb.en.u4cse20426@cb.students.amrita.edu_E
+cb.en.u4cse20427@cb.students.amrita.edu,KANAKAM HARIKA ,E,63,2023-09-15,Bangalore ,IT technical Engineer,10.2,1,CB.EN.U4CSE20427,0,0,0,0,CSE,2024,1,cb.en.u4cse20427@cb.students.amrita.edu_E
+cb.en.u4cse20145@cb.students.amrita.edu,M Nishanth ,B,63,2023-09-15,Bengaluru,Not assigned,10.2,1,CB.EN.U4CSE20145,0,1,0,0,CSE,2024,1,cb.en.u4cse20145@cb.students.amrita.edu_B
+cb.en.u4cse20205@cb.students.amrita.edu,Akshita Prasanth Pallithodiyil ,C,61,2023-09-09,Pune,Fullstack Developer,19.73,1,CB.EN.U4CSE20205,0,0,0,0,CSE,2024,1,cb.en.u4cse20205@cb.students.amrita.edu_C
+cb.en.u4cse20666@cb.students.amrita.edu,Tarun Ramaswamy ,F,65,2023-08-10,Bangalore,Trainee- Software Engineer/DevOps Engineer,11.3,1,CB.EN.U4CSE20666,0,1,0,0,CSE,2024,1,cb.en.u4cse20666@cb.students.amrita.edu_F
+cb.en.u4cse20654@cb.students.amrita.edu,SATHI LAKSHMI PRIYATHA REDDY ,F,65,2023-08-10,Banglore ,Software Engineer/ DevOps Engineer ,11.3,1,CB.EN.U4CSE20654,0,0,0,0,CSE,2024,1,cb.en.u4cse20654@cb.students.amrita.edu_F
+cb.en.u4cse20217@cb.students.amrita.edu,DHEEPTHI PRIYANGHA S J ,C,67,2023-10-09,Chennai/Mumbai ,Application and software developer ,7.5,1,CB.EN.U4CSE20217,0,0,0,0,CSE,2024,1,cb.en.u4cse20217@cb.students.amrita.edu_C
+cb.en.u4cse20154@cb.students.amrita.edu,Rengaraj R ,B,71,2023-08-08,Bengaluru,Software Engineer,9,1,CB.EN.U4CSE20154,0,1,0,0,CSE,2024,1,cb.en.u4cse20154@cb.students.amrita.edu_B
+cb.en.u4cse20164@cb.students.amrita.edu,SURAJ S ,B,72,2023-09-28,Bangalore,Data Analyst,10,1,CB.EN.U4CSE20164,0,0,0,0,CSE,2024,1,cb.en.u4cse20164@cb.students.amrita.edu_B
+cb.en.u4cse20437@cb.students.amrita.edu,MANISH S ,E,72,2023-09-29,Online,Analyst,10,1,CB.EN.U4CSE20437,0,0,0,0,CSE,2024,1,cb.en.u4cse20437@cb.students.amrita.edu_E
+cb.en.u4cse20023@cb.students.amrita.edu,PA.GURUDEV ,A,73,2023-09-04,BANGLORE,NOT YET DECIDED,10,1,CB.EN.U4CSE20023,0,0,0,0,CSE,2024,1,cb.en.u4cse20023@cb.students.amrita.edu_A
+cb.en.u4cse20050@cb.students.amrita.edu,M PRANAV ,A,73,2023-09-04,Bangalore/Chennai,Software Developer,10,1,CB.EN.U4CSE20050,0,0,0,0,CSE,2024,1,cb.en.u4cse20050@cb.students.amrita.edu_A
+cb.en.u4cse20122@cb.students.amrita.edu,GIRI PRASATH R ,B,73,2023-09-04,"Bangalore,Chennai,Hyderabad",Software Engineer,10,1,CB.EN.U4CSE20122,0,0,0,0,CSE,2024,1,cb.en.u4cse20122@cb.students.amrita.edu_B
+cb.en.u4cse20213@cb.students.amrita.edu,Chintapalli Jithendra Durga Kumar ,C,73,2023-09-05,Hyderabad,Software Engineer,10,1,CB.EN.U4CSE20213,0,0,0,0,CSE,2024,1,cb.en.u4cse20213@cb.students.amrita.edu_C
+cb.en.u4cse20251@cb.students.amrita.edu,N Roshith Sai Sriram ,C,73,2023-09-04,Bengaluru,Software Developer,10,1,CB.EN.U4CSE20251,0,0,0,0,CSE,2024,1,cb.en.u4cse20251@cb.students.amrita.edu_C
+cb.en.u4cse20264@cb.students.amrita.edu,SUGRIVU ROHIT ,C,73,2023-09-04,Hyderabad/Bangalore ,Software Engineer,9,1,CB.EN.U4CSE20264,0,0,0,0,CSE,2024,1,cb.en.u4cse20264@cb.students.amrita.edu_C
+cb.en.u4cse20317@cb.students.amrita.edu,GALI LAHARESH ,D,73,2023-09-04,Hyderabad ,Software engineer ,10,1,CB.EN.U4CSE20317,0,0,0,0,CSE,2024,1,cb.en.u4cse20317@cb.students.amrita.edu_D
+cb.en.u4cse20405@cb.students.amrita.edu,Akash R Prabhu ,E,73,2023-09-04,Banglore/Hyderabad/Chennai ,Software Engineer ,10,1,CB.EN.U4CSE20405,0,0,0,0,CSE,2024,1,cb.en.u4cse20405@cb.students.amrita.edu_E
+cb.en.u4cse20414@cb.students.amrita.edu,Dasari Harshavardhan Reddy ,E,73,2023-09-04,Bengaluru,Software Engineer,10,1,CB.EN.U4CSE20414,0,1,0,0,CSE,2024,1,cb.en.u4cse20414@cb.students.amrita.edu_E
+cb.en.u4cse20428@cb.students.amrita.edu,Karishma R S ,E,73,2023-09-04,BANGALORE,SOFTWARE ENGINEER,10,1,CB.EN.U4CSE20428,0,0,0,0,CSE,2024,1,cb.en.u4cse20428@cb.students.amrita.edu_E
+cb.en.u4cse20443@cb.students.amrita.edu,NIRUPAMASHREE M A ,E,73,2023-09-04,Bangalore,Not mentioned,10,1,CB.EN.U4CSE20443,0,0,0,0,CSE,2024,1,cb.en.u4cse20443@cb.students.amrita.edu_E
+cb.en.u4cse20607@cb.students.amrita.edu,BANDARU VENKATA SATYA SAI CHARAN KUMAR ,F,73,2023-09-04,Hyderabad/banglore/chennai,Software Engineer,10,1,CB.EN.U4CSE20607,0,0,0,0,CSE,2024,1,cb.en.u4cse20607@cb.students.amrita.edu_F
+cb.en.u4cse20635@cb.students.amrita.edu,Logkesh M ,F,73,2023-09-04,Banglore,Software Developer,10,1,CB.EN.U4CSE20635,0,0,0,0,CSE,2024,1,cb.en.u4cse20635@cb.students.amrita.edu_F
+cb.en.u4cse20639@cb.students.amrita.edu,Mukkanti venkata sai karthik ,F,73,2023-09-05,Bangalore,Software Engineer,10,1,CB.EN.U4CSE20639,0,0,0,0,CSE,2024,1,cb.en.u4cse20639@cb.students.amrita.edu_F
+cb.en.u4cse20246@cb.students.amrita.edu,PRANAV A S ,C,73,2023-09-04,,,10,1,CB.EN.U4CSE20246,0,0,0,0,CSE,2024,1,cb.en.u4cse20246@cb.students.amrita.edu_C
+cb.en.u4cse20227@cb.students.amrita.edu,Kanishk Aadhaw P ,C,74,2023-10-17,"Ettimadai,Coimbatore",Software R&D,5,1,CB.EN.U4CSE20227,1,0,0,0,CSE,2024,1,cb.en.u4cse20227@cb.students.amrita.edu_C
+cb.en.u4cse20309@cb.students.amrita.edu,Avantika Balaji ,D,74,2023-10-17,Chennai,Software RD Intern,1.8,1,CB.EN.U4CSE20309,1,0,0,0,CSE,2024,1,cb.en.u4cse20309@cb.students.amrita.edu_D
+cb.en.u4cse20653@cb.students.amrita.edu,SANGIREDDY SAINATH REDDY ,F,74,2023-10-17,Chennai ,Software Engineer ,-1,1,CB.EN.U4CSE20653,1,0,0,0,CSE,2024,1,cb.en.u4cse20653@cb.students.amrita.edu_F
+cb.en.u4cse20201@cb.students.amrita.edu,M Abhinav ,C,75,2023-09-18,Coimbatore ,Associate Software Engineer,7,1,CB.EN.U4CSE20201,0,1,0,0,CSE,2024,1,cb.en.u4cse20201@cb.students.amrita.edu_C
+cb.en.u4cse20055@cb.students.amrita.edu,ROHITH P ,A,76,2023-09-06,Bengaluru,software engineer,9.74,1,CB.EN.U4CSE20055,0,1,0,0,CSE,2024,1,cb.en.u4cse20055@cb.students.amrita.edu_A
+cb.en.u4cse20222@cb.students.amrita.edu,S HARISH SANKARANARAYANAN ,C,76,2023-09-06,Chennai,SDE,9.74,1,CB.EN.U4CSE20222,0,1,0,0,CSE,2024,1,cb.en.u4cse20222@cb.students.amrita.edu_C
+cb.en.u4cse20245@cb.students.amrita.edu,PARIPOORNA ,C,76,2023-09-06,Bangalore,Software Developer,9.74,1,CB.EN.U4CSE20245,0,1,0,0,CSE,2024,1,cb.en.u4cse20245@cb.students.amrita.edu_C
+cb.en.u4cse20304@cb.students.amrita.edu,Aksita.G ,D,76,2023-09-06,Banglore,SDE,9.72,1,CB.EN.U4CSE20304,0,0,0,0,CSE,2024,1,cb.en.u4cse20304@cb.students.amrita.edu_D
+cb.en.u4cse20307@cb.students.amrita.edu,Anne Sai Venkata Lokesh ,D,76,2023-09-06,Chennai,Software Engineer,9.74,1,CB.EN.U4CSE20307,0,1,0,0,CSE,2024,1,cb.en.u4cse20307@cb.students.amrita.edu_D
+cb.en.u4cse20343@cb.students.amrita.edu,Nouduri Sreenivas ,D,76,2023-09-06,Hyderabad/Banglore ,Software Developer ,9.74,1,CB.EN.U4CSE20343,0,1,0,0,CSE,2024,1,cb.en.u4cse20343@cb.students.amrita.edu_D
+cb.en.u4cse20464@cb.students.amrita.edu,Sri Bhuvana Pathaneni ,E,76,2023-09-06,Bengaluru,,9.74,1,CB.EN.U4CSE20464,0,0,0,0,CSE,2024,1,cb.en.u4cse20464@cb.students.amrita.edu_E
+cb.en.u4cse20615@cb.students.amrita.edu,Dharshita R ,F,76,2023-09-06,Chennai,Software Engineer,9.74,1,CB.EN.U4CSE20615,0,0,0,0,CSE,2024,1,cb.en.u4cse20615@cb.students.amrita.edu_F
+cb.en.u4cse20425@cb.students.amrita.edu,S Jayandar ,E,78,2023-08-25,Coimbatore ,Software Engineer,7,1,CB.EN.U4CSE20425,0,0,0,0,CSE,2024,1,cb.en.u4cse20425@cb.students.amrita.edu_E
+cb.en.u4cse20051@cb.students.amrita.edu,Preethi Prabha ,A,80,2023-09-15,Bangalore,Associate Engineer,7.5,1,CB.EN.U4CSE20051,0,0,0,0,CSE,2024,1,cb.en.u4cse20051@cb.students.amrita.edu_A
+cb.en.u4cse20109@cb.students.amrita.edu,Arvapalli Alekhya ,B,80,2023-09-15,Bangalore,Associate Engineer,7.5,1,CB.EN.U4CSE20109,0,0,0,0,CSE,2024,1,cb.en.u4cse20109@cb.students.amrita.edu_B
+cb.en.u4cse20348@cb.students.amrita.edu,PRIYANKA K ,D,80,2023-09-25,Bangalore,Associate Engineer,7.5,1,CB.EN.U4CSE20348,0,0,0,0,CSE,2024,1,cb.en.u4cse20348@cb.students.amrita.edu_D

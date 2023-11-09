@@ -197,7 +197,7 @@ module.exports = {
                 // console.log(managerPassword);
                 // console.log(passwordHashed);
 
-                await db_connection.query(`INSERT INTO managementData (managerEmail, managerName, managerPassword, managerRole, createdAt, accountStatus) VALUES (?, ?, ?, ?, ?, ?)`, [req.body.managerEmail, req.body.managerName, passwordHashed, "0", new Date(), "0"]);
+                await db_connection.query(`INSERT INTO managementData (managerEmail, managerName, managerPassword, managerRole, accountStatus) VALUES (?, ?, ?, ?, ?)`, [req.body.managerEmail, req.body.managerName, passwordHashed, "0", "0"]);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
@@ -296,7 +296,7 @@ module.exports = {
                 // Email the password to the student.
                 mailer.studentCreated(req.body.studentName, req.body.studentEmail, studentPassword);
 
-                await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, createdAt, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, passwordHashed, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, new Date(), "1"]);
+                await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, passwordHashed, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, "1"]);
 
                 await db_connection.query(`UNLOCK TABLES`);
 
@@ -380,9 +380,9 @@ module.exports = {
             let [student_2] = await db_connection.query(`SELECT * from studentRegister WHERE studentEmail = ?`, [req.body.studentEmail]);
 
             if (student_2.length === 0) {
-                await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp, createdAt) VALUES (?, ?, ?)`, [req.body.studentEmail, otp, new Date()]);
+                await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp) VALUES (?, ?)`, [req.body.studentEmail, otp]);
             } else {
-                await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, new Date(), req.body.studentEmail]);
+                await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, Date.now(), req.body.studentEmail]);
             }
 
 
@@ -473,7 +473,7 @@ module.exports = {
                     return res.status(400).send({ "message": "Student already registered!" });
                 }
                 else {
-                    await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, createdAt, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, req.body.studentPassword, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, new Date(), "1"]);
+                    await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, req.body.studentPassword, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, "1"]);
                     await db_connection.query(`UNLOCK TABLES`);
                 }
 
@@ -581,9 +581,9 @@ module.exports = {
                     let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
 
                     if (manager_2.length === 0) {
-                        await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp, createdAt) VALUES (?, ?, ?)`, [req.body.userEmail, otp, new Date()]);
+                        await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp) VALUES (?, ?)`, [req.body.userEmail, otp]);
                     } else {
-                        await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, new Date(), req.body.userEmail]);
+                        await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, Date.now(), req.body.userEmail]);
                     }
 
 
@@ -755,9 +755,9 @@ module.exports = {
                 let [student_2] = await db_connection.query(`SELECT * from studentRegister WHERE studentEmail = ?`, [req.body.userEmail]);
 
                 if (student_2.length === 0) {
-                    await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp, createdAt) VALUES (?, ?, ?)`, [req.body.userEmail, otp, new Date()]);
+                    await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp) VALUES (?, ?, ?)`, [req.body.userEmail, otp]);
                 } else {
-                    await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, new Date(), req.body.userEmail]);
+                    await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, Date.now(), req.body.userEmail]);
                 }
                 await db_connection.query(`UNLOCK TABLES`);
             } else {
@@ -778,9 +778,9 @@ module.exports = {
                 let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
 
                 if (manager_2.length === 0) {
-                    await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp, createdAt) VALUES (?, ?, ?)`, [req.body.userEmail, otp, new Date()]);
+                    await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp) VALUES (?, ?)`, [req.body.userEmail, otp]);
                 } else {
-                    await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, new Date(), req.body.userEmail]);
+                    await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, Date.now(), req.body.userEmail]);
                 }
                 await db_connection.query(`UNLOCK TABLES`);
             }
@@ -941,7 +941,7 @@ module.exports = {
                     }
 
                     try {
-                        company = await db_connection.query(`INSERT INTO companyData (companyName, createdAt, managerId) VALUES (?, ?, ?)`, [req.body.companyName, new Date(), manager[0]["id"]]);
+                        company = await db_connection.query(`INSERT INTO companyData (companyName, managerId) VALUES (?, ?)`, [req.body.companyName, manager[0]["id"]]);
                     } catch (err) {
                         return res.status(400).send({ "message": "Company Registered Already!" });
                     }
@@ -956,7 +956,7 @@ module.exports = {
                     }
 
                     try {
-                        company = await db_connection.query(`INSERT INTO companyData (companyName, createdAt, studentId) VALUES (?, ?, ?)`, [req.body.companyName, new Date(), student["id"]]);
+                        company = await db_connection.query(`INSERT INTO companyData (companyName, studentId) VALUES (?, ?, ?)`, [req.body.companyName, student["id"]]);
                     } catch (err) {
                         return res.status(400).send({ "message": "Company Registered Already!" });
                     }
@@ -1134,18 +1134,18 @@ module.exports = {
                     try {
                         if ((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "") &&
                             (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")) {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
                         else if ((req.jobLocation !== null || req.body.jobLocation !== undefined || req.body.jobLocation !== "") &&
                             (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")) {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
                         else if ((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "") &&
                             (req.body.extraData !== null || req.body.extraData !== undefined || req.body.extraData !== "")) {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, extraData, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, extraData, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
                         else {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, extraData, placementDate, isIntern, isPPo, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, extraData, placementDate, isIntern, isPPo, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
 
                     } catch (err) {
@@ -1166,18 +1166,18 @@ module.exports = {
                     try {
                         if ((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "") &&
                             (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")) {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
                         else if ((req.jobLocation !== null || req.body.jobLocation !== undefined || req.body.jobLocation !== "") &&
                             (req.body.extraData === null || req.body.extraData === undefined || req.body.extraData === "")) {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
                         else if ((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "") &&
                             (req.body.extraData !== null || req.body.extraData !== undefined || req.body.extraData !== "")) {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, extraData, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, extraData, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
                         else {
-                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, extraData, placementDate, isIntern, isPPo, isOnCampus, isGirlsDrive, createdAt, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, new Date(), studentId]);
+                            await db_connection.query(`INSERT INTO placementData (companyId, ctc, jobRole, jobLocation, extraData, placementDate, isIntern, isPPo, isOnCampus, isGirlsDrive, studentId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.companyId, req.body.ctc, req.body.jobRole, req.body.jobLocation, req.body.extraData, req.body.placementDate, req.body.isIntern, req.body.isPPO, req.body.isOnCampus, req.body.isGirlsDrive, studentId]);
                         }
 
                     } catch (err) {
@@ -1522,5 +1522,82 @@ module.exports = {
             }
         }
     ],
+
+
+    getStats: [
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" ||
+                req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+                (req.authorization_tier !== "0" && req.authorization_tier !== "1") ||
+                req.body.batch === null || req.body.batch === undefined || req.body.batch === "") {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+
+                // Max Min Avg CTC
+                await db_connection.query(`LOCK TABLES managementData READ`);
+                let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+
+                if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(401).send({ "message": "Access Restricted!" });
+                }
+
+                await db_connection.query(`LOCK TABLES placementData READ`);
+
+                let [maxMinAvgCTC] = await db_connection.query(`SELECT MAX(ctc) as maxCTC, MIN(ctc) as minCTC, AVG(ctc) as avgCTC from placementData`);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                // Total Placed Students
+
+                await db_connection.query(`LOCK TABLES studentData READ`);
+
+                let [placedCount] = await db_connection.query(`SELECT COUNT(id) as totalPlacedStudents from studentData WHERE isPlaced = 1 AND studentBatch = ?`, [req.body.batch]);
+                let [totalStudents] = await db_connection.query(`SELECT COUNT(id) as totalStudents from studentData WHERE studentBatch = ?`, [req.body.batch]);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                /*
+                Single Offer
+                Double Offers
+                Triple Offer
+                More than 3 offers 
+                */
+
+                await db_connection.query(`LOCK TABLES studentData READ, placementData READ`);
+
+                let [singleOffer] = await db_connection.query(`SELECT COUNT(id) as singleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 1)`, [req.body.batch]);
+
+                let [doubleOffer] = await db_connection.query(`SELECT COUNT(id) as doubleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 2)`, [req.body.batch]);
+
+                let [tripleOffer] = await db_connection.query(`SELECT COUNT(id) as tripleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 3)`, [req.body.batch]);
+
+                let [moreThan3Offer] = await db_connection.query(`SELECT COUNT(id) as moreThan3Offer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) > 3)`, [req.body.batch]);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                let [totalOffers] = singleOffer[0]["singleOffer"] + doubleOffer[0]["doubleOffer"] + tripleOffer[0]["tripleOffer"] + moreThan3Offer[0]["moreThan3Offer"];
+
+
+
+
+
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getAllStudentData - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+        }
+    ]
 
 }
