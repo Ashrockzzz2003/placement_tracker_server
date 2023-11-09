@@ -390,7 +390,7 @@ insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(42,28,4.8,'Did not Mention','2023-09-01',1,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(43,29,11.0,'NA','2023-10-09',1,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(44,29,11.0,'Analyst/Developer','2023-10-09',1,0,1,0);
-insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(45,31,-1.0,'Data scientist ','2023-09-13',1,0,1,0);
+insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(45,31,0.0,'Data scientist ','2023-09-13',1,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(46,33,8.0,'Not informed','2023-10-04',0,1,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(47,33,3.6,'Software Developer Intern','2023-10-27',1,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(48,33,4.5,'Associate Systems Engineer ','2023-09-06',0,0,1,0);
@@ -461,7 +461,7 @@ insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(113,73,10.0,'NA','2023-09-04',0,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(114,74,5.0,'Software R&D','2023-10-17',1,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(115,74,1.8,'Software RD Intern','2023-10-17',1,0,1,0);
-insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(116,74,-1.0,'Software Engineer ','2023-10-17',1,0,1,0);
+insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(116,74,0.0,'Software Engineer ','2023-10-17',1,0,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(117,75,7.0,'Associate Software Engineer','2023-09-18',0,1,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(118,76,9.74,'software engineer','2023-09-06',0,1,1,0);
 insert into placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) values(119,76,9.74,'SDE','2023-09-06',0,1,1,0);
@@ -854,7 +854,7 @@ INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (287,15,4.0,'Analyst','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (302,15,4.0,'Analyst','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (187,15,4.25,'-','2021/10/9','0','0','1','0');
-INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (157,15,-1.0,'-','2021/10/9','0','0','1','0');
+INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (157,15,0.0,'-','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (427,15,4.25,'Analyst','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (247,15,4.0,'Analyst','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (214,16,10.35,'-','2021/10/9','0','0','1','0');
@@ -967,7 +967,7 @@ INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (221,34,16.5,'Software Development Engineer l','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (336,34,11.0,'Devops','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (416,34,9.5,'QA ENGINEER','2021/10/9','0','0','1','0');
-INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (157,100,-1.0,'-','2021/10/9','0','0','1','0');
+INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (157,100,0.0,'-','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (131,101,5.0,'-','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (211,35,5.0,'Digital specialist Engineering','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (216,35,3.6,'Systems engineer','2021/10/9','0','0','1','0');
@@ -1000,7 +1000,7 @@ INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (236,37,16.0,'Software Developer','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (440,37,16.0,'-','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (175,38,6.0,'-','2021/10/9','0','0','1','0');
-INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (455,38,-1.0,'-','2021/10/9','0','0','1','0');
+INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (455,38,0.0,'-','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (159,39,4.0,'-','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (171,41,7.0,'POWER PROGRAMMER','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (255,41,9.0,'SAMURAI PROGRAMMER','2021/10/9','0','0','1','0');
