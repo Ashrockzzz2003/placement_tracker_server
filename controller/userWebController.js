@@ -278,7 +278,7 @@ module.exports = {
                     return res.status(401).send({ "message": "Access Restricted!" });
                 }
 
-                let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.studentEmail]);
+                let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.studentEmail]);
                 if (student.length > 0) {
                     await db_connection.query(`UNLOCK TABLES`);
                     return res.status(400).send({ "message": "Student already registered!" });
@@ -560,7 +560,7 @@ module.exports = {
                     "studentDept": student[0].studentDept,
                     "isHigherStudies": student[0].isHigherStudies,
                     "isPlaced": student[0].isPlaced,
-                    "CGPA": student[0].CGPA
+                    "CGPA": student[0].cgpa
                 });
             }
 
@@ -950,14 +950,15 @@ module.exports = {
                 else if (req.body.userRole === "2") {
                     let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
 
-                    if (student.length === 0 || student["studentAccountStatus"] !== "1") {
+                    if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
                         await db_connection.query(`UNLOCK TABLES`);
                         return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
                     try {
-                        company = await db_connection.query(`INSERT INTO companyData (companyName, studentId) VALUES (?, ?, ?)`, [req.body.companyName, student["id"]]);
+                        company = await db_connection.query(`INSERT INTO companyData (companyName, studentId) VALUES (?, ?)`, [req.body.companyName, student[0]["id"]]);
                     } catch (err) {
+                        console.log(err);
                         return res.status(400).send({ "message": "Company Registered Already!" });
                     }
                 }
@@ -1161,7 +1162,7 @@ module.exports = {
                         return res.status(401).send({ "message": "Access Restricted!" });
                     }
 
-                    [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
+                    let [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
                     studentId = studentId[0]["id"];
                     try {
                         if ((req.jobLocation === null || req.body.jobLocation === undefined || req.body.jobLocation === "") &&
@@ -1523,72 +1524,104 @@ module.exports = {
         }
     ],
 
-    // incomplete
-    getStats: [
+    getStudentPlacements: [
         webTokenValidator,
         async (req, res) => {
             if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" ||
                 req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
-                (req.authorization_tier !== "0" && req.authorization_tier !== "1") ||
-                req.body.batch === null || req.body.batch === undefined || req.body.batch === "") {
+                (req.authorization_tier !== "0" && req.authorization_tier !== "1" && req.authorization_tier !== "2")) {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let studentRoll = req.headers.authorization.split(" ")[2];
+
+            if ((req.authorization_tier === "1" || req.authorization_tier === "0") && (studentRoll === null || studentRoll === undefined || studentRoll === "")) {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
 
             let db_connection = await db.promise().getConnection();
 
             try {
+                if (req.authorization_tier === "0" || req.authorization_tier === "1") {
 
-                // Max Min Avg CTC
-                await db_connection.query(`LOCK TABLES managementData READ`);
-                let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                    await db_connection.query(`LOCK TABLES managementData READ`);
 
-                if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                    let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+                    if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(401).send({ "message": "Access Restricted!" });
+                    }
+
                     await db_connection.query(`UNLOCK TABLES`);
-                    return res.status(401).send({ "message": "Access Restricted!" });
+
+                    await db_connection.query(`LOCK TABLES studentData READ`);
+
+                    let [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentRollNo = ?`, [studentRoll]);
+
+                    if (studentId.length === 0) {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(400).send({ "message": "Student Not Registered!" });
+                    }
+
+                    await db_connection.query(`UNLOCK TABLES`);
+
+                    studentId = studentId[0]["id"];
+
+                    await db_connection.query(`LOCK TABLES placementData p READ, companyData c READ`);
+
+                    let [studentPlacementData] = await db_connection.query(`SELECT * from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc`, [studentId]);
+
+                    if (studentPlacementData.length === 0) {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(200).send({ 
+                            "placementData": [],
+                            "message": "No Placement Data Found!" 
+                        });
+                    }
+
+                    await db_connection.query(`UNLOCK TABLES`);
+
+                    return res.status(200).send({
+                        "message": "Placement Data Fetched!",
+                        "placementData": studentPlacementData
+                    });
+
+                } else if (req.authorization_tier === "2") {
+                    await db_connection.query(`LOCK TABLES studentData READ`);
+
+                    let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
+
+                    if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(401).send({ "message": "Access Restricted!" });
+                    }
+
+                    await db_connection.query(`UNLOCK TABLES`);
+
+                    await db_connection.query(`LOCK TABLES placementData p READ, companyData c READ`);
+
+                    let [studentPlacementData] = await db_connection.query(`SELECT * from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc`, [student[0]["id"]]);
+
+                    if (studentPlacementData.length === 0) {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(200).send({ 
+                            "placementData": [],
+                            "message": "No Placement Data Found!" 
+                        });
+                    }
+
+                    await db_connection.query(`UNLOCK TABLES`);
+
+                    return res.status(200).send({
+                        "message": "Placement Data Fetched!",
+                        "placementData": studentPlacementData
+                    });
                 }
-
-                await db_connection.query(`LOCK TABLES placementData READ`);
-
-                let [maxMinAvgCTC] = await db_connection.query(`SELECT MAX(ctc) as maxCTC, MIN(ctc) as minCTC, AVG(ctc) as avgCTC from placementData`);
-
-                await db_connection.query(`UNLOCK TABLES`);
-
-                // Total Placed Students
-
-                await db_connection.query(`LOCK TABLES studentData READ`);
-
-                let [placedCount] = await db_connection.query(`SELECT COUNT(id) as totalPlacedStudents from studentData WHERE isPlaced = 1 AND studentBatch = ?`, [req.body.batch]);
-                let [totalStudents] = await db_connection.query(`SELECT COUNT(id) as totalStudents from studentData WHERE studentBatch = ?`, [req.body.batch]);
-
-                await db_connection.query(`UNLOCK TABLES`);
-
-                /*
-                Single Offer
-                Double Offers
-                Triple Offer
-                More than 3 offers 
-                */
-
-                await db_connection.query(`LOCK TABLES studentData READ, placementData READ`);
-
-                let [singleOffer] = await db_connection.query(`SELECT COUNT(id) as singleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 1)`, [req.body.batch]);
-
-                let [doubleOffer] = await db_connection.query(`SELECT COUNT(id) as doubleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 2)`, [req.body.batch]);
-
-                let [tripleOffer] = await db_connection.query(`SELECT COUNT(id) as tripleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 3)`, [req.body.batch]);
-
-                let [moreThan3Offer] = await db_connection.query(`SELECT COUNT(id) as moreThan3Offer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) > 3)`, [req.body.batch]);
-
-                await db_connection.query(`UNLOCK TABLES`);
-
-                let [totalOffers] = singleOffer[0]["singleOffer"] + doubleOffer[0]["doubleOffer"] + tripleOffer[0]["tripleOffer"] + moreThan3Offer[0]["moreThan3Offer"];
-
-
 
             } catch (err) {
                 console.log(err);
                 const time = new Date();
-                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getAllStudentData - ${err}\n`);
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getStudentPlacements - ${err}\n`);
                 return res.status(500).send({ "message": "Internal Server Error." });
             } finally {
                 await db_connection.query(`UNLOCK TABLES`);
@@ -1596,5 +1629,79 @@ module.exports = {
             }
         }
     ]
+
+    // incomplete
+    // getStats: [
+    //     webTokenValidator,
+    //     async (req, res) => {
+    //         if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" ||
+    //             req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+    //             (req.authorization_tier !== "0" && req.authorization_tier !== "1") ||
+    //             req.body.batch === null || req.body.batch === undefined || req.body.batch === "") {
+    //             return res.status(400).send({ "message": "Access Restricted!" });
+    //         }
+
+    //         let db_connection = await db.promise().getConnection();
+
+    //         try {
+
+    //             // Max Min Avg CTC
+    //             await db_connection.query(`LOCK TABLES managementData READ`);
+    //             let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+
+    //             if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+    //                 await db_connection.query(`UNLOCK TABLES`);
+    //                 return res.status(401).send({ "message": "Access Restricted!" });
+    //             }
+
+    //             await db_connection.query(`LOCK TABLES placementData READ`);
+
+    //             let [maxMinAvgCTC] = await db_connection.query(`SELECT MAX(ctc) as maxCTC, MIN(ctc) as minCTC, AVG(ctc) as avgCTC from placementData`);
+
+    //             await db_connection.query(`UNLOCK TABLES`);
+
+    //             // Total Placed Students
+
+    //             await db_connection.query(`LOCK TABLES studentData READ`);
+
+    //             let [placedCount] = await db_connection.query(`SELECT COUNT(id) as totalPlacedStudents from studentData WHERE isPlaced = 1 AND studentBatch = ?`, [req.body.batch]);
+    //             let [totalStudents] = await db_connection.query(`SELECT COUNT(id) as totalStudents from studentData WHERE studentBatch = ?`, [req.body.batch]);
+
+    //             await db_connection.query(`UNLOCK TABLES`);
+
+    //             /*
+    //             Single Offer
+    //             Double Offers
+    //             Triple Offer
+    //             More than 3 offers 
+    //             */
+
+    //             await db_connection.query(`LOCK TABLES studentData READ, placementData READ`);
+
+    //             let [singleOffer] = await db_connection.query(`SELECT COUNT(id) as singleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 1)`, [req.body.batch]);
+
+    //             let [doubleOffer] = await db_connection.query(`SELECT COUNT(id) as doubleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 2)`, [req.body.batch]);
+
+    //             let [tripleOffer] = await db_connection.query(`SELECT COUNT(id) as tripleOffer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) = 3)`, [req.body.batch]);
+
+    //             let [moreThan3Offer] = await db_connection.query(`SELECT COUNT(id) as moreThan3Offer from studentData WHERE isPlaced = 1 AND studentBatch = ? AND id IN (SELECT studentId from placementData GROUP BY studentId HAVING COUNT(studentId) > 3)`, [req.body.batch]);
+
+    //             await db_connection.query(`UNLOCK TABLES`);
+
+    //             let [totalOffers] = singleOffer[0]["singleOffer"] + doubleOffer[0]["doubleOffer"] + tripleOffer[0]["tripleOffer"] + moreThan3Offer[0]["moreThan3Offer"];
+
+
+
+    //         } catch (err) {
+    //             console.log(err);
+    //             const time = new Date();
+    //             fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getAllStudentData - ${err}\n`);
+    //             return res.status(500).send({ "message": "Internal Server Error." });
+    //         } finally {
+    //             await db_connection.query(`UNLOCK TABLES`);
+    //             db_connection.release();
+    //         }
+    //     }
+    // ]
 
 }

@@ -496,7 +496,7 @@ INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18017','cb.en.u4cse18017@cb.students.amrita.edu','cb.en.u4cse18017@cb.students.amrita.edu_A','GULLAPUDI ROHITH GUPTA','A','2022','CSE','0','1', 'M');
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18019','cb.en.u4cse18019@cb.students.amrita.edu','cb.en.u4cse18019@cb.students.amrita.edu_A','HARIHARAN','A','2022','CSE','0','0', 'M');
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18020','cb.en.u4cse18020@cb.students.amrita.edu','cb.en.u4cse18020@cb.students.amrita.edu_A','HARINEE N','A','2022','CSE','0','1', 'F');
-INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18021','cb.en.u4cse18021@cb.students.amrita.edu','cb.en.u4cse18021@cb.students.amrita.edu_A','HARSHAVARDHINI B','A','2022','CSE','0','1', 'F');
+INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18021','cb.en.u4cse18021@cb.students.amrita.edu','8bfa6c4bb08dda986b72b519c47bba55190ae7f2e0940279081a7531fa25fbc9','HARSHAVARDHINI B','A','2022','CSE','0','1', 'F');
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18022','cb.en.u4cse18022@cb.students.amrita.edu','cb.en.u4cse18022@cb.students.amrita.edu_A','HIRUTHIK J','A','2022','CSE','0','1', 'M');
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18023','cb.en.u4cse18023@cb.students.amrita.edu','cb.en.u4cse18023@cb.students.amrita.edu_A','D. JAGADEESHRAM','A','2022','CSE','0','1', 'M');
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES ('CB.EN.U4CSE18024','cb.en.u4cse18024@cb.students.amrita.edu','cb.en.u4cse18024@cb.students.amrita.edu_A','J. SAIRAM SAMPATH','A','2022','CSE','0','1', 'M');
@@ -1196,6 +1196,12 @@ INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (401,84,17.5,'DevOps Engineer','2021/10/9','0','0','1','0');
 INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isIntern,isPPO,isOnCampus,isGirlsDrive) VALUES (462,84,17.5,'Security Developer','2021/10/9','0','0','1','0');
 
+INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender, cgpa) VALUES (
+    'CB.EN.U4CSE21008', 'cb.en.u4cse21008@cb.students.amrita.edu', '6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258', 'Ashwin Narayanan S', 'A', '2025', 'CSE', '0', '0', 'M', 9.35
+);
+INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES (
+    'CB.EN.U4CSE21001', 'cb.en.u4cse21001@cb.students.amrita.edu', '6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258', 'Abhinav Ramakrishnan', 'A', '2025', 'CSE', '0', '0', 'M'
+);
 
 
 -- insert into studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentGender,studentBatch,studentDept,isHigherStudies,isPlaced,createdAt) values ('CB.EN.U4CSE18001','cb.en.u4cse18001@cb.students.amrita.edu','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','AAKASH KRISHNA R','A','M','2022','CSE','1','0','2023-09-24');

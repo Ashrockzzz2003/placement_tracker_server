@@ -45,3 +45,12 @@
 2023-09-30T10:55:34.362Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
 2023-09-30T10:56:06.771Z - getCompanyHireData - TypeError: Cannot read properties of undefined (reading 'companyId')
 2023-10-03T15:00:02.950Z - getCompanyHireData - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE s.studentBatch = '2022'' at line 3
+2023-11-13T12:49:19.768Z - getStudentPlacements - Error: Table 'studentData' was not locked with LOCK TABLES
+2023-11-13T12:49:19.794Z - getStudentPlacements - Error: Table 'studentData' was not locked with LOCK TABLES
+2023-11-13T12:49:27.229Z - getStudentPlacements - Error: Table 'studentData' was not locked with LOCK TABLES
+2023-11-13T12:49:27.229Z - getStudentPlacements - Error: Table 'studentData' was not locked with LOCK TABLES
+2023-11-13T12:53:40.755Z - getStudentPlacements - Error: Table 'p' was not locked with LOCK TABLES
+2023-11-13T12:53:40.779Z - getStudentPlacements - Error: Table 'p' was not locked with LOCK TABLES
+2023-11-13T13:36:41.624Z - addStudent - TypeError: mailer.studentCreated is not a function
+2023-11-13T13:39:14.859Z - addStudent - Error: Duplicate entry 'CB.EN.U4CSE21008' for key 'studentdata.studentRollNo'
+2023-11-13T13:39:21.091Z - addStudent - Error: Duplicate entry 'CB.EN.U4CSE21008' for key 'studentdata.studentRollNo'

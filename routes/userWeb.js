@@ -9,6 +9,7 @@ router.post('/loginVerify', userWebController.loginVerify);
 
 router.post('/studentLoginVerify', userWebController.studentVerify);
 router.post('/studentRegister', userWebController.studentRegister);
+router.get('/getStudentPlacements', userWebController.getStudentPlacements);
 
 router.post('/registerOfficial', userWebController.registerOfficial);
 router.post('/addStudent', userWebController.addStudent);
