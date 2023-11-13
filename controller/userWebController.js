@@ -1533,9 +1533,9 @@ module.exports = {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
 
-            let studentRoll = req.headers.authorization.split(" ")[2];
+            let studentId = req.body.studentId;
 
-            if ((req.authorization_tier === "1" || req.authorization_tier === "0") && (studentRoll === null || studentRoll === undefined || studentRoll === "")) {
+            if ((req.authorization_tier === "1" || req.authorization_tier === "0") && (studentId === null || studentId === undefined || studentId === "")) {
                 return res.status(400).send({ "message": "Access Restricted!" });
             }
 
@@ -1556,25 +1556,24 @@ module.exports = {
 
                     await db_connection.query(`LOCK TABLES studentData READ`);
 
-                    let [studentId] = await db_connection.query(`SELECT id from studentData WHERE studentRollNo = ?`, [studentRoll]);
+                    let [student] = await db_connection.query(`SELECT * from studentData WHERE id = ?`, [studentId]);
 
-                    if (studentId.length === 0) {
+                    if (student.length === 0) {
                         await db_connection.query(`UNLOCK TABLES`);
                         return res.status(400).send({ "message": "Student Not Registered!" });
                     }
 
                     await db_connection.query(`UNLOCK TABLES`);
 
-                    studentId = studentId[0]["id"];
-
                     await db_connection.query(`LOCK TABLES placementData p READ, companyData c READ`);
 
-                    let [studentPlacementData] = await db_connection.query(`SELECT * from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc`, [studentId]);
+                    let [studentPlacementData] = await db_connection.query(`SELECT * from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc DESC`, [studentId]);
 
                     if (studentPlacementData.length === 0) {
                         await db_connection.query(`UNLOCK TABLES`);
                         return res.status(200).send({ 
                             "placementData": [],
+                            "student": student[0],
                             "message": "No Placement Data Found!" 
                         });
                     }
@@ -1583,6 +1582,7 @@ module.exports = {
 
                     return res.status(200).send({
                         "message": "Placement Data Fetched!",
+                        "student": student[0],
                         "placementData": studentPlacementData
                     });
 
@@ -1600,7 +1600,7 @@ module.exports = {
 
                     await db_connection.query(`LOCK TABLES placementData p READ, companyData c READ`);
 
-                    let [studentPlacementData] = await db_connection.query(`SELECT * from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc`, [student[0]["id"]]);
+                    let [studentPlacementData] = await db_connection.query(`SELECT * from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc DESC`, [student[0]["id"]]);
 
                     if (studentPlacementData.length === 0) {
                         await db_connection.query(`UNLOCK TABLES`);
