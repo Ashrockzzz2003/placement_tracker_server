@@ -755,7 +755,7 @@ module.exports = {
                 let [student_2] = await db_connection.query(`SELECT * from studentRegister WHERE studentEmail = ?`, [req.body.userEmail]);
 
                 if (student_2.length === 0) {
-                    await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp) VALUES (?, ?, ?)`, [req.body.userEmail, otp]);
+                    await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp) VALUES (?, ?)`, [req.body.userEmail, otp]);
                 } else {
                     await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, Date.now(), req.body.userEmail]);
                 }
