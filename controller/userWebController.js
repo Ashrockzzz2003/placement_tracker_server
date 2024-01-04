@@ -1443,7 +1443,7 @@ module.exports = {
                 s.studentName, s.studentGender, s.studentDept, s.studentBatch, s.studentSection, s.studentEmail,
                 s.isHigherStudies, s.isPlaced, s.cgpa, s.studentAccountStatus,
                 p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
-                p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive,
+                p.jobLocation, p.placementDate, p.isIntern, p.isPPO, p.isOnCampus, p.isGirlsDrive,
                 p.extraData from studentData s left join placementData p on s.id=p.studentId left join
                 companyData c on p.companyId=c.id WHERE s.studentBatch = ? ORDER BY s.studentSection;`, [req.body.batch]);
 
@@ -1496,7 +1496,7 @@ module.exports = {
                 s.studentName, s.studentGender, s.studentDept, s.studentBatch, s.studentSection, s.studentEmail,
                 s.isHigherStudies, s.cgpa, s.studentAccountStatus,
                 p.id as placementId, p.companyId, c.companyName, p.ctc, p.jobRole,
-                p.jobLocation, p.placementDate, p.isIntern, p.isPPO, P.isOnCampus, p.isGirlsDrive,
+                p.jobLocation, p.placementDate, p.isIntern, p.isPPO, p.isOnCampus, p.isGirlsDrive,
                 p.extraData from studentData s left join placementData p on s.id=p.studentId left join
                 companyData c on p.companyId=c.id WHERE s.studentBatch = ? AND p.id IS NOT NULL ORDER BY s.studentSection, s.studentEmail;`, [req.body.batch]);
 
