@@ -24,6 +24,7 @@ router.post('/resetPassword', userWebController.resetPassword);
 router.post('/addCompany', userWebController.addCompany);
 router.get('/getCompanies', userWebController.getCompanies);
 router.post('/addPlacementData', userWebController.addPlacementData);
+router.post('/editPlacementDataById', userWebController.editPlacementDataById);
 
 router.get('/getCompanyHireData',userWebController.getCompanyHireData);
 router.post('/getCompanyHireDataByBatch',userWebController.getCompanyHireDatabyBatch);
