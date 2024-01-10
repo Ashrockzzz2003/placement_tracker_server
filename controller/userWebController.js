@@ -424,6 +424,81 @@ module.exports = {
         }
     },
 
+
+    studentEditData : [
+        tokenValidator,
+        async (req, res) => {
+        /*
+        JSON
+        {
+            "studentRollNo": "<roll_no>",
+            "studentEmail": "<email_id>",
+            "studentName": "<name>",
+            "studentSection": "<section>",
+            "studentGender": "<M/F/O>",
+            "studentBatch": "<batch>",
+            "studentDept": "<dept>",
+            "isHigherStudies": "<0/1>",
+            "isPlaced": "<0/1>",
+            "CGPA": "<XX.XX>"
+        }
+        */
+     
+        if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" || req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" || req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" || req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" || req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" ||  req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.studentGender !== "M" && req.body.studentGender !== "F" && req.body.studentGender !== "O") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.isHigherStudies !== "0" && req.body.isHigherStudies !== "1") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (parseFloat(req.body.CGPA) < 0 || parseFloat(req.body.CGPA) > 10) {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        let db_connection = await db.promise().getConnection();
+
+        try {
+
+            if (req.authorization_tier === "1" || req.authorization_tier === "0"){
+                return res.status(400).send({ "message": "Functionality Not Available Yet!" });
+            }
+            else if (req.authorization_tier === "2"){
+                if (req.body.userEmail !== req.body.studentEmail){
+                    return res.status(400).send({ "message": "Access Restricted!" });
+                }
+                else{
+                    await db_connection.query(`LOCK TABLES studentData WRITE`);
+                    
+                    await db_connection.query(`UPDATE  studentData SET studentName = ?, studentSection = ?, studentGender = ?, studentBatch = ?, isHigherStudies = ?, CGPA = ? where studentEmail = ?`, [req.body.studentName, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.isHigherStudies, req.body.CGPA ,req.body.userEmail]);
+                    
+                    await db_connection.query(`UNLOCK TABLES`);
+
+                    return res.status(200).send({ "message": "Student Data Updated!" });
+                }
+
+            }
+
+        } catch (err) {
+            console.log(err);
+            const time = new Date();
+            fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - studentEditData - ${err}\n`);
+            return res.status(500).send({ "message": "Internal Server Error." });
+        } finally {
+            await db_connection.query(`UNLOCK TABLES`);
+            db_connection.release();
+        }
+        },
+    ],
+
     studentVerify: [
         /*
         JSON

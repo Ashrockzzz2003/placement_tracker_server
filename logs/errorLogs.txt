@@ -55,3 +55,5 @@
 2023-11-13T13:39:14.859Z - addStudent - Error: Duplicate entry 'CB.EN.U4CSE21008' for key 'studentdata.studentRollNo'
 2023-11-13T13:39:21.091Z - addStudent - Error: Duplicate entry 'CB.EN.U4CSE21008' for key 'studentdata.studentRollNo'
 2023-12-12T14:20:35.222Z - forgotPassword - Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?)' at line 1
+2024-01-10T15:24:00.872Z - studentEditData - TypeError: Cannot read properties of undefined (reading 'userRole')
+2024-01-10T15:25:38.567Z - studentEditData - TypeError: Cannot read properties of undefined (reading 'authorization_tier')
