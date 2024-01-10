@@ -1668,8 +1668,8 @@ INSERT INTO placementData (studentId,companyID,ctc,jobRole,placementDate,isInter
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender, cgpa) VALUES (
     'CB.EN.U4CSE21008', 'cb.en.u4cse21008@cb.students.amrita.edu', '6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258', 'Ashwin Narayanan S', 'A', '2025', 'CSE', '0', '0', 'M', 9.35
 );
-INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES (
-    'CB.EN.U4CSE21001', 'cb.en.u4cse21001@cb.students.amrita.edu', '7a310ecc623837762671b2a2bb14856fc154872525884f69992f38b247dfc67c', 'Abhinav Ramakrishnan', 'A', '2025', 'CSE', '0', '0', 'M'
+INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender, cgpa) VALUES (
+    'CB.EN.U4CSE21001', 'cb.en.u4cse21001@cb.students.amrita.edu', '7a310ecc623837762671b2a2bb14856fc154872525884f69992f38b247dfc67c', 'Abhinav Ramakrishnan', 'A', '2025', 'CSE', '0', '0', 'M', 9.12
 );
 
 

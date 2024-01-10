@@ -560,7 +560,7 @@ module.exports = {
                     "studentDept": student[0].studentDept,
                     "isHigherStudies": student[0].isHigherStudies,
                     "isPlaced": student[0].isPlaced,
-                    "CGPA": student[0].cgpa
+                    "CGPA": student[0].CGPA
                 });
             }
 
@@ -1262,6 +1262,8 @@ module.exports = {
         }
     ],
 
+
+
     getCompanyHireDatabyBatch: [
         /*
         JSON
@@ -1417,6 +1419,75 @@ module.exports = {
             }
         }
     ],
+
+
+    getCompanyHireDatabyBatch: [
+        /*
+        JSON
+        {
+            "studentBatch": "<studentBatch>"
+        }
+        */
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || (req.body.userRole !== "1" && req.body.userRole !== "0" && req.body.userRole !== "2") ||
+                req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
+                (req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || isNaN(req.body.studentBatch))) {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            let db_connection = await db.promise().getConnection();
+
+            try {
+                await db_connection.query(`LOCK TABLES managementData READ, studentData READ, placementData p READ, companyData c READ, studentData s READ`);
+
+                if (req.body.userRole === "0" || req.body.userRole === "1") {
+
+                    let [manager] = await db_connection.query(`SELECT accountStatus from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+
+                    if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(401).send({ "message": "Access Restricted!" });
+                    }
+                }
+                else if (req.body.userRole === "2") {
+                    let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ?`, [req.body.userEmail]);
+
+                    if (student.length === 0 || student[0]["studentAccountStatus"] !== "1") {
+                        await db_connection.query(`UNLOCK TABLES`);
+                        return res.status(401).send({ "message": "Access Restricted!" });
+                    }
+
+                }
+
+                // extract section wise hire count for each company
+
+                // [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, 
+                //     count(p.id) as totalHires from placementData p left join companyData c 
+                //     on p.companyId = c.id group by p.companyId, p.ctc, p.jobRole order by p.companyId;`);
+
+                [companyHireData] = await db_connection.query(`select p.companyId, c.companyName, p.ctc, p.jobRole, s.studentSection, COUNT(p.id) AS totalHires FROM placementData p join companyData c on p.companyId=c.id join studentData s on p.studentId=s.id WHERE s.studentBatch = ? group by p.companyId, p.ctc, p.jobRole, s.studentSection order by p.companyId, p.ctc, p.jobRole, s.studentSection;`, [req.body.studentBatch]);
+
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({
+                    "message": "Company Wise Placement Data Fetched!",
+                    "companyHireData": companyHireData
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - getCompanyHireData - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+
+        }
+    ],
+
 
     getAllStudentData: [
         webTokenValidator,
