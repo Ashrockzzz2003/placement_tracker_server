@@ -99,7 +99,8 @@ CREATE TABLE placementData (
 );
 
 insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('ashrockzzz2003@gmail.com','6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258','Ashwin Narayanan S', '1', '1');
-insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) VALUES ('hsheadone@gmail.com', 'a7ea0f1c90cdd8e3e6d0afeb8d3340f170e0ccc4042be277419217425817f20e', 'Bindu K R', '0', '0');
+insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('hsheadone@gmail.com', 'a7ea0f1c90cdd8e3e6d0afeb8d3340f170e0ccc4042be277419217425817f20e', 'Bindu K R', '0', '0');
+insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('abhinavramki2@gmail.com', '7a310ecc623837762671b2a2bb14856fc154872525884f69992f38b247dfc67c', 'Abhinav R', '1', '1');
 
 insert into companyData (companyName,managerId) values('ABOBE',2);
 insert into companyData (companyName,managerId) values('ACCENTURE',2);
@@ -1668,7 +1669,7 @@ INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,
     'CB.EN.U4CSE21008', 'cb.en.u4cse21008@cb.students.amrita.edu', '6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258', 'Ashwin Narayanan S', 'A', '2025', 'CSE', '0', '0', 'M', 9.35
 );
 INSERT INTO studentData (studentRollNo,studentEmail,studentPassword,studentName,studentSection,studentBatch,studentDept,isHigherStudies,isPlaced, studentGender) VALUES (
-    'CB.EN.U4CSE21001', 'cb.en.u4cse21001@cb.students.amrita.edu', '6f28f4faf56bb704ae154fc2d2b2ba0d72f8a9ea06c3b8a3ed0be6836da9e258', 'Abhinav Ramakrishnan', 'A', '2025', 'CSE', '0', '0', 'M'
+    'CB.EN.U4CSE21001', 'cb.en.u4cse21001@cb.students.amrita.edu', '7a310ecc623837762671b2a2bb14856fc154872525884f69992f38b247dfc67c', 'Abhinav Ramakrishnan', 'A', '2025', 'CSE', '0', '0', 'M'
 );
 
 
