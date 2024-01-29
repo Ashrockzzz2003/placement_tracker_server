@@ -474,9 +474,17 @@ module.exports = {
         try {
 
             if (req.authorization_tier === "1" || req.authorization_tier === "0"){
-                return res.status(400).send({ "message": "Functionality Not Available Yet!" });
+                //return res.status(400).send({ "message": "Functionality Not Available Yet!" });
+                await db_connection.query(`LOCK TABLES studentData WRITE`);
+                    
+                await db_connection.query(`UPDATE  studentData SET studentName = ?, studentSection = ?, studentGender = ?, studentBatch = ?, isHigherStudies = ?, CGPA = ? where studentEmail = ?`, [req.body.studentName, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.isHigherStudies, req.body.CGPA ,req.body.studentEmail]);
+                    
+                await db_connection.query(`UNLOCK TABLES`);
+
+                return res.status(200).send({ "message": "Student Data Updated!" });
+            
             }
-            else if (req.authorization_tier === "2"){
+            if (req.authorization_tier === "2"){
                 if (req.body.userEmail !== req.body.studentEmail){
                     return res.status(400).send({ "message": "Access Restricted!" });
                 }
@@ -1846,7 +1854,19 @@ module.exports = {
 
                     await db_connection.query(`LOCK TABLES studentData READ`);
 
-                    let [student] = await db_connection.query(`SELECT * from studentData WHERE id = ?`, [studentId]);
+                    let [student] = await db_connection.query(`SELECT 
+                    id AS studentId,
+                    studentRollNo,
+                    studentEmail,
+                    studentName,
+                    studentSection,
+                    studentGender,
+                    studentBatch,
+                    studentDept,
+                    isHigherStudies,
+                    isPlaced,
+                    CGPA,
+                    studentAccountStatus from studentData WHERE id = ?`, [studentId]);
 
                     if (student.length === 0) {
                         await db_connection.query(`UNLOCK TABLES`);
@@ -1857,7 +1877,7 @@ module.exports = {
 
                     await db_connection.query(`LOCK TABLES placementData p READ, companyData c READ`);
 
-                    let [studentPlacementData] = await db_connection.query(`select p.id as placementID, companyID, companyName, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, extraData from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = 1 ORDER BY p.ctc;`, [studentId]);
+                    let [studentPlacementData] = await db_connection.query(`select p.id as placementID, companyID, companyName, ctc, jobRole, jobLocation, placementDate, isIntern, isPPO, isOnCampus, isGirlsDrive, extraData from placementData p left join companyData c on p.companyId = c.id WHERE p.studentId = ? ORDER BY p.ctc;`, [studentId]);
 
                     if (studentPlacementData.length === 0) {
                         await db_connection.query(`UNLOCK TABLES`);
