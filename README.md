@@ -1,5 +1,8 @@
 # Server for Amrita Placement Tracker
 
+<img align='center' src="https://img.shields.io/github/created-at/Ashrockzzz2003/placement_tracker_server"/>
+<img src="https://github.com/Ashrockzzz2003/placement_tracker_web/blob/v2/public/logo.png?raw=true" style="width: 280px;" />
+
 ## About
 
 This is the backend server for a web application for tracking the placement activities of the students of Amrita School of Computing, Coimbatore.
