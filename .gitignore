@@ -3,3 +3,6 @@
 **/.DS_Store
 /mail/mailer.js
 /schema/preprocessing/
+
+.env
+.env.local

@@ -356,9 +356,9 @@ module.exports = {
             return res.status(400).send({ "message": "Missing details." });
         }
 
-        if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
-            return res.status(400).send({ "message": "Missing details." });
-        }
+        // if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
+        //     return res.status(400).send({ "message": "Missing details." });
+        // }
 
         let db_connection = await db.promise().getConnection();
 
