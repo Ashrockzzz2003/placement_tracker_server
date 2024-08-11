@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-    
+
 
 jobs:
   prepare:
@@ -18,7 +18,6 @@ jobs:
       - name: Fetch Dockerfile
         run: |
           curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/dockerfiles/placement_tracker_server/Dockerfile
-          mv Dockerfile Dockerfile
 
       - name: Cache Dockerfile
         uses: actions/cache@v3
