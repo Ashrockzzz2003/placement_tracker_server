@@ -1,14 +1,16 @@
+const tableNames = require("../tableNames"); 
+
 const unlockTables = "UNLOCK TABLES";
 
 const toggleOfficialAccountStatus = 
 {
     locks: {
-        lockManagerData: "LOCK TABLES managementData WRITE"
+        lockManagerData: `LOCK TABLES ${tableNames.managementData} WRITE`
     },
     queries: {
-        checkIfUserIsAdmin: "SELECT * from managementData WHERE managerEmail = ? AND managerRole = ?",
-        checkIfManagerExists: "SELECT * from managementData WHERE id = ?",
-        changeAccountStatus: "UPDATE managementData SET accountStatus = ? WHERE id = ?"
+        checkIfUserIsAdmin: `SELECT * from ${tableNames.managementData.name} WHERE ${tableNames.managementData.managerEmail} = ? AND ${tableNames.managementData.role} = ?`,
+        checkIfManagerExists: `SELECT * from ${tableNames.managementData.name} WHERE ${tableNames.managementData.id} = ?`,
+        changeAccountStatus: `UPDATE ${tableNames.managementData.name} SET ${tableNames.managementData.accountStatus} = ? WHERE ${tableNames.managementData.id} = ?`
     }
 }
 
