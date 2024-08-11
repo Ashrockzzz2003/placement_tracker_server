@@ -70,7 +70,7 @@ on:
 env:
   PROJECT_ID: cloud-computing-project-432117 # TODO: update Google Cloud project id
   GAR_LOCATION: us # TODO: update Artifact Registry location
-  SERVICE: placement-tracker-server # TODO: update Cloud Run service name
+  SERVICE: placement_tracker_server # TODO: update Cloud Run service name
   REGION: asia-south1 # TODO: update Cloud Run service region
 
 jobs:
