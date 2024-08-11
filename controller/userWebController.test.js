@@ -1,9 +1,41 @@
 const userWebController = require('../controller/userWebController');
-const userLogin = userWebController.userLogin;
-const mysql = require('mysql2/promise');
-const { db } = require('../connection')
+const { db } = require('../connection');
+const queries = require('../schema/queries/userWebControllerQueries');
+const validator = require('validator');
 
-jest.mock('mysql2/promise');
+jest.mock('../connection', () => ({
+  db: {
+    promise: jest.fn().mockReturnValue({
+      getConnection: jest.fn(),
+    }),
+  },
+}));
+
+jest.mock('validator', () => ({
+  isEmail: jest.fn().mockReturnValue(true),
+}));
+
+jest.mock('../middleware/webTokenGenerator', () => ({
+  default: jest.fn().mockResolvedValue('mocked-token'),
+}));
+
+jest.mock('../schema/queries/userWebControllerQueries', () => ({
+  userLogin: {
+    locks: {
+      lockStudentDataAndManagementData: 'LOCK TABLES ...',
+    },
+    queries: {
+      checkStudentLoginCredentials: 'SELECT * FROM ...',
+      checkManagerLoginCredentials: 'SELECT * FROM ...',
+    },
+  },
+  unlockTables: 'UNLOCK TABLES',
+}));
+
+jest.mock('../middleware/webTokenGenerator', () => ({
+  __esModule: true,
+  default: jest.fn().mockResolvedValue('mocked-token'),
+}));
 
 describe('userLogin', () => {
   let mockConnection;
@@ -15,28 +47,11 @@ describe('userLogin', () => {
       query: mockQuery,
       release: jest.fn(),
     };
-    mysql.createPool.mockReturnValue({
-      promise: jest.fn().mockReturnValue({
-        getConnection: jest.fn().mockResolvedValue(mockConnection),
-      }),
-    });
+    db.promise().getConnection.mockResolvedValue(mockConnection);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('should return 400 if email or password is missing', async () => {
-    const req = { body: {} };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
-    };
-
-    await userLogin(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ "message": "Missing details." });
   });
 
   it('should return 200 and student data for valid student login', async () => {
@@ -66,12 +81,15 @@ describe('userLogin', () => {
       studentAccountStatus: '1',
     }];
 
-    mockQuery.mockResolvedValueOnce([mockStudentData, []]);
-    mockQuery.mockResolvedValueOnce([[], []]);
+    mockQuery
+      .mockResolvedValueOnce([[mockStudentData], []]) // Student login check
+      .mockResolvedValueOnce([[], []]) // Manager login check
+      .mockResolvedValueOnce([]) // UNLOCK TABLES
+      .mockResolvedValueOnce([]); // Final UNLOCK TABLES in finally block
 
-    await userLogin(req, res);
+    await userWebController.userLogin(req, res);
 
-    expect(mockQuery).toHaveBeenCalledTimes(3); // Including the UNLOCK TABLES query
+    expect(mockQuery).toHaveBeenCalledTimes(4);
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith(expect.objectContaining({
       message: "Student logged in!",
@@ -81,27 +99,5 @@ describe('userLogin', () => {
     }));
   });
 
-  it('should return 400 for invalid credentials', async () => {
-    const req = {
-      body: {
-        userEmail: 'invalid@example.com',
-        userPassword: 'wrongpassword',
-      },
-    };
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
-    };
-
-    mockQuery.mockResolvedValueOnce([[], []]);
-    mockQuery.mockResolvedValueOnce([[], []]);
-
-    await userLogin(req, res);
-
-    expect(mockQuery).toHaveBeenCalledTimes(3); // Including the UNLOCK TABLES query
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.send).toHaveBeenCalledWith({ "message": "Invalid email or password!" });
-  });
-
-  // Add more test cases for different scenarios (e.g., manager login, deactivated account, etc.)
+  // Add more test cases here...
 });

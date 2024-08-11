@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "deploy": "pm2 start index.js -i max --name placement_tracker",
-    "test": "jest"
+    "test": "jest",
+    "local_actions":""
   },
   "author": "Ashwin Narayanan S",
   "license": "ISC",

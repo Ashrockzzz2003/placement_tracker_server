@@ -3,5 +3,7 @@
 **/.DS_Store
 /schema/preprocessing/
 
+./Dockerfile
+
 .env
 .env.local
