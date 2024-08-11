@@ -4,11 +4,11 @@
 /schema/preprocessing/
 
 # RSA Keys
-./RSA/public_key.pem
-./RSA/private_key.pem
+/RSA/public_key.pem
+/RSA/private_key.pem
 
 # Docker
-./Dockerfile
+/Dockerfile
 
 # Environment Variables
 .env
