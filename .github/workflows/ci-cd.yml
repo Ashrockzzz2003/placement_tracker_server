@@ -25,7 +25,7 @@ jobs:
           path: ./Dockerfile
           key: ${{ runner.os }}-dockerfile-${{ github.sha }}
 
-  trigger-shared-workflow:
+  main-workflow:
     needs: prepare
     uses: Abhinav-ark/placement_tracker_cicd/.github/workflows/placement_tracker_server_deploy.yml@main
     with:
