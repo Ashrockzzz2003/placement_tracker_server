@@ -3,7 +3,13 @@
 **/.DS_Store
 /schema/preprocessing/
 
+# RSA Keys
+./RSA/public_key.pem
+./RSA/private_key.pem
+
+# Docker
 ./Dockerfile
 
+# Environment Variables
 .env
 .env.local
