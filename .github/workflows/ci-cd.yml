@@ -15,7 +15,7 @@ jobs:
 
       - name: Fetch Dockerfile
         run: |
-          curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/dockerfiles/placement_tracker_server
+          curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/dockerfiles/placement_tracker_server/Dockerfile
           mv Dockerfile Dockerfile
 
       - name: Cache Dockerfile
@@ -26,7 +26,7 @@ jobs:
 
   trigger-shared-workflow:
     needs: prepare
-    uses: Abhinav-ark/placement_tracker_cicd/.github/workflows/placement_tracker_server/deploy.yml@main
+    uses: Abhinav-ark/placement_tracker_cicd/.github/workflows/placement_tracker_server_deploy.yml@main
     with:
       branch: ${{ github.ref }}
     secrets:
