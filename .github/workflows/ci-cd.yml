@@ -15,7 +15,7 @@ jobs:
 
       - name: Fetch Dockerfile
         run: |
-          curl -O https://raw.githubusercontent.com/your-username/shared-workflows/main/dockerfiles/repo1.Dockerfile
+          curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/dockerfiles/placement_tracker_server/Dockerfile
           mv repo1.Dockerfile Dockerfile
 
       - name: Cache Dockerfile
@@ -37,3 +37,5 @@ jobs:
       MAIL_USER: ${{ secrets.MAIL_USER }}
       MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+      WIF_SERVICE_ACCOUNT: ${{ secrets.WIF_SERVICE_ACCOUNT }}
