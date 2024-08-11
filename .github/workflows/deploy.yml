@@ -128,8 +128,8 @@ jobs:
             --build-arg MAIL_USER=${{ secrets.MAIL_USER }} \
             --build-arg MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }} \
             --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
-            -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" .
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+            -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE_PREFIX }}/${{ env.SERVICE }}:${{ github.sha }}" .
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE_PREFIX }}/${{ env.SERVICE }}:${{ github.sha }}"
 
       # END - Docker auth and build
 
