@@ -9,6 +9,7 @@ env:
   GAR_LOCATION: us
   SERVICE: placement_tracker_server
   REGION: asia-south1
+  SERVICE_PREFIX: gcr.io
   CLOUD_RUN_SERVICE: placement-tracker-server
 
 jobs:
@@ -49,8 +50,8 @@ jobs:
             --build-arg MAIL_USER=${{ secrets.MAIL_USER }} \
             --build-arg MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }} \
             --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} \
-            -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" .
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+            -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE_PREFIX }}/${{ env.SERVICE }}:${{ github.sha }}" .
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE_PREFIX }}/${{ env.SERVICE }}:${{ github.sha }}"
 
   deploy:
     needs: build
@@ -75,7 +76,7 @@ jobs:
         with:
           service: ${{ env.CLOUD_RUN_SERVICE }}
           region: ${{ env.REGION }}
-          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+          image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.SERVICE_PREFIX }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
