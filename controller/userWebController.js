@@ -11,6 +11,7 @@ const passwordGenerator = require('secure-random-password');
 const crypto = require('crypto');
 
 const mailer = require('../mail/mailer');
+const queries = require('../schema/queries/userWebControllerQueries');
 
 const fs = require('fs');
 const validator = require('validator');
@@ -614,17 +615,19 @@ module.exports = {
         let db_connection = await db.promise().getConnection();
 
         try {
-            await db_connection.query(`LOCK TABLES studentData READ, managementData READ`);
+            //await db_connection.query(`LOCK TABLES studentData READ, managementData READ`);
+            await db_connection.query(queries.userLogin.locks.lockStudentDataAndManagementData);
 
-            let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? AND studentPassword = ?`, [req.body.userEmail, req.body.userPassword]);
+            //let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? AND studentPassword = ?`, [req.body.userEmail, req.body.userPassword]);
+            let [student] = await db_connection.query(queries.userLogin.queries.checkStudentLoginCredentials, [req.body.userEmail, req.body.userPassword]);
 
             if (student.length > 0) {
 
                 if (student[0].studentAccountStatus === "2") {
-                    await db_connection.query(`UNLOCK TABLES`);
+                    await db_connection.query(queries.unlockTables);
                     return res.status(401).send({ "message": "Your Account has been deactivated. Check you mail for further instructions." });
                 } else if (student[0].studentAccountStatus !== "1") {
-                    await db_connection.query(`UNLOCK TABLES`);
+                    await db_connection.query(queries.unlockTables);
                     return res.status(401).send({ "message": "Access Restricted." });
                 }
 
@@ -633,7 +636,7 @@ module.exports = {
                     "userRole": "2",
                 });
 
-                await db_connection.query(`UNLOCK TABLES`);
+                await db_connection.query(queries.unlockTables);
 
                 return res.status(200).send({
                     "message": "Student logged in!",
@@ -652,11 +655,12 @@ module.exports = {
                 });
             }
 
-            let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ? AND managerPassword = ?`, [req.body.userEmail, req.body.userPassword]);
+            //let [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ? AND managerPassword = ?`, [req.body.userEmail, req.body.userPassword]);
+            let [manager] = await db_connection.query(queries.userLogin.queries.checkManagerLoginCredentials, [req.body.userEmail, req.body.userPassword]);
 
             if (manager.length > 0) {
                 if (manager[0].accountStatus === "2") {
-                    await db_connection.query(`UNLOCK TABLES`);
+                    await db_connection.query(queries.unlockTables);
                     return res.status(401).send({ "message": "Your Account has been deactivated. Check you mail for further instructions." });
                 }
 
@@ -664,16 +668,20 @@ module.exports = {
                     // send otp to the manager's email. First time verification.
                     const otp = generateOTP();
 
-                    await db_connection.query(`LOCK TABLES managementRegister WRITE`);
+                    //await db_connection.query(`LOCK TABLES managementRegister WRITE`);
+                    await db_connection.query(queries.userLogin.locks.lockManagementRegister);
 
-                    let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
+                    //let [manager_2] = await db_connection.query(`SELECT * from managementRegister WHERE managerEmail = ?`, [req.body.userEmail]);
+                    let [manager_2] = await db_connection.query(queries.userLogin.queries.checkIfManagerIsRegistered, [req.body.userEmail]);
 
                     if (manager_2.length === 0) {
-                        await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp) VALUES (?, ?)`, [req.body.userEmail, otp]);
+                        //await db_connection.query(`INSERT INTO managementRegister (managerEmail, otp) VALUES (?, ?)`, [req.body.userEmail, otp]);
+                        await db_connection.query(queries.userLogin.queries.registerManager, [req.body.userEmail, otp]);
                     } else {
-                        await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, Date.now(), req.body.userEmail]);
+                        //await db_connection.query(`UPDATE managementRegister SET otp = ?, createdAt = ? WHERE managerEmail = ?`, [otp, Date.now(), req.body.userEmail]);\
+                        await db_connection.query(queries.userLogin.queries.updateManagerOtp, [otp, Date.now(), req.body.userEmail]);
+                    
                     }
-
 
 
                     // send mail
@@ -684,7 +692,7 @@ module.exports = {
                         "userRole": manager[0].managerRole,
                     });
 
-                    await db_connection.query(`UNLOCK TABLES`);
+                    await db_connection.query(queries.unlockTables);
 
                     return res.status(201).send({
                         "message": "First time login! OTP sent to email.",
@@ -693,7 +701,7 @@ module.exports = {
                         "managerName": manager[0].managerName,
                     });
                 } else if (manager[0].accountStatus !== "1") {
-                    await db_connection.query(`UNLOCK TABLES`);
+                    await db_connection.query(queries.unlockTables);
                     return res.status(401).send({ "message": "Access Restricted." });
                 }
 
@@ -702,7 +710,7 @@ module.exports = {
                     "userRole": manager[0].managerRole,
                 });
 
-                await db_connection.query(`UNLOCK TABLES`);
+                await db_connection.query(queries.unlockTables);
 
                 return res.status(200).send({
                     "message": "Manager logged in!",
@@ -715,7 +723,7 @@ module.exports = {
                 });
             }
 
-            await db_connection.query(`UNLOCK TABLES`);
+            await db_connection.query(queries.unlockTables);
 
             return res.status(400).send({ "message": "Invalid email or password!" });
         } catch (err) {
@@ -724,7 +732,7 @@ module.exports = {
             fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - userLogin - ${err}\n`);
             return res.status(500).send({ "message": "Internal Server Error." });
         } finally {
-            await db_connection.query(`UNLOCK TABLES`);
+            await db_connection.query(queries.unlockTables);
             db_connection.release();
         }
     },
