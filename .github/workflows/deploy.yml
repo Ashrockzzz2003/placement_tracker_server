@@ -70,9 +70,10 @@ on:
 env:
   PROJECT_ID: cloud-computing-project-432117 # TODO: update Google Cloud project id
   GAR_LOCATION: us # TODO: update Artifact Registry location
-  SERVICE: placement_tracker_server # TODO: update Cloud Run service name
+  SERVICE: placement_tracker_server # TODO: update Artifact service name
   REGION: asia-south1 # TODO: update Cloud Run service region
   SERVICE_PREFIX: gcr.io
+  CLOUD_RUN_SERVICE: placement-tracker-server
 
 jobs:
   deploy:
@@ -137,7 +138,7 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v0.8.0
         with:
-          service: ${{ env.SERVICE }}
+          service: ${{ env.CLOUD_RUN_SERVICE }}
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.SERVICE_PREFIX }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
