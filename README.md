@@ -34,6 +34,3 @@ This is the backend server for a web application for tracking the placement acti
 
 `Abhinav R`
 
-
-
-> The mailer is hidden for security reasons.
