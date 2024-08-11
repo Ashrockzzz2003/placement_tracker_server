@@ -17,7 +17,7 @@ jobs:
 
       - name: Fetch Dockerfile
         run: |
-          curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/dockerfiles/placement_tracker_server/Dockerfile
+          curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/main/dockerfiles/placement_tracker_server/Dockerfile
 
       - name: Cache Dockerfile
         uses: actions/cache@v3
