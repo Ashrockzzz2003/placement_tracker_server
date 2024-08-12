@@ -7,7 +7,7 @@
     "start": "node index.js",
     "deploy": "pm2 start index.js -i max --name placement_tracker",
     "test": "jest",
-    "local_actions":""
+    "local_actions": ""
   },
   "author": "Ashwin Narayanan S",
   "license": "ISC",
@@ -26,6 +26,7 @@
     "paseto": "^3.1.4",
     "process": "^0.11.10",
     "secure-random-password": "^0.2.3",
+    "supertest": "^7.0.0",
     "validator": "^13.9.0"
   }
 }
