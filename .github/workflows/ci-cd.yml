@@ -1,0 +1,42 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch Dockerfile
+        run: |
+          curl -O https://raw.githubusercontent.com/Abhinav-ark/placement_tracker_cicd/main/dockerfiles/placement_tracker_server/Dockerfile
+
+      - name: Cache Dockerfile
+        uses: actions/cache@v3
+        with:
+          path: ./Dockerfile
+          key: ${{ runner.os }}-dockerfile-${{ github.sha }}
+
+  main-workflow:
+    needs: prepare
+    uses: Abhinav-ark/placement_tracker_cicd/.github/workflows/placement_tracker_server_deploy.yml@main
+    with:
+      branch: ${{ github.ref }}
+    secrets:
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      MAIL_USER: ${{ secrets.MAIL_USER }}
+      MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+      WIF_SERVICE_ACCOUNT: ${{ secrets.WIF_SERVICE_ACCOUNT }}

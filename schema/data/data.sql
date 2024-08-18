@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS placement_tracker;
+
+USE placement_tracker;
+
 DROP TABLE IF EXISTS placementData;
 DROP TABLE IF EXISTS companyData;
 DROP TABLE IF EXISTS studentRegister;

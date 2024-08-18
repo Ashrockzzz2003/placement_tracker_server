@@ -1,5 +1,15 @@
 /node_modules
 
 **/.DS_Store
-/mail/mailer.js
 /schema/preprocessing/
+
+# RSA Keys
+/RSA/public_key.pem
+/RSA/private_key.pem
+
+# Docker
+/Dockerfile
+
+# Environment Variables
+.env
+.env.local
