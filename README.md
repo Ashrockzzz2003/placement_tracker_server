@@ -27,7 +27,7 @@ This is the backend server for a web application for tracking the placement acti
     ```sh
     npm start
     ```
-## Create a .env file in the root directory of the project, and add the following environment variables:
+### Create a .env file in the root directory of the project, and add the following environment variables:
  ```sh
 DB_HOST=<your-database-host>
 DB_USER=<your-database-user>
