@@ -28,11 +28,14 @@ This is the backend server for a web application for tracking the placement acti
     npm start
     ```
 ## Create a .env file in the root directory of the project, and add the following environment variables:
+ ```sh
+    
+   
 DB_HOST=<your-database-host>
 DB_USER=<your-database-user>
 DB_PASSWORD=<your-database-password>
 DB_NAME=<your-database-name>
-
+```
 ## Team
 
 `Ashwin Narayanan S`
