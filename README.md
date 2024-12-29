@@ -23,7 +23,7 @@ This is the backend server for a web application for tracking the placement acti
     npm install
     ```
 2. Create a .env.local file in the root directory of the project, and add the following environment variables:
-      ```env
+    ```env
     DB_HOST=<your-database-host>
     DB_USER=<your-database-user>
     DB_PASSWORD=<your-database-password>
