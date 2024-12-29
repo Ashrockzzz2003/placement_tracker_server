@@ -24,10 +24,10 @@ This is the backend server for a web application for tracking the placement acti
     ```
 2. Create a .env file in the root directory of the project, and add the following environment variables:
  ```sh
-DB_HOST=<your-database-host>
-DB_USER=<your-database-user>
-DB_PASSWORD=<your-database-password>
-DB_NAME=<your-database-name>
+    DB_HOST=<your-database-host>
+    DB_USER=<your-database-user>
+    DB_PASSWORD=<your-database-password>
+    DB_NAME=<your-database-name>
 ```
 
 3. Run the App in Development Mode
