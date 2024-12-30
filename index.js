@@ -11,7 +11,9 @@ const reInitDatabase = require("./schema/reInitDatabase");
 const server = express();
 const cors = require('cors');
 
-const userWebRouter = require('./routes/userWeb');
+const authrouter = require('./routes/auth.js');
+const studentrouter = require('./routes/student.js'); 
+const managerrouter = require('./routes/manager.js'); 
 
 const { generateKey } = require('./RSA/keyGen');
 
