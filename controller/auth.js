@@ -419,5 +419,203 @@ module.exports = {
                 db_connection.release();
             }
         }
+    ],
+
+    studentRegister: async (req, res) => {
+        /*
+        JSON
+        {
+            "studentRollNo": "<roll_no>",
+            "studentEmail": "<email_id>",
+            "studentName": "<name>",
+            "studentPassword": "<password>",
+            "studentSection": "<section>",
+            "studentGender": "<M/F/O>"
+            "studentBatch": "<batch>",
+            "studentDept": "<dept>",
+            "isHigherStudies": "<0/1>",
+            "isPlaced": "<0/1>",
+            "CGPA": "<XX.XX>"
+        }
+        */
+
+        if (req.body.studentEmail === null || req.body.studentEmail === undefined || req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail) ||
+            req.body.studentPassword === null || req.body.studentPassword === undefined || req.body.studentPassword === "") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.studentRollNo === null || req.body.studentRollNo === undefined || req.body.studentRollNo === "" || req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" || req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" || req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" || req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" || req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" || req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" || req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" || req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.studentGender !== "M" && req.body.studentGender !== "F" && req.body.studentGender !== "O") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.isHigherStudies !== "0" && req.body.isHigherStudies !== "1") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (req.body.isPlaced !== "0" && req.body.isPlaced !== "1") {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        if (parseFloat(req.body.CGPA) < 0 || parseFloat(req.body.CGPA) > 10) {
+            return res.status(400).send({ "message": "Missing details." });
+        }
+
+        // if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
+        //     return res.status(400).send({ "message": "Missing details." });
+        // }
+
+        let db_connection = await db.promise().getConnection();
+
+        try {
+            await db_connection.query(`LOCK TABLES studentData READ, managementData READ`);
+
+            // check if student email already registered
+            const [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? or studentRollNo = ?`, [req.body.studentEmail, req.body.studentRollNo]);
+            const [manager] = await db_connection.query(`SELECT * from managementData WHERE managerEmail = ?`, [req.body.studentEmail]);
+            if (student.length > 0 || manager.length > 0) {
+                await db_connection.query(`UNLOCK TABLES`);
+                return res.status(400).send({ "message": "Student already registered!" });
+            }
+
+            const otp = generateOTP();
+
+            await db_connection.query(`LOCK TABLES studentRegister WRITE`);
+
+            let [student_2] = await db_connection.query(`SELECT * from studentRegister WHERE studentEmail = ?`, [req.body.studentEmail]);
+
+            if (student_2.length === 0) {
+                await db_connection.query(`INSERT INTO studentRegister (studentEmail, otp) VALUES (?, ?)`, [req.body.studentEmail, otp]);
+            } else {
+                await db_connection.query(`UPDATE studentRegister SET otp = ?, createdAt = ? WHERE studentEmail = ?`, [otp, Date.now(), req.body.studentEmail]);
+            }
+
+
+
+            const secret_token = await otpTokenGenerator({
+                "userEmail": req.body.studentEmail,
+                "userRole": "2",
+                "studentRollNo": req.body.studentRollNo,
+                "studentName": req.body.studentName,
+                "studentPassword": req.body.studentPassword,
+                "studentSection": req.body.studentSection,
+                "studentGender": req.body.studentGender,
+                "studentBatch": req.body.studentBatch,
+                "studentDept": req.body.studentDept,
+                "isHigherStudies": req.body.isHigherStudies,
+                "isPlaced": req.body.isPlaced,
+                "CGPA": req.body.CGPA
+            });
+
+            //console.log(req.body.studentEmail, otp);
+            mailer.loginOTP(req.body.studentName, otp, req.body.studentEmail);
+            await db_connection.query(`UNLOCK TABLES`);
+
+            return res.status(200).send({
+                "message": "OTP sent to email.",
+                "SECRET_TOKEN": secret_token,
+                "studentEmail": req.body.studentEmail,
+                "studentRollNo": req.body.studentRollNo,
+            });
+
+        } catch (err) {
+            console.log(err);
+            const time = new Date();
+            fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - studentRegister - ${err}\n`);
+            return res.status(500).send({ "message": "Internal Server Error." });
+        } finally {
+            await db_connection.query(`UNLOCK TABLES`);
+            db_connection.release();
+        }
+    },
+
+    studentVerify: [
+        /*
+        JSON
+        {
+            "otp":"<otp>"
+        }
+        */
+        otpTokenValidator,
+        async (req, res) => {
+            if (req.authorization_tier !== "2" || req.body.studentEmail === null || req.body.studentEmail === undefined ||
+                req.body.studentEmail === "" || !validator.isEmail(req.body.studentEmail) ||
+                req.body.studentRollNo === null || req.body.studentRollNo === undefined || req.body.studentRollNo === "" ||
+                req.body.studentPassword === null || req.body.studentPassword === undefined || req.body.studentPassword === "" ||
+                req.body.otp === null || req.body.otp === undefined || req.body.otp === "") {
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+            if (req.body.studentName === null || req.body.studentName === undefined || req.body.studentName === "" ||
+                req.body.studentSection === null || req.body.studentSection === undefined || req.body.studentSection === "" ||
+                req.body.studentGender === null || req.body.studentGender === undefined || req.body.studentGender === "" ||
+                req.body.studentBatch === null || req.body.studentBatch === undefined || req.body.studentBatch === "" ||
+                req.body.studentDept === null || req.body.studentDept === undefined || req.body.studentDept === "" ||
+                req.body.isHigherStudies === null || req.body.isHigherStudies === undefined || req.body.isHigherStudies === "" ||
+                req.body.isPlaced === null || req.body.isPlaced === undefined || req.body.isPlaced === "" ||
+                req.body.CGPA === null || req.body.CGPA === undefined || req.body.CGPA === "") {
+                console.log(req);
+                return res.status(400).send({ "message": "Access Restricted!" });
+            }
+
+
+            let db_connection = await db.promise().getConnection();
+            try {
+                await db_connection.query(`LOCK TABLES studentRegister WRITE, studentData WRITE`);
+
+                //let check = await db_connection.query(`Delete from studentRegister where studentEmail = ? and otp = ?`, [req.body.studentEmail,req.body.otp]);
+                //console.log(check);
+                const [check_1] = await db_connection.query(`Delete from studentRegister where studentEmail = ? and otp = ?`, [req.body.studentEmail, req.body.otp]);
+                if (check_1.affectedRows === 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Invalid OTP!" });
+                }
+
+                let [student] = await db_connection.query(`SELECT * from studentData WHERE studentEmail = ? or studentRollNo = ?`, [req.body.studentEmail, req.body.studentRollNo]);
+
+                if (student.length > 0) {
+                    await db_connection.query(`UNLOCK TABLES`);
+                    return res.status(400).send({ "message": "Student already registered!" });
+                }
+                else {
+                    await db_connection.query(`INSERT INTO studentData (studentRollNo, studentEmail, studentName, studentPassword, studentSection, studentGender, studentBatch, studentDept, isHigherStudies, isPlaced, CGPA, studentAccountStatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [req.body.studentRollNo, req.body.studentEmail, req.body.studentName, req.body.studentPassword, req.body.studentSection, req.body.studentGender, req.body.studentBatch, req.body.studentDept, req.body.isHigherStudies, req.body.isPlaced, req.body.CGPA, "1"]);
+                    await db_connection.query(`UNLOCK TABLES`);
+                }
+
+                const secret_token = await webTokenGenerator({
+                    "userEmail": req.body.studentEmail,
+                    "userRole": "2"
+                });
+
+                return res.status(200).send({
+                    "message": "Student verifed successfully!",
+                    "SECRET_TOKEN": secret_token,
+                    "studentEmail": req.body.studentEmail,
+                    "studentName": req.body.studentName,
+                    "studentRollNo": req.body.studentRollNo,
+                    "studentId": req.body.id,
+                    "studentSection": req.body.studentSection,
+                    "studentGender": req.body.studentGender,
+                    "studentBatch": req.body.studentBatch,
+                    "studentDept": req.body.studentDept,
+                    "isHigherStudies": req.body.isHigherStudies,
+                    "isPlaced": req.body.isPlaced,
+                    "CGPA": req.body.CGPA
+                });
+
+            } catch (err) {
+                console.log(err);
+                const time = new Date();
+                fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - studentVerify - ${err}\n`);
+                return res.status(500).send({ "message": "Internal Server Error." });
+            } finally {
+                await db_connection.query(`UNLOCK TABLES`);
+                db_connection.release();
+            }
+
+        }
     ]
 }
