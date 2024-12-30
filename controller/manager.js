@@ -1,11 +1,8 @@
 const { db } = require('../connection')
 
 const webTokenValidator = require('../middleware/webTokenValidator');
-
 const passwordGenerator = require('secure-random-password');
-
 const crypto = require('crypto');
-
 const mailer = require('../mail/mailer');
 
 const fs = require('fs');

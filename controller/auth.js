@@ -1,7 +1,6 @@
 const { db } = require('../connection')
 
 const webTokenGenerator = require('../middleware/webTokenGenerator');
-const webTokenValidator = require('../middleware/webTokenValidator');
 const otpTokenGenerator = require('../middleware/otpTokenGenerator');
 const [otpTokenValidator, resetPasswordValidator] = require('../middleware/otpTokenValidator');
 
