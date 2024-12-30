@@ -15,10 +15,6 @@ const validator = require('validator');
 const tokenValidator = require('../middleware/webTokenValidator');
 
 module.exports = {
-    test: async (req, res) => {
-        return res.status(200).send({ "message": 'Ok' });
-    },
-
     userLogin: async (req, res) => {
         /*
         JSON
