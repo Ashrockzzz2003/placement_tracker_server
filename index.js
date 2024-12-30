@@ -27,7 +27,9 @@ server.use(express.json());
 server.use(cors());
 server.disable('x-powered-by');
 
-server.use('/api', userWebRouter);
+router.use('/auth', authrouter); 
+router.use('/student', studentrouter); 
+router.use('/manager', managerrouter); 
 
 if (cluster.isPrimary) {
     console.log(`[MESSAGE]: Master ${process.pid} is running.`);
