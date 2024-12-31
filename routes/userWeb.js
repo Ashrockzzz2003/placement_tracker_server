@@ -34,4 +34,6 @@ router.post('/getAllStudentData',userWebController.getAllStudentData);
 router.get('/getTopFivePlacements',userWebController.getTop5Placements);
 router.post('/getAllPlacedStudentData',userWebController.getAllPlacedStudentsData);
 
+router.post('/manager/profile/edit', userWebController.editManagerProfileById);
+
 module.exports = router;
