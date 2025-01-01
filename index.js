@@ -32,6 +32,7 @@ server.disable('x-powered-by');
 // server.use('api/auth', authrouter);
 // server.use('api/student', studentrouter);
 // server.use('api/manager', managerrouter);
+// New routes
 server.use('/api/auth', authrouter);
 server.use('/api/student', studentrouter);
 server.use('/api/manager', managerrouter);
