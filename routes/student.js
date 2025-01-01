@@ -8,3 +8,5 @@ router.post('/addStudent', studentcontroll.addStudent);
 router.post('/getStudentPlacements', studentcontroll.getStudentPlacements);
 router.post('/getAllStudentData',studentcontroll.getAllStudentData);
 router.post('/getAllPlacedStudentData',studentcontroll.getAllPlacedStudentsData);
+
+module.exports = router;

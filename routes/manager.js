@@ -18,3 +18,5 @@ router.post('/editPlacementDataById', managercontroll.editPlacementDataById);
 router.get('/getCompanyHireData',managercontroll.getCompanyHireData);
 router.post('/getCompanyHireDataByBatch',managercontroll.getCompanyHireDatabyBatch);
 router.post('/getCompanyHireDataById',managercontroll.getCompanyHireDataById);
+
+module.exports = router;
