@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router();
 const authcontroll = require('../controller/auth');
 
+router.get('/test', authcontroll.test);
+
 router.post('/studentRegister', authcontroll.studentRegister);
 router.post('/studentLoginVerify', authcontroll.studentVerify);
 
