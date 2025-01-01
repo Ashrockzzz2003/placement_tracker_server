@@ -1962,15 +1962,9 @@ module.exports = {
         */ 
         webTokenValidator,
         async (req, res) => {
-            if (req.body.userRole === null || req.body.userRole === undefined || req.body.userRole === "" || (req.body.userRole !== "1" && req.body.userRole !== "0" && req.body.userRole !== "2") ||
-            req.body.userEmail === null || req.body.userEmail === undefined || req.body.userEmail === "" || !validator.isEmail(req.body.userEmail) ||
-            req.body.managerEmail === null || req.body.managerEmail === undefined || req.body.managerEmail === "" || !validator.isEmail(req.body.managerEmail) ||
-            req.body.managerPassword === null || req.body.managerPassword === undefined || req.body.managerPassword === "" ||
-            req.body.managerName === null || req.body.managerName === undefined || req.body.managerName === "" ||
-            req.body.managerRole === null || req.body.managerRole === undefined || req.body.managerRole === "" || (req.body.managerRole !== "0" && req.body.managerRole !== "1") ||
-            req.body.accountStatus === null || req.body.accountStatus === undefined || req.body.accountStatus == "" || (req.body.accountStatus !== "0" && req.body.accountStatus !== "1" && req.body.accountStatus !== "2") ||
-            req.body.managerId === null || req.body.managerId === undefined || req.body.managerId === "" || isNaN(req.body.managerId)
-        )
+            if (req.body.newName === null || req.body.newName === undefined || req.body.newName === "" ||
+                req.body.id === null || req.body.id === undefined || req.body.id === "" || isNaN(req.body.id)
+            )
         {
             return res.status(400).send({ "message": "Access Restricted1!" });
         }
@@ -1980,14 +1974,14 @@ module.exports = {
         try {
             await db_connection.query(`LOCK TABLES managementData WRITE`);
 
-            let [manager] = await db_connection.query(`SELECT accountStatus,id from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
-            if (manager.length === 0 || manager[0]["accountStatus"] !== "1") {
+            let [manager] = await db_connection.query(`SELECT accountStatus, managerRole from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+            if (manager.length === 0 || manager[0]["accountStatus"] !== "1" || manager[0]["managerRole"] !== "0") {
                 await db_connection.query(`UNLOCK TABLES`);
                 return res.status(401).send({ "message": "Access Restricted2!"});
             }
 
             try {
-                await db_connection.query(`UPDATE managementData SET managerEmail = ?, managerPassword = ?, managerName = ?, managerRole = ?, accountStatus = ? WHERE id = ?`, [req.body.managerEmail, req.body.managerPassword, req.body.managerName, req.body.managerRole, req.body.accountStatus, req.body.managerId]);
+                await db_connection.query(`UPDATE managementData SET managerName = ? WHERE id = ?`, [req.body.newName, req.body.id]);
             } catch (err) {
                 await db_connection.query(`UNLOCK TABLES`);
                 return res.status(400).send({ "message": "Manager Profile Update Error!" });
