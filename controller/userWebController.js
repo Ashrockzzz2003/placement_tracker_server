@@ -1946,6 +1946,57 @@ module.exports = {
                 db_connection.release();
             }
         }
+    ], 
+
+    editManagerProfileById: [
+        /*
+        JSON
+        {
+            "id" : "<managerId>" INTEGER,
+            "managerName" : "<managerName>"
+        }
+        */ 
+        webTokenValidator,
+        async (req, res) => {
+            if (req.body.newName === null || req.body.newName === undefined || req.body.newName === "" ||
+                req.body.id === null || req.body.id === undefined || req.body.id === "" || isNaN(req.body.id)
+            )
+        {
+            return res.status(400).send({ "message": "Access Restricted1!" });
+        }
+
+        let db_connection = await db.promise().getConnection();
+
+        try {
+            await db_connection.query(`LOCK TABLES managementData WRITE`);
+
+            let [manager] = await db_connection.query(`SELECT accountStatus, managerRole from managementData WHERE managerEmail = ?`, [req.body.userEmail]);
+            if (manager.length === 0 || manager[0]["accountStatus"] !== "1" || manager[0]["managerRole"] !== "0") {
+                await db_connection.query(`UNLOCK TABLES`);
+                return res.status(401).send({ "message": "Access Restricted2!"});
+            }
+
+            try {
+                await db_connection.query(`UPDATE managementData SET managerName = ? WHERE id = ?`, [req.body.newName, req.body.id]);
+            } catch (err) {
+                await db_connection.query(`UNLOCK TABLES`);
+                return res.status(400).send({ "message": "Manager Profile Update Error!" });
+            }
+
+            await db_connection.query(`UNLOCK TABLES`);
+
+            return res.status(200).send({ "message": "Manager Profile Updated!" });
+            
+        } catch (err) {
+            console.log(err);
+            const time = new Date();
+            fs.appendFileSync('logs/errorLogs.txt', `${time.toISOString()} - editManagerProfileById - ${err}\n`);
+            return res.status(500).send({ "message": "Internal Server Error."});
+        } finally {
+            await db_connection.query(`UNLOCK TABLES`);
+            db_connection.release();
+        }
+        }
     ]
 
     // incomplete
