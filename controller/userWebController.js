@@ -1952,12 +1952,8 @@ module.exports = {
         /*
         JSON
         {
-            "managerId" : "<managerId>" INTEGER,
-            "managerEmail" : "<managerEmail>",
-            "managerPassword" : "<managerPassword>",
-            "managerName" : "<managerName>",
-            "managerRole" : "<0/1>",
-            "accountStatus" : "<0/1/2>"
+            "id" : "<managerId>" INTEGER,
+            "managerName" : "<managerName>"
         }
         */ 
         webTokenValidator,
