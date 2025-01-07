@@ -19,7 +19,7 @@ const tokenValidator = require('../middleware/webTokenValidator');
 
 const request = require('supertest');
 const express = require('express');
-const userWebController = require('../controller/userWebController');
+const userWebController = require('../controller/auth');
 
 const app = express();
 app.use(express.json());
