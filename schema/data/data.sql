@@ -103,7 +103,7 @@ CREATE TABLE placementData (
 );
 
 insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('ashrockzzz2003@gmail.com','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','Ashwin Narayanan S', '1', '1');
-insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('hsheadone@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Bindu K R', '0', '0');
+insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('hsheadone@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Bindu K R', '0', '1');
 insert into managementData (managerEmail,managerPassword,managerName,managerRole, accountStatus) values ('abhinavramki2@gmail.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'Abhinav R', '1', '1');
 
 insert into companyData (companyName,managerId) values('ADOBE',2);
