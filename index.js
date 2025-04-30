@@ -11,7 +11,9 @@ const reInitDatabase = require("./schema/reInitDatabase");
 const server = express();
 const cors = require('cors');
 
-const userWebRouter = require('./routes/userWeb');
+const authrouter = require('./routes/auth.js');
+const studentrouter = require('./routes/student.js'); 
+const managerrouter = require('./routes/manager.js'); 
 
 const { generateKey } = require('./RSA/keyGen');
 
@@ -27,7 +29,14 @@ server.use(express.json());
 server.use(cors());
 server.disable('x-powered-by');
 
-server.use('/api', userWebRouter);
+// server.use('api/auth', authrouter);
+// server.use('api/student', studentrouter);
+// server.use('api/manager', managerrouter);
+// New routes
+server.use('/api/auth', authrouter);
+server.use('/api/student', studentrouter);
+server.use('/api/manager', managerrouter);
+
 
 if (cluster.isPrimary) {
     console.log(`[MESSAGE]: Master ${process.pid} is running.`);
