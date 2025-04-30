@@ -11,12 +11,14 @@ router.post('/registerOfficial', managercontroll.registerOfficial);
 router.post('/addCompany', managercontroll.addCompany);
 router.get('/getCompanies', managercontroll.getCompanies);
 
-router.get('/getTopFivePlacements',managercontroll.getTop5Placements);
+router.get('/getTopFivePlacements', managercontroll.getTop5Placements);
 router.post('/addPlacementData', managercontroll.addPlacementData);
 router.post('/editPlacementDataById', managercontroll.editPlacementDataById);
 
-router.get('/getCompanyHireData',managercontroll.getCompanyHireData);
-router.post('/getCompanyHireDataByBatch',managercontroll.getCompanyHireDatabyBatch);
-router.post('/getCompanyHireDataById',managercontroll.getCompanyHireDataById);
+router.get('/getCompanyHireData', managercontroll.getCompanyHireData);
+router.post('/getCompanyHireDataByBatch', managercontroll.getCompanyHireDatabyBatch);
+router.post('/getCompanyHireDataById', managercontroll.getCompanyHireDataById);
+
+router.post('editManagerProfileById', managercontroll.editManagerProfileById);
 
 module.exports = router;
