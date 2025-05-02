@@ -27,6 +27,6 @@ const TEMPLATE_ACCOUNT_DEACTIVATED = (managerEmail, managerName) => {
     </body>
 
     </html>`;
-}
+};
 
 module.exports = TEMPLATE_ACCOUNT_DEACTIVATED;

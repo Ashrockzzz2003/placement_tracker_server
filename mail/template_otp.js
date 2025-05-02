@@ -27,6 +27,6 @@ const TEMPLATE_OTP = (otp, userName) => {
     </body>
 
     </html>`;
-}
+};
 
 module.exports = TEMPLATE_OTP;

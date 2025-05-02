@@ -1,6 +1,6 @@
-require('dotenv').config();
-const mysql = require('mysql2');
-const os = require('os');
+require("dotenv").config();
+const mysql = require("mysql2");
+const os = require("os");
 const connectionLimit = os.cpus().length;
 
 const db = mysql.createPool({
@@ -10,7 +10,7 @@ const db = mysql.createPool({
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: connectionLimit,
-    queueLimit: 0
+    queueLimit: 0,
 });
 
-module.exports = {db};
+module.exports = { db };

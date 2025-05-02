@@ -1,4 +1,8 @@
-const TEMPLATE_OFFICIAL_CREATED = (managerEmail, managerName, managerPassword) => {
+const TEMPLATE_OFFICIAL_CREATED = (
+    managerEmail,
+    managerName,
+    managerPassword,
+) => {
     return `<!DOCTYPE html>
     <html lang="en">
 
@@ -29,6 +33,6 @@ const TEMPLATE_OFFICIAL_CREATED = (managerEmail, managerName, managerPassword) =
     </body>
 
     </html>`;
-}
+};
 
 module.exports = TEMPLATE_OFFICIAL_CREATED;

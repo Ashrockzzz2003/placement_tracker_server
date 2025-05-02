@@ -1,4 +1,8 @@
-const TEMPLATE_STUDENT_CREATED = (studentEmail, studentName, studentPassword) => {
+const TEMPLATE_STUDENT_CREATED = (
+    studentEmail,
+    studentName,
+    studentPassword,
+) => {
     return `<!DOCTYPE html>
     <html lang="en">
 
@@ -29,6 +33,6 @@ const TEMPLATE_STUDENT_CREATED = (studentEmail, studentName, studentPassword) =>
     </body>
 
     </html>`;
-}
+};
 
 module.exports = TEMPLATE_STUDENT_CREATED;

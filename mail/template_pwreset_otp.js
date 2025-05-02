@@ -29,6 +29,6 @@ const TEMPLATE_PWRESET_OTP = (otp, userName) => {
     </body>
 
     </html>`;
-}
+};
 
 module.exports = TEMPLATE_PWRESET_OTP;

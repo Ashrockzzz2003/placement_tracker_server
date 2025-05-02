@@ -1,18 +1,18 @@
-const fs = require('fs');
+const fs = require("fs");
 
 const reInitDatabase = (db) => {
     try {
-        fs.readFile('./schema/data/data.sql', 'utf8', (err, data) => {
+        fs.readFile("./schema/data/data.sql", "utf8", (err, data) => {
             if (err) {
                 console.log(err);
-            }
-            else {
+            } else {
                 db.query(data, (err, result) => {
                     if (err) {
                         console.log(err);
-                    }
-                    else {
-                        console.log(`[MESSAGE]: Database Initialized Successfully.`);
+                    } else {
+                        console.log(
+                            `[MESSAGE]: Database Initialized Successfully.`,
+                        );
                     }
                 });
             }
@@ -21,6 +21,5 @@ const reInitDatabase = (db) => {
         console.error(err);
     }
 };
-
 
 module.exports = reInitDatabase;
