@@ -9,10 +9,10 @@ This is the backend server for a web application for tracking the placement acti
 
 ## Technologies Used
 
-| Type | Technologies | Link |
-| --- | --- | --- |
-| Frontend | `NextJS`, `ReactJS`, `NodeJS`, `TailwindCSS` | [GitHub](https://github.com/Ashrockzzz2003/placement_tracker_web) |
-| Backend | `NodeJS`, `ExpressJS`, `MySQL` | [GitHub](https://github.com/Ashrockzzz2003/placement_tracker_server) |
+| Type     | Technologies                                 | Link                                                                 |
+| -------- | -------------------------------------------- | -------------------------------------------------------------------- |
+| Frontend | `NextJS`, `ReactJS`, `NodeJS`, `TailwindCSS` | [GitHub](https://github.com/Ashrockzzz2003/placement_tracker_web)    |
+| Backend  | `NodeJS`, `ExpressJS`, `MySQL`               | [GitHub](https://github.com/Ashrockzzz2003/placement_tracker_server) |
 
 ## Getting Started
 
@@ -23,6 +23,7 @@ This is the backend server for a web application for tracking the placement acti
     npm install
     ```
 2. Create a `.env` file in the root directory of the project, and add the following environment variables:
+
     ```env
     DB_HOST=<your-database-host>
     DB_USER=<your-database-user>
@@ -40,4 +41,3 @@ This is the backend server for a web application for tracking the placement acti
 `Ashwin Narayanan S`
 
 `Abhinav R`
-

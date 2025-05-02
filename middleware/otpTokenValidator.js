@@ -1,21 +1,23 @@
-require('dotenv').config();
-const paseto = require('paseto');
-const { V4: { verify } } = paseto;
-const fs = require('fs');
+require("dotenv").config();
+const paseto = require("paseto");
+const {
+    V4: { verify },
+} = paseto;
+const fs = require("fs");
 const secret_key = process.env.SECRET_KEY;
 
 async function otpTokenValidator(req, res, next) {
     const tokenHeader = req.headers.authorization;
-    const token = tokenHeader && tokenHeader.split(' ')[1];
+    const token = tokenHeader && tokenHeader.split(" ")[1];
 
     if (tokenHeader == null || token == null) {
         res.status(401).send({
-            "ERROR": "No Token. Warning."
+            ERROR: "No Token. Warning.",
         });
         return;
     }
 
-    const public_key = fs.readFileSync('./RSA/public_key.pem');
+    const public_key = fs.readFileSync("./RSA/public_key.pem");
     try {
         const payLoad = await verify(token, public_key);
         if (payLoad["secret_key"] == secret_key) {
@@ -36,38 +38,37 @@ async function otpTokenValidator(req, res, next) {
                 req.body.isPlaced = payLoad["isPlaced"];
                 req.body.CGPA = payLoad["CGPA"];
             }
-            
+
             next();
             return;
         } else {
             res.status(401).send({
-                "ERROR": "Unauthorized access. Warning."
+                ERROR: "Unauthorized access. Warning.",
             });
             return;
         }
     } catch (err) {
         res.status(401).send({
-            "ERROR": "Unauthorized access. Warning."
+            ERROR: "Unauthorized access. Warning.",
         });
         return;
     }
-
 }
 
 async function resetPasswordValidator(req, res, next) {
     const tokenHeader = req.headers.authorization;
     //console.log("tokenHeader:", tokenHeader);
-    const token = tokenHeader && tokenHeader.split(' ')[1];
+    const token = tokenHeader && tokenHeader.split(" ")[1];
     //console.log("token:", token);
 
     if (tokenHeader == null || token == null) {
         res.status(401).send({
-            "ERROR": "No Token. Warning."
+            ERROR: "No Token. Warning.",
         });
         return;
     }
 
-    const public_key = fs.readFileSync('./RSA/public_key.pem');
+    const public_key = fs.readFileSync("./RSA/public_key.pem");
     try {
         const payLoad = await verify(token, public_key);
         if (payLoad["secret_key"] == secret_key) {
@@ -77,17 +78,16 @@ async function resetPasswordValidator(req, res, next) {
             return;
         } else {
             res.status(401).send({
-                "ERROR": "Unauthorized access. Warning."
+                ERROR: "Unauthorized access. Warning.",
             });
             return;
         }
     } catch (err) {
         res.status(401).send({
-            "ERROR": "Unauthorized access. Warning."
+            ERROR: "Unauthorized access. Warning.",
         });
         return;
     }
-
 }
 
 module.exports = [otpTokenValidator, resetPasswordValidator];
