@@ -681,8 +681,17 @@ module.exports = {
         }
 
         // if (req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu") {
-        //     return res.status(400).send({ "message": "Missing details." });
-        // }
+         //return res.status(400).send({ "message": "Missing details." });}
+        const validDomains = [
+            "cb.students.amrita.edu",
+            "bl.students.amrita.edu",
+            "nc.students.amrita.edu",
+
+        ];
+        if (!validDomains.includes(req.body.studentEmail.split("@")[1])) {
+            return res.status(400).send({ message: "Missing details." });
+        }
+
 
         let db_connection = await db.promise().getConnection();
 
