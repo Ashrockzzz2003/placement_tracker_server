@@ -18,7 +18,7 @@ const mailer = require("../mail/mailer");
 const fs = require("fs");
 const validator = require("validator");
 const tokenValidator = require("../middleware/webTokenValidator");
-
+const validDomains = require("../config");
 module.exports = {
     studentEditData: [
         tokenValidator,
@@ -90,11 +90,16 @@ module.exports = {
                 return res.status(400).send({ message: "Missing details." });
             }
 
-            if (
+            /*if (
                 req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu"
             ) {
                 return res.status(400).send({ message: "Missing details." });
-            }
+            }*/
+          
+        if (!validDomains.includes(req.body.studentEmail.split("@")[1])) {
+            return res.status(400).send({ message: "Missing details." });
+        }
+
 
             if (
                 req.authorization_tier !== "0" &&
@@ -278,11 +283,17 @@ module.exports = {
                 return res.status(400).send({ message: "Missing details." });
             }
 
-            if (
+            /*if (
                 req.body.studentEmail.split("@")[1] !== "cb.students.amrita.edu"
             ) {
                 return res.status(400).send({ message: "Missing details." });
-            }
+            }*/
+
+             
+        if (!validDomains.includes(req.body.studentEmail.split("@")[1])) {
+            return res.status(400).send({ message: "Missing details." });
+        }
+
 
             let db_connection = await db.promise().getConnection();
 
